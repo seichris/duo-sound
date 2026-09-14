@@ -23,6 +23,13 @@ jobs:
           swift --version
       - name: Core unit tests
         run: swift test
+      - name: Render all sound pairs for review
+        run: swift run -c release SoundPreview build/sound-library
+      - uses: actions/upload-artifact@v4
+        with:
+          name: original-sound-library-40-clips
+          path: build/sound-library/
+          retention-days: 14
       - name: Generate icon and verify project
         run: |
           python3 scripts/generate_assets.py

@@ -10,7 +10,7 @@ The project still targets iPhone and iPad. Do not silently remove iPad support t
 
 1. **Choose your opening and closing sounds.** Actual main screen; small but readable foreground requirement.
 2. **Two actions. Your own sound.** Actual independent selections and previews.
-3. **Five original effects.** Actual preset picker, without third-party franchise names.
+3. **20 original effects.** Actual grouped, searchable sound library, without third-party franchise names.
 4. **Import a short clip.** Real Files/import interaction using an original fixture, no private filenames.
 5. **You control the quiet.** Volume/Off and clear Silent Mode/output-route explanation.
 

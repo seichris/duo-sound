@@ -1,9 +1,99 @@
 import Foundation
 
+/// Stable categories for browsing, not persisted selection identifiers.
+public enum SoundCategory: String, CaseIterable, Sendable {
+    case musical, mechanical, nature, playful, scienceFiction
+
+    public var title: String {
+        switch self {
+        case .scienceFiction: return "Sci-Fi"
+        default: return rawValue.capitalized
+        }
+    }
+}
+
 public enum SoundPreset: String, Codable, CaseIterable, Sendable {
-    case chime, paper, arcade, orbit, click, off, custom
-    public var title: String { rawValue.capitalized }
-    public static var builtIns: [Self] { [.chime, .paper, .arcade, .orbit, .click] }
+    // Keep existing raw values and defaults stable for previously saved settings.
+    case chime, paper, arcade, orbit, click
+    case crystal, marimba, musicBox, zipper, latch, typewriter
+    case waterDrop, bird, rain, bubble, spring, cork, laser, robot, powerUp
+    case off, custom
+
+    public var title: String {
+        switch self {
+        case .musicBox: return "Music Box"
+        case .waterDrop: return "Water Drop"
+        case .powerUp: return "Power Up / Down"
+        default: return rawValue.capitalized
+        }
+    }
+
+    public var category: SoundCategory? {
+        switch self {
+        case .chime, .crystal, .marimba, .musicBox: return .musical
+        case .paper, .click, .zipper, .latch, .typewriter: return .mechanical
+        case .waterDrop, .bird, .rain: return .nature
+        case .arcade, .bubble, .spring, .cork: return .playful
+        case .orbit, .laser, .robot, .powerUp: return .scienceFiction
+        case .off, .custom: return nil
+        }
+    }
+
+    public var detail: String {
+        switch self {
+        case .chime: return "A soft three-note welcome or goodbye."
+        case .paper: return "A dry paper crinkle."
+        case .arcade: return "Retro notes climbing or falling."
+        case .orbit: return "An airy electronic sweep."
+        case .click: return "A tiny, crisp tap."
+        case .crystal: return "Bright, shimmering glass bells."
+        case .marimba: return "Two warm wooden notes."
+        case .musicBox: return "A delicate, sparkling melody."
+        case .zipper: return "A quick, textured zip or unzip."
+        case .latch: return "A metal release and a solid catch."
+        case .typewriter: return "A short flurry of mechanical keys."
+        case .waterDrop: return "Rounded, rippling water drops."
+        case .bird: return "Two small, clear chirps."
+        case .rain: return "A soft shower with scattered droplets."
+        case .bubble: return "Playful, rising or falling bubble pops."
+        case .spring: return "A wobbly, elastic boing."
+        case .cork: return "A hollow pop and a snug little thump."
+        case .laser: return "A bright sci-fi zap."
+        case .robot: return "A tiny robot greeting or farewell."
+        case .powerUp: return "An ascending startup or descending shutdown."
+        case .off: return "No sound for this direction."
+        case .custom: return "Your imported audio clip."
+        }
+    }
+
+    /// Every generated clip is deliberately short. Legacy durations stay intact.
+    public var duration: Double? {
+        switch self {
+        case .chime, .paper, .arcade, .orbit: return 0.42
+        case .click: return 0.13
+        case .crystal: return 0.65
+        case .marimba: return 0.50
+        case .musicBox: return 0.72
+        case .zipper: return 0.34
+        case .latch: return 0.24
+        case .typewriter: return 0.26
+        case .waterDrop: return 0.46
+        case .bird: return 0.56
+        case .rain: return 0.60
+        case .bubble: return 0.34
+        case .spring: return 0.60
+        case .cork: return 0.22
+        case .laser: return 0.40
+        case .robot: return 0.50
+        case .powerUp: return 0.70
+        case .off, .custom: return nil
+        }
+    }
+
+    public static var builtIns: [Self] { allCases.filter { $0.category != nil } }
+    public static func presets(in category: SoundCategory) -> [Self] {
+        builtIns.filter { $0.category == category }
+    }
 }
 
 public struct ImportedSound: Codable, Equatable, Sendable {

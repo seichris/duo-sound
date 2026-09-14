@@ -2,9 +2,11 @@
 
 ## Implemented checks
 
-`swift test`: 29 tests covering silent initial states, deadband, endpoint-only timer completion, duplicate notifications, partial-to-flat changes, jitter/spikes, reset cancellation/rebaseline, invalid and backwards timestamps, invalid angles, rapid complete cycles, inclusive thresholds, deterministic bounded PCM/WAV, distinct open/close sounds, settings round-trip/corruption, volume validation, custom-file requirements, path traversal, bounded reads and write failures.
+`swift test`: 39 tests covering silent initial states, deadband, endpoint-only timer completion, duplicate notifications, partial-to-flat changes, jitter/spikes, reset cancellation/rebaseline, invalid and backwards timestamps, invalid angles, rapid complete cycles, inclusive thresholds, deterministic bounded PCM/WAV, distinct open/close sounds, settings round-trip/corruption, volume validation, custom-file requirements, path traversal, bounded reads and write failures.
 
-Local run: Swift 6.2.1/Linux, **29 passed, zero failures**. Source parsing passed for all Swift files and separately for `DUO_HINGE_SDK`. Parsing is **not** iOS SDK type-checking. CI builds the default simulator app on macOS. Check the actual run status rather than treating the presence of a workflow as a passing result.
+Local run: Swift 6.2.1/Linux, **39 passed, zero failures**. Source parsing passed for all Swift files and separately for `DUO_HINGE_SDK`. Parsing is **not** iOS SDK type-checking. CI builds the default simulator app on macOS. Check the actual run status rather than treating the presence of a workflow as a passing result.
+
+The added sound-library tests cover catalog completeness, readable labels, stable saved IDs, all opening/closing combinations, custom-import retention, persisted new presets, 40 unique renders, short durations, PCM format, amplitude bounds and deterministic output. See [SOUND_LIBRARY.md](SOUND_LIBRARY.md) for the offline sampler and browser QA.
 
 ## First iOS simulator/device smoke test
 
