@@ -1,0 +1,31 @@
+name: CI
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+permissions:
+  contents: read
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  core-and-ios-build:
+    runs-on: macos-15
+    steps:
+      - uses: actions/checkout@v4
+      - name: Toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+      - name: Core unit tests
+        run: swift test
+      - name: Generated project is current
+        run: |
+          python3 scripts/generate_project.py
+          git diff --exit-code -- DuoSound.xcodeproj
+      - name: Build iOS simulator app (preview scheme, not Duo hardware validation)
+        run: >-
+          xcodebuild -project DuoSound.xcodeproj -scheme DuoSound
+          -configuration Debug -sdk iphonesimulator
+          -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO build
