@@ -1,0 +1,28 @@
+{
+  "schema_version": 1,
+  "status": "blocked",
+  "assessed_on": "2026-09-14",
+  "validated_source_sha256": null,
+  "owner": {
+    "legal_name": null,
+    "support_email": null,
+    "copyright": null,
+    "team_id": null,
+    "bundle_id": "com.seichris.duosound",
+    "app_store_id": null,
+    "support_url": null,
+    "privacy_url": null,
+    "marketing_url": null
+  },
+  "evidence": {
+    "public_sdk_compiles": {"passed": false, "reference": null},
+    "physical_open_close_and_handoff": {"passed": false, "reference": null},
+    "audio_import_lifecycle_accessibility": {"passed": false, "reference": null},
+    "privacy_manifest_and_policy_audited": {"passed": false, "reference": null},
+    "real_store_screenshots_reviewed": {"passed": false, "reference": null},
+    "public_urls_and_contact_verified": {"passed": false, "reference": null},
+    "seller_age_rating_rights_and_availability": {"passed": false, "reference": null},
+    "distribution_sdk_accepted_by_apple": {"passed": false, "reference": null}
+  },
+  "notes": "Preparation is not authorization to upload, submit for review, release, or accept agreements. Do not mark evidence passed without a dated test/report for the fingerprinted source. Default CI is not physical Duo validation."
+}

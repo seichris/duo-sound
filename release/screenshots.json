@@ -1,0 +1,5 @@
+{
+  "schema_version": 1,
+  "captures": [],
+  "note": "Populate with actual, reviewed release captures. Each entry needs path, sha256, width, height, device_family (iphone or ipad), locale, and source (physical-device or simulator). Do not invent a Duo capture from another device."
+}
