@@ -38,5 +38,9 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>DuoSupportURL</key>
+	<string>$(DUO_SUPPORT_URL)</string>
+	<key>DuoPrivacyURL</key>
+	<string>$(DUO_PRIVACY_URL)</string>
 </dict>
 </plist>

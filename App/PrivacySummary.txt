@@ -1,0 +1,17 @@
+Duo Sound privacy summary
+
+The app does not create accounts, record microphone audio, include advertising or analytics SDKs, or automatically transmit your sounds, settings, or hinge activity to a server.
+
+Settings and imported audio
+Your selected settings and copies of audio clips you import are stored in the app's private storage. The current activity label is kept in memory, not saved as a history. Importing a file gives the app access to the file you selected; it does not grant general access to your file library.
+
+Device backups and deletion
+Depending on your iOS settings, app data may be included in device or cloud backups. Deleting the app removes its active local data; offloading the app can retain documents and data. Removing a backup is a separate action controlled through the backup service. Duo Sound does not operate its own cloud-sync service.
+
+External support and links
+Opening a support or policy link uses an external website. Information you voluntarily include in an issue or email, and information processed by that service, is governed by its policies. GitHub issues are public: do not attach private audio, credentials, or personal information. The app does not automatically attach your audio or diagnostics.
+
+Permissions
+Sound playback and the user-selected file importer do not require the app to record your microphone. No camera, location, notification, or background-listening permission is requested.
+
+Use the full-policy link for the publisher's current legal and contact information.

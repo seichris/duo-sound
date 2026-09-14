@@ -79,7 +79,11 @@ struct ContentView: View {
                 NavigationStack {
                     Form {
                         Section("Sound, not surveillance") {
-                            Text("No account, analytics, microphone permission, or network service. Settings and imported sounds stay in this app’s private storage. The activity label is not saved.")
+                            Text("No account, analytics SDK, microphone recording, or app-operated network service. Device backups and external support services are separate.")
+                            NavigationLink("Privacy & data") { PrivacyView() }
+                                .accessibilityIdentifier("privacyPolicy")
+                            NavigationLink("Help with sounds") { SoundHelpView() }
+                                .accessibilityIdentifier("soundHelp")
                         }
                         Section("Built for iPhone Duo") {
                             Text("Inspired by Scrunch. Original Swift implementation and original synthesized sounds; no Scrunch code or sound assets are bundled.")
@@ -119,7 +123,7 @@ struct ContentView: View {
                     .accessibilityLabel("Import \(event.title.lowercased()) sound")
             }.buttonStyle(.bordered)
         } header: { Text("When \(event.title.lowercased())") }
-          footer: { Text("Original presets or your own audio clip, up to 5 seconds and 8 MB.") }
+          footer: { Text("Original presets or your own audio clip, up to 5 seconds and 8 MiB.") }
     }
 }
 
