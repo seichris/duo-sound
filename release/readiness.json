@@ -24,5 +24,5 @@
     "seller_age_rating_rights_and_availability": {"passed": false, "reference": null},
     "distribution_sdk_accepted_by_apple": {"passed": false, "reference": null}
   },
-  "notes": "App Store Connect currently shows record 6812193737 (Hingy - Hinge Sounds), version 1.0 in PREPARE_FOR_SUBMISSION, under team 4H5PK8686H; no build or availability is configured. The owner supplied WEB3 FZCO, jensen@web3.consulting, 2026 WEB3 FZCO and GitHub-backed public URLs on 2026-09-15. Exact bare name availability remains unresolved. User authorization to continue the release attempt is recorded in the task; do not mark evidence passed without a dated test/report for the fingerprinted source. Default CI is not physical Duo validation."
+  "notes": "App Store Connect currently shows record 6812193737 (Hingy), version 1.0 in PREPARE_FOR_SUBMISSION, under team 4H5PK8686H; version metadata, category, content rights, age rating, copyright and privacy URL are configured, while no build or availability is configured. The owner supplied WEB3 FZCO, jensen@web3.consulting, 2026 WEB3 FZCO and GitHub-backed public URLs on 2026-09-15. User authorization to continue the release attempt is recorded in the task; do not mark evidence passed without a dated test/report for the fingerprinted source. Default CI is not physical Duo validation."
 }
