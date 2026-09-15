@@ -14,4 +14,6 @@ Opening a support or policy link uses an external website. Information you volun
 Permissions
 Sound playback and the user-selected file importer do not require the app to record your microphone. No camera, location, notification, or background-listening permission is requested.
 
-Use the full-policy link for the publisher's current legal and contact information.
+Publisher: WEB3 FZCO
+Support: jensen@web3.consulting
+Use the full-policy link for the current policy and public support options.
