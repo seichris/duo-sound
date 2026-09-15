@@ -94,9 +94,9 @@ final class AppModel: ObservableObject {
         settings = next
         if enabledChanged { resetObservation() }
     }
-    func preview(_ event: FoldEvent) {
+    func preview(_ event: FoldEvent, preset: SoundPreset? = nil) {
         guard isActive else { return }
-        play(event, label: "Preview")
+        play(event, label: "Preview", preset: preset)
     }
     func importSound(from url: URL, event: FoldEvent) {
         let scoped = url.startAccessingSecurityScopedResource()
@@ -153,8 +153,8 @@ final class AppModel: ObservableObject {
         guard isActive, settings.enabled else { return }
         play(event, label: isDemo ? "Demo fold" : "Hinge")
     }
-    private func play(_ event: FoldEvent, label: String) {
-        let preset = settings.preset(for: event)
+    private func play(_ event: FoldEvent, label: String, preset override: SoundPreset? = nil) {
+        let preset = override ?? settings.preset(for: event)
         guard preset != .off else {
             audio.stop(); lastEvent = "\(label) · \(event.title) sound is off"; return
         }

@@ -1,0 +1,46 @@
+name: Release preparation
+on:
+  pull_request:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  package-preview:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Generate original icon and audio fixture
+        run: python3 scripts/generate_assets.py
+      - name: Validate and export draft preparation
+        run: |
+          python3 scripts/generate_project.py
+          git diff --exit-code -- DuoSound.xcodeproj
+          python3 -m unittest discover -s scripts/tests -v
+          python3 scripts/release_check.py
+          python3 scripts/export_listing.py --draft
+          python3 scripts/build_site.py
+          if python3 scripts/release_check.py --submission > build/submission-status.txt; then
+            echo 'Evidence gate passed; no upload will be performed.'
+          else
+            echo 'Submission remains blocked; see the report in the artifact.'
+          fi
+      - name: Package preparation assets (not a signed release)
+        run: |
+          mkdir -p build/release-preparation
+          git archive HEAD -o build/release-preparation/source.zip
+          cp App/Assets.xcassets/AppIcon.appiconset/AppIcon.png build/release-preparation/
+          cp -R build/listing-draft build/site-preview build/release-preparation/
+          cp build/submission-status.txt build/release-preparation/
+          cp release/listing.json build/release-preparation/listing-DRAFT.json
+          cp build/fixtures/original-chime.wav build/release-preparation/
+          printf 'Developer preparation only. No physical Duo validation, App Store upload, or release approval.\n' > build/release-preparation/READ-ME-FIRST.txt
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-preparation
+          path: build/release-preparation/
+          retention-days: 14

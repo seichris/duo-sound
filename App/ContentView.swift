@@ -7,6 +7,8 @@ struct ContentView: View {
     @State private var importEvent: FoldEvent = .opened
     @State private var showImporter = false
     @State private var showAbout = false
+    @State private var libraryEvent: FoldEvent = .opened
+    @State private var showLibrary = false
     var body: some View {
         NavigationStack {
             Form {
@@ -79,7 +81,11 @@ struct ContentView: View {
                 NavigationStack {
                     Form {
                         Section("Sound, not surveillance") {
-                            Text("No account, analytics, microphone permission, or network service. Settings and imported sounds stay in this app’s private storage. The activity label is not saved.")
+                            Text("No account, analytics SDK, microphone recording, or app-operated network service. Device backups and external support services are separate.")
+                            NavigationLink("Privacy & data") { PrivacyView() }
+                                .accessibilityIdentifier("privacyPolicy")
+                            NavigationLink("Help with sounds") { SoundHelpView() }
+                                .accessibilityIdentifier("soundHelp")
                         }
                         Section("Built for iPhone Duo") {
                             Text("Inspired by Scrunch. Original Swift implementation and original synthesized sounds; no Scrunch code or sound assets are bundled.")
@@ -90,13 +96,16 @@ struct ContentView: View {
                     .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { showAbout = false } } }
                 }
             }
+            .sheet(isPresented: $showLibrary) {
+                SoundLibraryView(model: model, event: libraryEvent)
+            }
             .fileImporter(isPresented: $showImporter, allowedContentTypes: [.audio]) { result in
                 switch result {
                 case .success(let url): model.importSound(from: url, event: importEvent)
                 case .failure(let error): model.errorMessage = error.localizedDescription
                 }
             }
-            .alert("Duo Sound", isPresented: Binding(get: { model.errorMessage != nil },
+            .alert("Duo Sound", isPresented: Binding(get: { !showLibrary && model.errorMessage != nil },
                 set: { if !$0 { model.errorMessage = nil } })) {
                     Button("OK", role: .cancel) { model.errorMessage = nil }
                 } message: { Text(model.errorMessage ?? "") }
@@ -104,13 +113,23 @@ struct ContentView: View {
     }
     private func soundSection(_ event: FoldEvent) -> some View {
         Section {
-            Picker("Sound", selection: Binding(get: { model.settings.preset(for: event) },
-                set: { preset in model.updateSettings { $0.select(preset, for: event) } })) {
-                ForEach(SoundPreset.builtIns + [.off], id: \.self) { Text($0.title).tag($0) }
-                if let imported = model.settings.imported(for: event) {
-                    Text(imported.displayName).tag(SoundPreset.custom)
+            Button {
+                libraryEvent = event
+                showLibrary = true
+            } label: {
+                HStack {
+                    Text("Sound").foregroundStyle(.primary)
+                    Spacer()
+                    Text(model.settings.preset(for: event) == .custom
+                         ? (model.settings.imported(for: event)?.displayName ?? "Custom")
+                         : model.settings.preset(for: event).title)
+                        .foregroundStyle(.secondary)
+                    Image(systemName: "chevron.right").font(.caption).foregroundStyle(.tertiary)
                 }
             }
+            .accessibilityLabel("Choose \(event.title.lowercased()) sound")
+            .accessibilityValue(model.settings.preset(for: event).title)
+            .accessibilityIdentifier("soundChoice-\(event.rawValue)")
             HStack {
                 Button { model.preview(event) } label: { Label("Preview", systemImage: "play.fill") }
                     .accessibilityLabel("Preview \(event.title.lowercased()) sound")
@@ -119,7 +138,96 @@ struct ContentView: View {
                     .accessibilityLabel("Import \(event.title.lowercased()) sound")
             }.buttonStyle(.bordered)
         } header: { Text("When \(event.title.lowercased())") }
-          footer: { Text("Original presets or your own audio clip, up to 5 seconds and 8 MB.") }
+          footer: { Text("\(SoundPreset.builtIns.count) original presets, or your own audio clip up to 5 seconds and 8 MiB.") }
+    }
+}
+
+
+/// Audition any effect without replacing the saved opening/closing selection.
+@MainActor
+struct SoundLibraryView: View {
+    @ObservedObject var model: AppModel
+    let event: FoldEvent
+    @Environment(\.dismiss) private var dismiss
+    @State private var search = ""
+
+    var body: some View {
+        NavigationStack {
+            List {
+                if search.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                    Section {
+                        row(.off)
+                        if let imported = model.settings.imported(for: event) {
+                            row(.custom, title: imported.displayName)
+                        }
+                    } header: { Text("Your choice") } footer: {
+                        Text("Tap a name to select it. Play buttons only preview; they do not change your selection.")
+                    }
+                }
+                ForEach(SoundCategory.allCases, id: \.self) { category in
+                    let presets = SoundPreset.presets(in: category).filter(matches)
+                    if !presets.isEmpty {
+                        Section(category.title) {
+                            ForEach(presets, id: \.self) { preset in row(preset) }
+                        }
+                    }
+                }
+                if !search.isEmpty && SoundPreset.builtIns.filter(matches).isEmpty {
+                    Text("No matching sounds").foregroundStyle(.secondary)
+                        .accessibilityIdentifier("noMatchingSounds")
+                }
+            }
+            .navigationTitle("\(event.title) sounds")
+            .navigationBarTitleDisplayMode(.inline)
+            .searchable(text: $search, prompt: "Search \(SoundPreset.builtIns.count) sounds")
+            .alert("Duo Sound", isPresented: Binding(get: { model.errorMessage != nil },
+                set: { if !$0 { model.errorMessage = nil } })) {
+                    Button("OK", role: .cancel) { model.errorMessage = nil }
+                } message: { Text(model.errorMessage ?? "") }
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) { Button("Done") { dismiss() } }
+            }
+        }
+    }
+
+    private func matches(_ preset: SoundPreset) -> Bool {
+        let query = search.trimmingCharacters(in: .whitespacesAndNewlines)
+        return query.isEmpty || preset.title.localizedCaseInsensitiveContains(query)
+            || preset.detail.localizedCaseInsensitiveContains(query)
+            || (preset.category?.title.localizedCaseInsensitiveContains(query) ?? false)
+    }
+
+    private func row(_ preset: SoundPreset, title: String? = nil) -> some View {
+        HStack(spacing: 12) {
+            Button {
+                model.updateSettings { $0.select(preset, for: event) }
+            } label: {
+                HStack(spacing: 10) {
+                    Image(systemName: model.settings.preset(for: event) == preset ? "checkmark.circle.fill" : "circle")
+                        .foregroundStyle(model.settings.preset(for: event) == preset ? Color.accentColor : Color.secondary)
+                        .accessibilityHidden(true)
+                    VStack(alignment: .leading, spacing: 3) {
+                        Text(title ?? preset.title).foregroundStyle(.primary)
+                        Text(preset.detail).font(.caption).foregroundStyle(.secondary)
+                            .fixedSize(horizontal: false, vertical: true)
+                    }
+                    Spacer(minLength: 0)
+                }.contentShape(Rectangle())
+            }
+            .buttonStyle(.borderless)
+            .accessibilityLabel(title ?? preset.title)
+            .accessibilityValue(model.settings.preset(for: event) == preset ? "Selected" : "Not selected")
+            .accessibilityIdentifier("select-\(event.rawValue)-\(preset.rawValue)")
+            if preset != .off {
+                Button { model.preview(event, preset: preset) } label: {
+                    Image(systemName: "play.circle.fill").font(.title2)
+                        .frame(minWidth: 44, minHeight: 44)
+                }
+                .buttonStyle(.borderless)
+                .accessibilityLabel("Preview \(title ?? preset.title) \(event.title.lowercased()) sound")
+                .accessibilityIdentifier("preview-\(event.rawValue)-\(preset.rawValue)")
+            }
+        }
     }
 }
 

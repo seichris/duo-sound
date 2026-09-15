@@ -8,3 +8,11 @@ xcuserdata/
 *.ipa
 *.xcarchive
 __pycache__/
+build/
+TestResults/
+App/Assets.xcassets/AppIcon.appiconset/AppIcon.png
+*.p8
+*.p12
+*.mobileprovision
+.env
+.env.*
