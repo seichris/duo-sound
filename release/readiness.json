@@ -4,15 +4,15 @@
   "assessed_on": "2026-09-15",
   "validated_source_sha256": null,
   "owner": {
-    "legal_name": null,
-    "support_email": null,
-    "copyright": null,
+    "legal_name": "WEB3 FZCO",
+    "support_email": "jensen@web3.consulting",
+    "copyright": "2026 WEB3 FZCO",
     "team_id": "4H5PK8686H",
     "bundle_id": "com.seichris.duosound",
     "app_store_id": "6812193737",
-    "support_url": null,
-    "privacy_url": null,
-    "marketing_url": null
+    "support_url": "https://github.com/seichris/duo-sound/issues",
+    "privacy_url": "https://github.com/seichris/duo-sound/blob/main/docs/PRIVACY.md",
+    "marketing_url": "https://github.com/seichris/duo-sound"
   },
   "evidence": {
     "public_sdk_compiles": {"passed": false, "reference": null},
@@ -24,5 +24,5 @@
     "seller_age_rating_rights_and_availability": {"passed": false, "reference": null},
     "distribution_sdk_accepted_by_apple": {"passed": false, "reference": null}
   },
-  "notes": "App Store Connect currently shows record 6812193737 (Hingy - Hinge Sounds), version 1.0 in PREPARE_FOR_SUBMISSION, under team 4H5PK8686H; no build or availability is configured. Exact bare name availability is unresolved. Preparation is not authorization to upload, submit for review, release, or accept agreements. Do not mark evidence passed without a dated test/report for the fingerprinted source. Default CI is not physical Duo validation."
+  "notes": "App Store Connect currently shows record 6812193737 (Hingy - Hinge Sounds), version 1.0 in PREPARE_FOR_SUBMISSION, under team 4H5PK8686H; no build or availability is configured. The owner supplied WEB3 FZCO, jensen@web3.consulting, 2026 WEB3 FZCO and GitHub-backed public URLs on 2026-09-15. Exact bare name availability remains unresolved. User authorization to continue the release attempt is recorded in the task; do not mark evidence passed without a dated test/report for the fingerprinted source. Default CI is not physical Duo validation."
 }

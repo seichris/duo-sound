@@ -1,8 +1,8 @@
 # App Store release preparation
 
-Status: **prepared for review, blocked for submission**. Updated September 15, 2026.
+Status: **metadata configured, blocked for submission**. Updated September 15, 2026.
 
-The marketing name candidate is **Hingy**. Research and rejected keyword intents are in [ASO_SEO_RESEARCH.md](ASO_SEO_RESEARCH.md); the machine-readable listing is `release/listing.json`. A matching App Store Connect record is now visible under **WEB3 FZCO**; no exact-name reservation, signing, TestFlight upload, review submission, live site deployment, or agreement acceptance has been performed.
+The marketing name candidate is **Hingy**. Research and rejected keyword intents are in [ASO_SEO_RESEARCH.md](ASO_SEO_RESEARCH.md); the machine-readable listing is `release/listing.json`. A matching App Store Connect record is now visible under **WEB3 FZCO**; no exact-name reservation, signing, TestFlight upload, review submission, live site deployment, or agreement acceptance has been performed. The owner has authorized the release attempt and supplied the support contact; Apple upload remains gated by the verified SDK, build, screenshots, availability, and review-contact requirements below.
 
 ## Live identity check
 
@@ -11,10 +11,10 @@ Read-only reconciliation against the authenticated App Store Connect account on 
 - Seller/team: **WEB3 FZCO**, team ID `4H5PK8686H`.
 - Bundle ID resource: `8W83N73D6Z`, `com.seichris.duosound`, universal platform.
 - App Store record: `6812193737`, current name **Hingy - Hinge Sounds**, SKU `hingy-ios-2026`.
-- Version: `1.0`, state `PREPARE_FOR_SUBMISSION`; no build is uploaded and availability is not configured.
-- The visible New App form accepted `hingy` without an inline conflict, but the resulting record name differs. That is not proof that the exact bare name is reserved; keep name availability unresolved until final metadata review.
+- Version: `1.0`, state `PREPARE_FOR_SUBMISSION`; metadata, category, content-rights, age-rating, copyright and privacy URL are configured. No build is uploaded and availability is not configured.
+- The visible New App form accepted `hingy` without an inline conflict, and the existing record's localized name is now **Hingy**. That is not proof that the exact bare name is reserved outside this record; keep name availability unresolved until final metadata review.
 
-The record appeared while the visible form was being completed; it was left unchanged. This branch does not claim that a deliberate Create action, upload, or submission was performed.
+The record was reconciled through the authenticated API and remains in preparation. This branch does not claim that an upload or submission was performed.
 
 ## What this branch prepares
 
@@ -42,9 +42,9 @@ The supplied logo is validated in the asset catalogue by a repository-owned Pyth
 
 **Public API and physical behavior.** Confirm the actual SDK declarations and build the hinge adapter. Record a dated device/OS test of open, close, jitter, first observation, foreground return, interruptions, and especially inner/outer display handoff. Test Silent Mode, system/effect volume, wired/Bluetooth output, valid/invalid imports, persistence, VoiceOver and large text. Do not replace missing sensor data with window geometry or scene activation. Do not keep a silent audio loop alive. The implementation remains foreground only.
 
-**Seller and public URLs.** In `release/readiness.json`, provide the actual legal publisher, public support email, copyright, and live HTTPS marketing/support/privacy URLs. The team ID, bundle ID, and App Store record ID recorded above are verified live; the remaining seller and URL fields are still null. URLs need real reachable content and a genuine contact route, not just a source file with placeholders. Regenerate the Xcode project after changing the URLs; its Info.plist substitutions feed the in-app links. Review the full privacy policy and website, not only the offline summary.
+**Seller and public URLs.** `release/readiness.json` now records the owner-provided publisher `WEB3 FZCO`, support email `jensen@web3.consulting`, copyright `2026 WEB3 FZCO`, and GitHub-backed HTTPS marketing/support/privacy URLs. Confirm that these are the intended public storefront contacts and that the links remain reachable. The App Review form still requires an actual contact phone number; do not invent one. Regenerate the Xcode project after changing the URLs; its Info.plist substitutions feed the in-app links. Review the full privacy policy and website, not only the offline summary.
 
-**App Store Connect declarations.** Review the existing app record using the matching bundle ID. Confirm the final name is available, choose the actual price and storefronts, complete the current age-rating questionnaire (do not copy a competitor's rating), content rights, encryption questions, and App Privacy responses. The implementation suggests no developer-operated app-data collection, but the owner must audit the final archive and any third-party/testing/support services before selecting that response. Inspect the Xcode privacy report and actual SDK required-reason API declarations, including timing/file access. Do not invent reason codes. EU availability requires the seller's actual Digital Services Act trader determination and verified contact information where applicable; Mainland China and other storefront-specific obligations must be checked for the actual publisher before enabling those regions. No legal status is decided by this PR.
+**App Store Connect declarations.** Review the existing app record using the matching bundle ID. The localized name is now **Hingy**; the top-level record still reports its original `Hingy - Hinge Sounds` label until Apple reconciles it. Content rights, category, age rating, copyright and privacy URL are configured from the current source; confirm the actual price, storefronts, encryption questions, and App Privacy responses. The implementation suggests no developer-operated app-data collection, but the owner must audit the final archive and any third-party/testing/support services before selecting that response. Inspect the Xcode privacy report and actual SDK required-reason API declarations, including timing/file access. Do not invent reason codes. EU availability requires the seller's actual Digital Services Act trader determination and verified contact information where applicable; Mainland China and other storefront-specific obligations must be checked for the actual publisher before enabling those regions. No legal status is decided by this PR.
 
 **Screenshots and review materials.** Use the actual running candidate and Apple's accepted slots in `release/SCREENSHOTS.md`. The universal target requires iPad assets too. CI attachments retain visible simulation labels and are QA evidence, not physical-Duo marketing images. Populate `release/screenshots.json` with real files, dimensions, SHA-256, family, locale and provenance; preserve originals and record manual review. Complete `release/REVIEW_NOTES.md` using actual test/build/device details. There is no login/demo account to invent.
 
