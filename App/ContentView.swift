@@ -63,7 +63,7 @@ struct ContentView: View {
                 }
                 Section {
                     Label("Foreground only", systemImage: "info.circle")
-                    Text("Duo Sound must be visible and active. It does not listen while another app is open, the phone is locked, or this app is suspended. Closing during a display handoff still needs device testing.")
+                    Text("Hingy must be visible and active. It does not listen while another app is open, the phone is locked, or this app is suspended. Closing during a display handoff still needs device testing.")
                         .font(.footnote).foregroundStyle(.secondary)
                     if !AppModel.hingeSDKEnabled {
                         Text("Preview build: Apple’s announced hinge API is not compiled in. All fold events here are simulated. See the repository’s SDK activation guide.")
@@ -71,7 +71,7 @@ struct ContentView: View {
                     }
                 }
             }
-            .navigationTitle("Duo Sound")
+            .navigationTitle("Hingy")
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("About", systemImage: "info.circle") { showAbout = true }
@@ -92,7 +92,7 @@ struct ContentView: View {
                             Text("Hinge integration is based on Apple’s September 2026 developer talks. The default build is a demo until the iOS 27.1 SDK integration is compiled and tested.")
                         }
                     }
-                    .navigationTitle("About Duo Sound")
+                    .navigationTitle("About Hingy")
                     .toolbar { ToolbarItem(placement: .confirmationAction) { Button("Done") { showAbout = false } } }
                 }
             }
@@ -105,7 +105,7 @@ struct ContentView: View {
                 case .failure(let error): model.errorMessage = error.localizedDescription
                 }
             }
-            .alert("Duo Sound", isPresented: Binding(get: { !showLibrary && model.errorMessage != nil },
+            .alert("Hingy", isPresented: Binding(get: { !showLibrary && model.errorMessage != nil },
                 set: { if !$0 { model.errorMessage = nil } })) {
                     Button("OK", role: .cancel) { model.errorMessage = nil }
                 } message: { Text(model.errorMessage ?? "") }
@@ -180,7 +180,7 @@ struct SoundLibraryView: View {
             .navigationTitle("\(event.title) sounds")
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $search, prompt: "Search \(SoundPreset.builtIns.count) sounds")
-            .alert("Duo Sound", isPresented: Binding(get: { model.errorMessage != nil },
+            .alert("Hingy", isPresented: Binding(get: { model.errorMessage != nil },
                 set: { if !$0 { model.errorMessage = nil } })) {
                     Button("OK", role: .cancel) { model.errorMessage = nil }
                 } message: { Text(model.errorMessage ?? "") }

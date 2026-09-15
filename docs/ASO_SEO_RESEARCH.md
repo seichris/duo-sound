@@ -1,10 +1,10 @@
-# Duo Sound: ASO and web SEO research
+# Hingy: ASO and web SEO research
 
-Research date: **2026-09-14**. Product baseline: `0c2754a3d2cac742e0c53f6b4a9204ee7ae4093c`.
+Research date: **2026-09-14**. Live name check re-run: **2026-09-15**. Product baseline: `0c2754a3d2cac742e0c53f6b4a9204ee7ae4093c`.
 
 ## Decision
 
-Position around **custom opening and closing effects for a folding phone**, not a generic soundboard, ringtones, speaker repair, or background automation. Proposed launch name: **Duo Sound: Fold Effects** (23 characters); subtitle: **Custom Open & Close Audio** (25). These are candidates, not a reserved App Store name or a trademark clearance.
+Position around **custom opening and closing effects for a folding phone**, not a generic soundboard, ringtones, speaker repair, or background automation. Proposed launch name: **Hingy** (5 characters); subtitle: **Custom Open & Close Audio** (25). These are candidates, not a reserved App Store name or a trademark clearance.
 
 **Do not submit the current demo.** The default scheme simulates folds. The hardware adapter remains SDK/device-unverified. The store listing is a conditional launch draft for a validated foreground-only product; neither changing the copy nor turning on a compiler flag completes that work. Apple still lists the Duo SDK as coming later this month [A1].
 
@@ -25,7 +25,7 @@ Used public web search, Apple's developer/store documentation, a directly retrie
 | `"folding sound" app iphone` | Noise from paper-folding effects and general iPhone audio. |
 | `site:apps.apple.com "fold" "sound"` | Broad/unrelated results; native App Store search still needs checking. |
 | `site:apps.apple.com "soundboard" "custom"` | Generic custom-soundboard competition. |
-| `site:apps.apple.com "Duo Sound"` | No dependable exact-name availability conclusion from the returned sample. |
+| `site:apps.apple.com "Hingy"` | No dependable exact-name availability conclusion from the returned sample; public-store queries for US, GB, SG and AE returned no exact `Hingy` listing, while the authenticated team has a differently named record. |
 | `"Soundbox - Custom Soundboard"` | Direct competing App Store listing retrieved [C2]. |
 | `"Scrunch" "iPhone"` | Brand ambiguity, including unrelated phone cases. |
 | `"fold sounds" app` | Stock effects and unrelated sound content; qualify with device/action language. |

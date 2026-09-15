@@ -56,7 +56,7 @@ for name in ['Debug', 'Release', 'Debug-Duo', 'Release-Duo', 'AppStore']:
               'SWIFT_OPTIMIZATION_LEVEL': '-Onone' if debug else '-O', 'DEBUG_INFORMATION_FORMAT': 'dwarf' if debug else 'dwarf-with-dsym',
               'SWIFT_ACTIVE_COMPILATION_CONDITIONS': ' '.join(['$(inherited)'] + (['DEBUG'] if debug else []) + (['DUO_HINGE_SDK'] if duo else []) + (['APP_STORE_RELEASE'] if name == 'AppStore' else []))}
     project_configs.append(add('project:' + name, isa='XCBuildConfiguration', name=name, buildSettings=shared))
-    target_configs.append(add('target:' + name, isa='XCBuildConfiguration', name=name, buildSettings={
+    target_settings = {
         'PRODUCT_NAME': 'DuoSound', 'PRODUCT_BUNDLE_IDENTIFIER': owner['bundle_id'], 'INFOPLIST_FILE': 'App/Info.plist',
         'GENERATE_INFOPLIST_FILE': 'NO', 'TARGETED_DEVICE_FAMILY': '1,2', 'SUPPORTED_PLATFORMS': 'iphoneos iphonesimulator',
         'SUPPORTS_MACCATALYST': 'NO', 'CODE_SIGN_STYLE': 'Automatic', 'CURRENT_PROJECT_VERSION': '1', 'MARKETING_VERSION': '1.0',
@@ -64,7 +64,10 @@ for name in ['Debug', 'Release', 'Debug-Duo', 'Release-Duo', 'AppStore']:
         'ENABLE_USER_SCRIPT_SANDBOXING': 'NO',
         'DUO_SUPPORT_URL': owner.get('support_url') or 'https://github.com/seichris/duo-sound/issues',
         'DUO_PRIVACY_URL': owner.get('privacy_url') or 'https://github.com/seichris/duo-sound/blob/main/docs/PRIVACY.md',
-    }))
+    }
+    if owner.get('team_id'):
+        target_settings['DEVELOPMENT_TEAM'] = owner['team_id']
+    target_configs.append(add('target:' + name, isa='XCBuildConfiguration', name=name, buildSettings=target_settings))
 project_list = add('project-configs', isa='XCConfigurationList', buildConfigurations=project_configs, defaultConfigurationIsVisible='0', defaultConfigurationName='Release')
 target_list = add('target-configs', isa='XCConfigurationList', buildConfigurations=target_configs, defaultConfigurationIsVisible='0', defaultConfigurationName='Release')
 target = add('target', isa='PBXNativeTarget', buildConfigurationList=target_list, buildPhases=phases, buildRules=[], dependencies=[],

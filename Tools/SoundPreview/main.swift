@@ -33,10 +33,10 @@ struct SoundPreview {
         }
         let html = """
         <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Duo Sound — original sound library</title>
+        <title>Hingy — original sound library</title>
         <style>body{font:17px system-ui,sans-serif;max-width:850px;margin:40px auto;padding:0 20px}h1{line-height:1.1}section{padding:8px 0 20px;border-bottom:1px solid #bbb}.pair{display:flex;flex-wrap:wrap;gap:24px}audio{display:block;max-width:100%;margin-top:8px}h2{margin-top:40px}</style>
         <h1>\(SoundPreset.builtIns.count) sounds. Both directions.</h1>
-        <p>Original procedural audio exported from Duo Sound. Start at a low device volume. These unscaled files play at full effect level; the app defaults to 65% effect volume. This is an audio sampler, not evidence of physical hinge detection.</p>
+        <p>Original procedural audio exported from Hingy. Start at a low device volume. These unscaled files play at full effect level; the app defaults to 65% effect volume. This is an audio sampler, not evidence of physical hinge detection.</p>
         <p>No network, autoplay, tracking, or third-party audio assets.</p>\(rows)</html>
         """
         try html.write(to: output.appendingPathComponent("index.html"), atomically: true, encoding: .utf8)
