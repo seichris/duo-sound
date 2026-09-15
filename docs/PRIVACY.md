@@ -1,4 +1,4 @@
-# Duo Sound privacy policy — publisher-review draft
+# Hingy privacy policy — publisher-review draft
 
 Last prepared: September 14, 2026. **This is the developer-preview policy, not an assertion that public-release publisher details have been completed.** Before App Store submission, the owner must supply the verified legal publisher and public contact, publish the full policy at the configured URL, and audit it against the exact release build.
 

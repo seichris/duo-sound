@@ -1,6 +1,6 @@
 # Original sound library
 
-Duo Sound now has **20 built-in presets and 40 direction-specific clips**. Opening and closing can use different presets, either side can be Off, and existing custom imports are still available. The original five preset IDs, defaults and audio algorithms are unchanged.
+Hingy now has **20 built-in presets and 40 direction-specific clips**. Opening and closing can use different presets, either side can be Off, and existing custom imports are still available. The original five preset IDs, defaults and audio algorithms are unchanged.
 
 | Category | Presets | New in this expansion |
 |---|---|---|

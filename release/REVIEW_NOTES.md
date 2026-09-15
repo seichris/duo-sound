@@ -4,7 +4,7 @@
 
 ## Product and scope
 
-Duo Sound offers independently selected opening and closing sound effects through the public hinge API on supported hardware. It is a **foreground-only** experience, not an iOS system sound replacement or background fold listener. On unsupported hardware, sound previews and explicitly labelled simulation do not claim to detect a physical hinge.
+Hingy offers independently selected opening and closing sound effects through the public hinge API on supported hardware. It is a **foreground-only** experience, not an iOS system sound replacement or background fold listener. On unsupported hardware, sound previews and explicitly labelled simulation do not claim to detect a physical hinge.
 
 The distinct intended interaction is a physical fold with individually assigned original/imported effects, not a collection of web links or a reskinned soundboard. Please evaluate this description against the actual build: the default developer preview has not yet established the physical interaction and must not be submitted as the finished product. Review Guideline 4.3(b) explicitly covers generic sound-effect apps; approval is not guaranteed by adding metadata or more presets.
 
@@ -16,4 +16,4 @@ The app respects Silent Mode and current output routing. It intentionally suppre
 
 ## Attach before submitting
 
-The owner must supply the actual build number, release SDK/toolchain, device/OS results (especially close/display handoff), a real recorded demonstration if useful, valid support/contact and privacy URLs, completed privacy/age-rating responses, rights/copyright information, and truthful availability/compatibility settings. Do not add invented phone numbers, developer identities, approval statements, or a fake App Store record. See `docs/APP_STORE_RELEASE.md`.
+The owner must supply the actual build number, release SDK/toolchain, device/OS results (especially close/display handoff), a real recorded demonstration if useful, valid support/contact and privacy URLs, completed privacy/age-rating responses, rights/copyright information, and truthful availability/compatibility settings. Do not add invented phone numbers, developer identities, approval statements, or treat the existing App Store record as approval. See `docs/APP_STORE_RELEASE.md`.

@@ -1,15 +1,15 @@
 {
   "schema_version": 1,
   "status": "blocked",
-  "assessed_on": "2026-09-14",
+  "assessed_on": "2026-09-15",
   "validated_source_sha256": null,
   "owner": {
     "legal_name": null,
     "support_email": null,
     "copyright": null,
-    "team_id": null,
+    "team_id": "4H5PK8686H",
     "bundle_id": "com.seichris.duosound",
-    "app_store_id": null,
+    "app_store_id": "6812193737",
     "support_url": null,
     "privacy_url": null,
     "marketing_url": null
@@ -24,5 +24,5 @@
     "seller_age_rating_rights_and_availability": {"passed": false, "reference": null},
     "distribution_sdk_accepted_by_apple": {"passed": false, "reference": null}
   },
-  "notes": "Preparation is not authorization to upload, submit for review, release, or accept agreements. Do not mark evidence passed without a dated test/report for the fingerprinted source. Default CI is not physical Duo validation."
+  "notes": "App Store Connect currently shows record 6812193737 (Hingy - Hinge Sounds), version 1.0 in PREPARE_FOR_SUBMISSION, under team 4H5PK8686H; no build or availability is configured. Exact bare name availability is unresolved. Preparation is not authorization to upload, submit for review, release, or accept agreements. Do not mark evidence passed without a dated test/report for the fingerprinted source. Default CI is not physical Duo validation."
 }
