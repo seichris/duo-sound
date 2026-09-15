@@ -1,0 +1,24 @@
+{
+  "name": "hingy-app-store-screenshots",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "next dev -H 127.0.0.1 -p 4173",
+    "build": "next build",
+    "export": "tsx scripts/export-playwright.ts --url http://127.0.0.1:4173 --width 1320 --height 2868 --out ../../release/app-store-assets --locale en-US --device iphone-6.9 --theme navy-mint --wait-ms 300",
+    "validate": "tsx scripts/validate-exports.ts --dir ../../release/app-store-assets/screenshots --allow 1320x2868 --output ../../release/app-store-assets/_validation.txt --json ../../release/app-store-assets/_validation.json"
+  },
+  "dependencies": {
+    "next": "latest",
+    "react": "latest",
+    "react-dom": "latest"
+  },
+  "devDependencies": {
+    "@types/node": "26.5.1",
+    "@types/react": "19.3.0",
+    "jszip": "latest",
+    "playwright": "latest",
+    "tsx": "latest",
+    "typescript": "7.0.2"
+  }
+}

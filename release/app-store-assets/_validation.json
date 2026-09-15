@@ -1,0 +1,47 @@
+[
+  {
+    "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/01-01-hero-en-us-iphone-6.9-1320x2868.png",
+    "status": "pass",
+    "width": 1320,
+    "height": 2868,
+    "format": "png",
+    "hasAlphaChannel": false,
+    "errors": []
+  },
+  {
+    "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/02-02-two-sides-en-us-iphone-6.9-1320x2868.png",
+    "status": "pass",
+    "width": 1320,
+    "height": 2868,
+    "format": "png",
+    "hasAlphaChannel": false,
+    "errors": []
+  },
+  {
+    "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/03-03-library-en-us-iphone-6.9-1320x2868.png",
+    "status": "pass",
+    "width": 1320,
+    "height": 2868,
+    "format": "png",
+    "hasAlphaChannel": false,
+    "errors": []
+  },
+  {
+    "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/04-04-custom-en-us-iphone-6.9-1320x2868.png",
+    "status": "pass",
+    "width": 1320,
+    "height": 2868,
+    "format": "png",
+    "hasAlphaChannel": false,
+    "errors": []
+  },
+  {
+    "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/05-05-private-en-us-iphone-6.9-1320x2868.png",
+    "status": "pass",
+    "width": 1320,
+    "height": 2868,
+    "format": "png",
+    "hasAlphaChannel": false,
+    "errors": []
+  }
+]

@@ -1,0 +1,112 @@
+[
+  {
+    "filename": "01-01-hero-en-us-iphone-6.9-1320x2868.png",
+    "path": "release/app-store-assets/screenshots/en-us/iphone-6.9/01-01-hero-en-us-iphone-6.9-1320x2868.png",
+    "locale": "en-US",
+    "device": "iphone-6.9",
+    "theme": "navy-mint",
+    "slide": 1,
+    "slideId": "01-hero",
+    "width": 1320,
+    "height": 2868,
+    "renderer": "playwright",
+    "createdAt": "2026-09-15T07:11:17.124Z",
+    "validation": {
+      "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/01-01-hero-en-us-iphone-6.9-1320x2868.png",
+      "status": "pass",
+      "width": 1320,
+      "height": 2868,
+      "format": "png",
+      "hasAlphaChannel": false,
+      "errors": []
+    }
+  },
+  {
+    "filename": "02-02-two-sides-en-us-iphone-6.9-1320x2868.png",
+    "path": "release/app-store-assets/screenshots/en-us/iphone-6.9/02-02-two-sides-en-us-iphone-6.9-1320x2868.png",
+    "locale": "en-US",
+    "device": "iphone-6.9",
+    "theme": "navy-mint",
+    "slide": 2,
+    "slideId": "02-two-sides",
+    "width": 1320,
+    "height": 2868,
+    "renderer": "playwright",
+    "createdAt": "2026-09-15T07:11:17.124Z",
+    "validation": {
+      "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/02-02-two-sides-en-us-iphone-6.9-1320x2868.png",
+      "status": "pass",
+      "width": 1320,
+      "height": 2868,
+      "format": "png",
+      "hasAlphaChannel": false,
+      "errors": []
+    }
+  },
+  {
+    "filename": "03-03-library-en-us-iphone-6.9-1320x2868.png",
+    "path": "release/app-store-assets/screenshots/en-us/iphone-6.9/03-03-library-en-us-iphone-6.9-1320x2868.png",
+    "locale": "en-US",
+    "device": "iphone-6.9",
+    "theme": "navy-mint",
+    "slide": 3,
+    "slideId": "03-library",
+    "width": 1320,
+    "height": 2868,
+    "renderer": "playwright",
+    "createdAt": "2026-09-15T07:11:17.124Z",
+    "validation": {
+      "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/03-03-library-en-us-iphone-6.9-1320x2868.png",
+      "status": "pass",
+      "width": 1320,
+      "height": 2868,
+      "format": "png",
+      "hasAlphaChannel": false,
+      "errors": []
+    }
+  },
+  {
+    "filename": "04-04-custom-en-us-iphone-6.9-1320x2868.png",
+    "path": "release/app-store-assets/screenshots/en-us/iphone-6.9/04-04-custom-en-us-iphone-6.9-1320x2868.png",
+    "locale": "en-US",
+    "device": "iphone-6.9",
+    "theme": "navy-mint",
+    "slide": 4,
+    "slideId": "04-custom",
+    "width": 1320,
+    "height": 2868,
+    "renderer": "playwright",
+    "createdAt": "2026-09-15T07:11:17.124Z",
+    "validation": {
+      "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/04-04-custom-en-us-iphone-6.9-1320x2868.png",
+      "status": "pass",
+      "width": 1320,
+      "height": 2868,
+      "format": "png",
+      "hasAlphaChannel": false,
+      "errors": []
+    }
+  },
+  {
+    "filename": "05-05-private-en-us-iphone-6.9-1320x2868.png",
+    "path": "release/app-store-assets/screenshots/en-us/iphone-6.9/05-05-private-en-us-iphone-6.9-1320x2868.png",
+    "locale": "en-US",
+    "device": "iphone-6.9",
+    "theme": "navy-mint",
+    "slide": 5,
+    "slideId": "05-private",
+    "width": 1320,
+    "height": 2868,
+    "renderer": "playwright",
+    "createdAt": "2026-09-15T07:11:17.124Z",
+    "validation": {
+      "file": "release/app-store-assets/screenshots/en-us/iphone-6.9/05-05-private-en-us-iphone-6.9-1320x2868.png",
+      "status": "pass",
+      "width": 1320,
+      "height": 2868,
+      "format": "png",
+      "hasAlphaChannel": false,
+      "errors": []
+    }
+  }
+]
