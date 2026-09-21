@@ -2,7 +2,7 @@
 
 A native SwiftUI sound toy for opening and closing iPhone Duo, inspired by [Scrunch](https://github.com/DenyTheFlowerpot/Scrunch).
 
-> **September 20, 2026: developer preview, not a working system-wide fold-sound utility.** Xcode 27.1 beta now provides the iOS 27.1 SDK used by the opt-in hinge adapter. `DuoSound-DuoSDK` compiles Apple's `onHingeChange` path for simulator and iPhone targets; the default scheme still has **simulated folds only**. Duo simulator/device behavior remains validation work, and this app is foreground only: no background/lock-screen listener is claimed. [Research and sources](docs/IPHONE_DUO_RESEARCH.md).
+> **September 21, 2026: foreground Duo build.** The opt-in hinge adapter uses Apple's public `UIHingeInteraction` at runtime, so the signed distribution candidate can be built with supported stable Xcode while iOS 27.1 supplies live hinge updates. The default scheme still has **simulated folds only**. This app is foreground only: no background/lock-screen listener is claimed. [Research and sources](docs/IPHONE_DUO_RESEARCH.md).
 
 ## Included
 
@@ -18,7 +18,7 @@ The default build visibly says **DEMO · SIMULATED HINGE**. Tap Open, Close, or 
 
 ## Activate the announced hinge API
 
-With Xcode 27.1 beta (or a newer compatible SDK), inspect the declarations and select **DuoSound-DuoSDK**. That scheme sets `DUO_HINGE_SDK`; the default scheme does not. This is a compile-time gate, not a hidden runtime API lookup. Follow [the SDK/device validation checklist](docs/TESTING.md) before claiming automatic support or making a release. Do not enable this scheme in an older SDK: a compile error is expected.
+Select **DuoSound-DuoSDK** for the live hinge path. That scheme sets `DUO_HINGE_SDK`; the default scheme does not. The adapter is a small UIKit bridge that resolves the public interaction only on iOS 27.1 or newer, and reports no hinge on older devices. Follow [the SDK/device validation checklist](docs/TESTING.md) before claiming automatic support or making a release.
 
 An angle below 8 degrees is treated as closed; opening is detected at 22 degrees, not only at fully flat. These are tunable **app thresholds**, not Apple specifications. The 0–180-degree convention and actual callback/scene lifecycle behavior must be verified on the released SDK and device. Neither screen resizing nor app activation is used as a proxy for folding. First observations, source changes and foreground resumes silently rebaseline. No historical events are reconstructed.
 
@@ -29,14 +29,14 @@ See [the full sound library and offline audio sampler](docs/SOUND_LIBRARY.md) fo
 ```sh
 swift test
 python3 scripts/generate_project.py  # only needed after adding/removing source files
-DEVELOPER_DIR=/Applications/Xcode-27.1.app/Contents/Developer xcodebuild -project DuoSound.xcodeproj -scheme DuoSound \
+DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project DuoSound.xcodeproj -scheme DuoSound \
   -sdk iphonesimulator -destination 'generic/platform=iOS Simulator' \
   CODE_SIGNING_ALLOWED=NO build
 ```
 
 `Sources/DuoSoundCore` contains detection, synthesis and persistence. `App` contains UI, playback, lifecycle coordination and the guarded hinge adapter. Core sources are compiled directly into the app; the Swift package exists for portable tests and adds no dependency. `.github/workflows/ci.yml` checks core tests, project regeneration and the standard iOS build; it does **not** validate Duo hardware. No code-signing credentials are stored.
 
-**Local validation:** 39 XCTest tests passed on Swift 6.2.1/macOS. Xcode 27.1 builds both the default simulator app and the opt-in Duo scheme for simulator and iPhone SDKs; the default app also launches on the installed iOS 27.0 simulator. These are compile/simulator checks, not physical-Duo evidence. The App Store preparation branch includes the supplied 1024px app icon; there is still no signed distribution archive.
+**Local validation:** 39 XCTest tests passed on Swift 6.2.1/macOS. Stable Xcode 26.6 builds both the default simulator app and the opt-in Duo scheme; the opt-in scheme also runs on the iPhone Duo iOS 27.1 simulator. These are compile/simulator checks, not physical-device evidence. The App Store candidate is signed separately during release.
 
 ## Important limitation
 

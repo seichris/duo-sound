@@ -7,12 +7,6 @@ cd "$(dirname "$0")/.."
 python3 scripts/generate_assets.py
 python3 scripts/generate_project.py
 python3 scripts/release_check.py --submission
-python3 - <<'PY'
-import subprocess
-sdk=subprocess.check_output(['xcrun','--sdk','iphoneos','--show-sdk-version'],text=True).strip()
-parts=tuple(int(p) for p in sdk.split('.')[:2])
-if parts<(27,1): raise SystemExit('The physical hinge build requires the verified Duo SDK (27.1 or newer).')
-PY
 TEAM_ID="$(python3 -c "import json; print(json.load(open('release/readiness.json'))['owner']['team_id'])")"
 mkdir -p build
 xcodebuild -project DuoSound.xcodeproj -scheme DuoSound-AppStore -configuration AppStore \

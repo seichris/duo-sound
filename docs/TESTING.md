@@ -14,10 +14,10 @@ Open the default DuoSound scheme. Verify demo labelling, Open/Close and slider s
 
 ## SDK activation — mandatory
 
-1. Verify that Xcode 27.1 beta (or newer compatible SDK) is genuinely available on Apple's Duo developer/download pages. Select that Xcode installation. This project was checked with Xcode 27.1 beta build 27A9269.
-2. Open the actual SDK declarations for `View.onHingeChange`, hinge context, angle and status. Confirm callback syntax and availability. The isolated adapter currently matches the iOS 27.1 SDK and must be corrected if a later SDK changes it.
+1. Verify the iOS 27.1 Duo runtime is installed and select a supported stable Xcode for distribution. This project was checked with Xcode 26.6 (build 17F113) and Xcode 27.1 beta (build 27A9269).
+2. Confirm the public `UIHingeInteraction`/`UIHinge` declarations in the iOS 27.1 SDK. The adapter uses a runtime bridge so a stable-SDK binary can load the public class only on iOS 27.1 or newer.
 3. Confirm that 0 degrees is closed, 180 degrees is flat, and endpoint angles are valid; do not assume this from our demo. Confirm whether an initial callback is delivered. The first live sample deliberately seeds a silent baseline, so without initial delivery the first gesture may be consumed as that baseline.
-4. Select **DuoSound-DuoSDK**, which sets `DUO_HINGE_SDK` in Debug-Duo/Release-Duo, and build. A green default-scheme CI run says nothing about this path.
+4. Select **DuoSound-DuoSDK**, which sets `DUO_HINGE_SDK` in Debug-Duo/Release-Duo, and build with stable Xcode. A green default-scheme CI run says nothing about this path.
 5. Use the Duo Device Hub simulator when available. Test both a supported hinge and a nil hinge. Never infer hardware support from model strings or display geometry.
 
 ## Physical Duo acceptance — release blocking

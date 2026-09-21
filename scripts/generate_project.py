@@ -52,7 +52,10 @@ for name in ['Debug', 'Release', 'Debug-Duo', 'Release-Duo', 'AppStore']:
     debug = name.startswith('Debug')
     duo = name.endswith('-Duo') or name == 'AppStore'
     shared = {'CLANG_ENABLE_MODULES': 'YES', 'CLANG_ENABLE_OBJC_ARC': 'YES', 'SDKROOT': 'iphoneos',
-              'IPHONEOS_DEPLOYMENT_TARGET': '27.1' if name == 'AppStore' else '17.0', 'SWIFT_VERSION': '5.0', 'ENABLE_USER_SCRIPT_SANDBOXING': 'YES',
+              # The public hinge interaction is runtime-bridged, so the
+              # distribution candidate can be built with the supported stable
+              # SDK while still running on iOS 27.1 Duo devices.
+              'IPHONEOS_DEPLOYMENT_TARGET': '17.0', 'SWIFT_VERSION': '5.0', 'ENABLE_USER_SCRIPT_SANDBOXING': 'YES',
               'SWIFT_OPTIMIZATION_LEVEL': '-Onone' if debug else '-O', 'DEBUG_INFORMATION_FORMAT': 'dwarf' if debug else 'dwarf-with-dsym',
               'SWIFT_ACTIVE_COMPILATION_CONDITIONS': ' '.join(['$(inherited)'] + (['DEBUG'] if debug else []) + (['DUO_HINGE_SDK'] if duo else []) + (['APP_STORE_RELEASE'] if name == 'AppStore' else []))}
     project_configs.append(add('project:' + name, isa='XCBuildConfiguration', name=name, buildSettings=shared))
@@ -109,6 +112,7 @@ for name, suffix in [('DuoSound', ''), ('DuoSound-DuoSDK', '-Duo'), ('DuoSound-A
     ref = f'<BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{target}" BuildableName="DuoSound.app" BlueprintName="DuoSound" ReferencedContainer="container:DuoSound.xcodeproj"/>'
     debug_config = 'AppStore' if suffix == 'AppStore' else 'Debug' + suffix
     release_config = 'AppStore' if suffix == 'AppStore' else 'Release' + suffix
+    archive_config = 'AppStore' if suffix == 'AppStore' else release_config
     ui_ref = f'<BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ui_target}" BuildableName="DuoSoundUITests.xctest" BlueprintName="DuoSoundUITests" ReferencedContainer="container:DuoSound.xcodeproj"/>'
     testables = f'<Testables><TestableReference skipped="NO">{ui_ref}</TestableReference></Testables>' if not suffix else '<Testables/>'
     (schemes / f'{name}.xcscheme').write_text(f'''<?xml version="1.0" encoding="UTF-8"?>
@@ -118,7 +122,7 @@ for name, suffix in [('DuoSound', ''), ('DuoSound-DuoSDK', '-Duo'), ('DuoSound-A
 <LaunchAction buildConfiguration="{debug_config}" selectedDebuggerIdentifier="Xcode.DebuggerFoundation.Debugger.LLDB" selectedLauncherIdentifier="Xcode.IDEFoundation.Launcher.LLDB" launchStyle="0" useCustomWorkingDirectory="NO" ignoresPersistentStateOnLaunch="NO" debugDocumentVersioning="YES" allowLocationSimulation="YES"><BuildableProductRunnable runnableDebuggingMode="0">{ref}</BuildableProductRunnable></LaunchAction>
 <ProfileAction buildConfiguration="{release_config}" shouldUseLaunchSchemeArgsEnv="YES" savedToolIdentifier="" useCustomWorkingDirectory="NO" debugDocumentVersioning="YES"><BuildableProductRunnable runnableDebuggingMode="0">{ref}</BuildableProductRunnable></ProfileAction>
 <AnalyzeAction buildConfiguration="{debug_config}"/>
-<ArchiveAction buildConfiguration="AppStore" revealArchiveInOrganizer="YES"/>
+<ArchiveAction buildConfiguration="{archive_config}" revealArchiveInOrganizer="YES"/>
 </Scheme>
 ''')
 print('Generated DuoSound.xcodeproj (preview, Duo SDK, and guarded App Store schemes).')
