@@ -4,7 +4,7 @@
 
 `swift test`: 39 tests covering silent initial states, deadband, endpoint-only timer completion, duplicate notifications, partial-to-flat changes, jitter/spikes, reset cancellation/rebaseline, invalid and backwards timestamps, invalid angles, rapid complete cycles, inclusive thresholds, deterministic bounded PCM/WAV, distinct open/close sounds, settings round-trip/corruption, volume validation, custom-file requirements, path traversal, bounded reads and write failures.
 
-Local run: Swift 6.2.1/Linux, **39 passed, zero failures**. Source parsing passed for all Swift files and separately for `DUO_HINGE_SDK`. Parsing is **not** iOS SDK type-checking. CI builds the default simulator app on macOS. Check the actual run status rather than treating the presence of a workflow as a passing result.
+Local run: Swift 6.2.1/macOS, **39 passed, zero failures**. Xcode 27.1 builds the default simulator app plus `DuoSound-DuoSDK` for both `iphonesimulator27.1` and `iphoneos27.1`. The default app launches on the installed iOS 27.0 simulator. A successful build or simulator launch is not physical-Duo evidence. CI builds the default simulator app on macOS. Check the actual run status rather than treating the presence of a workflow as a passing result.
 
 The added sound-library tests cover catalog completeness, readable labels, stable saved IDs, all opening/closing combinations, custom-import retention, persisted new presets, 40 unique renders, short durations, PCM format, amplitude bounds and deterministic output. See [SOUND_LIBRARY.md](SOUND_LIBRARY.md) for the offline sampler and browser QA.
 
@@ -14,8 +14,8 @@ Open the default DuoSound scheme. Verify demo labelling, Open/Close and slider s
 
 ## SDK activation — mandatory
 
-1. Verify that Xcode 27.1 beta (or newer compatible SDK) is genuinely available on Apple's Duo developer/download pages. Select that Xcode installation.
-2. Open the actual SDK declarations for `View.onHingeChange`, hinge context, angle and status. Confirm callback syntax and availability. Correct the isolated adapter if final declarations differ.
+1. Verify that Xcode 27.1 beta (or newer compatible SDK) is genuinely available on Apple's Duo developer/download pages. Select that Xcode installation. This project was checked with Xcode 27.1 beta build 27A9269.
+2. Open the actual SDK declarations for `View.onHingeChange`, hinge context, angle and status. Confirm callback syntax and availability. The isolated adapter currently matches the iOS 27.1 SDK and must be corrected if a later SDK changes it.
 3. Confirm that 0 degrees is closed, 180 degrees is flat, and endpoint angles are valid; do not assume this from our demo. Confirm whether an initial callback is delivered. The first live sample deliberately seeds a silent baseline, so without initial delivery the first gesture may be consumed as that baseline.
 4. Select **DuoSound-DuoSDK**, which sets `DUO_HINGE_SDK` in Debug-Duo/Release-Duo, and build. A green default-scheme CI run says nothing about this path.
 5. Use the Duo Device Hub simulator when available. Test both a supported hinge and a nil hinge. Never infer hardware support from model strings or display geometry.

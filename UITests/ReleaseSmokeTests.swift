@@ -63,6 +63,7 @@ final class ReleaseSmokeTests: XCTestCase {
         crystal.tap()
         XCTAssertEqual(crystal.value as? String, "Selected")
         capture("05-crystal-library-not-hardware")
+        dismissLibrarySearch(app)
         app.buttons["Done"].tap()
         XCTAssertEqual(app.buttons["soundChoice-opened"].value as? String, "Crystal")
 
@@ -71,6 +72,7 @@ final class ReleaseSmokeTests: XCTestCase {
         let laser = app.buttons["select-closed-laser"]
         XCTAssertTrue(laser.waitForExistence(timeout: 5))
         laser.tap()
+        dismissLibrarySearch(app)
         app.buttons["Done"].tap()
         XCTAssertEqual(app.buttons["soundChoice-closed"].value as? String, "Laser")
         app.terminate()
@@ -96,6 +98,14 @@ final class ReleaseSmokeTests: XCTestCase {
         search.tap()
         if search.buttons["Clear text"].exists { search.buttons["Clear text"].tap() }
         search.typeText(query)
+    }
+
+    @MainActor
+    private func dismissLibrarySearch(_ app: XCUIApplication) {
+        // In iOS 27, the expanded searchable field replaces the sheet's
+        // navigation bar until its trailing close control is tapped.
+        let close = app.buttons["close"]
+        if close.waitForExistence(timeout: 2) { close.tap() }
     }
 
     @MainActor

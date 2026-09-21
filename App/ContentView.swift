@@ -89,7 +89,7 @@ struct ContentView: View {
                         }
                         Section("Built for iPhone Duo") {
                             Text("Inspired by Scrunch. Original Swift implementation and original synthesized sounds; no Scrunch code or sound assets are bundled.")
-                            Text("Hinge integration is based on Apple’s September 2026 developer talks. The default build is a demo until the iOS 27.1 SDK integration is compiled and tested.")
+                            Text("Hinge integration is based on Apple’s September 2026 developer talks. The default build remains a demo; the Duo schemes compile the iOS 27.1 hinge API, while physical hinge behavior still needs device validation.")
                         }
                     }
                     .navigationTitle("About Hingy")

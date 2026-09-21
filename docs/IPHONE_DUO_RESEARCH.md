@@ -1,12 +1,12 @@
-# iPhone Duo research — September 14, 2026
+# iPhone Duo research — September 20, 2026
 
 ## Scope and conclusion
 
 Reviewed Apple's Duo developer landing page, the published summaries/code from all six linked Tech Talks, the Human Interface Guidelines entry/indexed excerpts, relevant Apple audio/background guidance, and Scrunch's README and fold detection source. This is the publicly reachable material found on this date, not a claim to have accessed unreleased SDK headers or every forum post. The HIG page body was JavaScript-only in retrieval; its indexed excerpts and the dedicated design talk supplied the design overview. Standalone hinge symbol documentation was not retrievable.
 
-**Verified preview, not verified runtime:** Apple demonstrates SwiftUI `onHingeChange`, nullable `context.hinge`, `hinge.angle` (SwiftUI `Angle`), and `.partiallyOpen`. Its talk also describes UIKit `UIHingeInteraction`. The code uses the demonstrated SwiftUI callback and degrees only; it does not invent a `HingeManager`, device model identifier, permission, or background service. Exact availability, initial delivery, angle semantics at endpoints and lifecycle ordering still need the actual SDK/device.
+**Verified SDK declarations, not verified runtime:** Apple demonstrates SwiftUI `onHingeChange`, nullable `context.hinge`, `hinge.angle` (SwiftUI `Angle`), and `.partiallyOpen`. Its talk also describes UIKit `UIHingeInteraction`. Xcode 27.1 beta's iOS 27.1 SDK now type-checks the isolated adapter in this project for simulator and iPhone targets. The code uses the demonstrated SwiftUI callback and degrees only; it does not invent a `HingeManager`, device model identifier, permission, or background service. Exact initial delivery, angle semantics at endpoints and lifecycle ordering still need the Duo simulator/device.
 
-**Availability:** The developer landing page says Xcode 27.1 beta and the written “Preparing your app” guide are coming later this month. Forward-looking instructions in the talks are not evidence that the SDK has shipped. Accordingly the default build excludes the adapter at compile time. A runtime `#available` check alone would not let an older SDK compile an unknown symbol.
+**Availability:** Xcode 27.1 beta (build 27A9269) is available and includes the iOS 27.1 SDK. The default build still excludes the adapter at compile time, while the Duo schemes enable it. A runtime `#available` check alone would not let an older SDK compile an unknown symbol.
 
 ## Apple documentation inventory
 
