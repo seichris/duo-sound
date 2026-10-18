@@ -27,9 +27,9 @@ Sources: [UIHingeInteraction](https://developer.apple.com/documentation/uikit/ui
 
 - Core package: 39 tests passed, zero failures.
 - Release-preparation checks: 18 tests passed, zero failures; ordinary preparation checks pass.
-- Typed Duo adapter: simulator Debug-Duo and unsigned device Release-Duo builds compiled with SDK 27.1. An optimized device build succeeded. These are compile checks, not signed-device or audible-playback evidence.
+- Typed Duo adapter: simulator Debug-Duo and unsigned device Release-Duo builds compiled with SDK 27.1. Optimized device and simulator builds succeeded; [the source-bound compile manifest](../release/evidence/sdk-compile-2026-10-18.json) records SDK, build number and binary hashes. These are compile checks, not signed-device or audible-playback evidence.
 - The installed iPadOS 27.0 test runner stalled before tests executed, including the baseline attempt. Initial launch attempts ended without a test result and were stopped. A fresh dedicated iPad simulator also stalled. Do not count these as passing tests or as a reproduced app freeze.
-- Current simulator attempts/results are recorded below after completion. The reviewer OS, iPadOS 27.2, is not installed. The 27.1 runtime is Duo-only and rejects creation of an iPad device.
+- The stable Xcode 26.6 / iPadOS 26.5 attempt also stalled before test execution, after a successful build. Its compiler-discovery probe needed a temporary local wrapper that removed only verbose output from the macro probe; actual compiler/linker calls were forwarded unchanged. No audio/UI runtime suite has completed locally. The reviewer OS, iPadOS 27.2, is not installed. The 27.1 runtime is Duo-only and rejects creation of an iPad device.
 
 ## Candidate and remaining gates
 

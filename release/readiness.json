@@ -2,7 +2,7 @@
   "schema_version": 1,
   "status": "blocked",
   "assessed_on": "2026-10-18",
-  "validated_source_sha256": null,
+  "validated_source_sha256": "dd4ff83d0832c55abeab2a82fad5140c0086e2db066969d701fba6c07ce13190",
   "owner": {
     "legal_name": "WEB3 FZCO",
     "support_email": "jensen@web3.consulting",
@@ -16,8 +16,8 @@
   },
   "evidence": {
     "public_sdk_compiles": {
-      "passed": false,
-      "reference": null
+      "passed": true,
+      "reference": "release/evidence/sdk-compile-2026-10-18.json"
     },
     "physical_open_close_and_handoff": {
       "passed": false,
