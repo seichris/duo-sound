@@ -80,6 +80,16 @@ struct ContentView: View {
             .sheet(isPresented: $showAbout) {
                 NavigationStack {
                     Form {
+                        Section {
+                            HStack {
+                                Spacer()
+                                Image("HingyLogo")
+                                    .resizable().scaledToFit().frame(width: 112, height: 112)
+                                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                                    .accessibilityLabel("Hingy logo")
+                                Spacer()
+                            }.padding(.vertical, 8)
+                        }
                         Section("Sound, not surveillance") {
                             Text("No account, analytics SDK, microphone recording, or app-operated network service. Device backups and external support services are separate.")
                             NavigationLink("Privacy & data") { PrivacyView() }
