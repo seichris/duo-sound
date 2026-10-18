@@ -190,8 +190,13 @@ final class AppModel: ObservableObject {
                     generated[key] = rendered; data = rendered
                 }
             }
-            try audio.play(data, volume: settings.volume, purpose: purpose)
-            lastEvent = "\(label) · \(event.title) · \(preset.title)"
+            audio.play(data, volume: settings.volume, purpose: purpose) { [weak self] result in
+                guard let self, self.isActive else { return }
+                switch result {
+                case .success: self.lastEvent = "\(label) · \(event.title) · \(preset.title)"
+                case .failure(let error): self.errorMessage = error.localizedDescription
+                }
+            }
         } catch { errorMessage = error.localizedDescription }
     }
 }

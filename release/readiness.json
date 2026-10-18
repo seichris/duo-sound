@@ -2,7 +2,7 @@
   "schema_version": 1,
   "status": "blocked",
   "assessed_on": "2026-10-18",
-  "validated_source_sha256": "5686d5f2400d00447f3b4c7ed1d07e2513dd0e640828df8a3c009ad9e7858096",
+  "validated_source_sha256": null,
   "owner": {
     "legal_name": "WEB3 FZCO",
     "support_email": "jensen@web3.consulting",
@@ -16,8 +16,8 @@
   },
   "evidence": {
     "public_sdk_compiles": {
-      "passed": true,
-      "reference": "release/evidence/sdk-compile-2026-10-18.json"
+      "passed": false,
+      "reference": null
     },
     "physical_open_close_and_handoff": {
       "passed": false,
@@ -48,5 +48,5 @@
       "reference": null
     }
   },
-  "notes": "October 18 read-only App Store Connect checks confirm version 1.0 is REJECTED and attached to build 3, the latest uploaded build. The local repair candidate is 1.0 (4). See docs/RESUBMISSION_VALIDATION.md for source-level defects, SDK audit and actual checks. Physical iPad audio and physical Duo open/close/display-handoff acceptance, current screenshots, App Privacy publication and distribution acceptance remain unverified for this source. Do not mark those gates passed from compile or metadata checks."
+  "notes": "An October 18 simulator retry found synchronous audio-session activation/deactivation on the main actor. The candidate now moves session/player work to a serial background queue with immediate cancellation. Source-bound compilation and simulator results are being refreshed. Physical playback/handoff, review OS coverage, store assets, privacy publication and distribution acceptance remain unverified."
 }

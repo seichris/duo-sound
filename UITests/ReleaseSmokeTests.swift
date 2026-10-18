@@ -27,8 +27,7 @@ final class ReleaseSmokeTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         let simulation = app.switches["Simulate hinge"]
-        for _ in 0..<6 where !simulation.isHittable { app.swipeUp() }
-        if simulation.value as? String == "0" { simulation.tap() }
+        setSwitch(simulation, to: true, in: app)
         let open = app.buttons["demoOpen"]
         for _ in 0..<6 where !open.isHittable { app.swipeUp() }
         XCTAssertTrue(open.isHittable)
@@ -94,8 +93,7 @@ final class ReleaseSmokeTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         let enabled = app.switches["Enable fold sounds"]
-        for _ in 0..<6 where !enabled.isHittable { app.swipeUp() }
-        if enabled.value as? String == "1" { enabled.tap() }
+        setSwitch(enabled, to: false, in: app)
         for event in ["opened", "closed"] {
             let preview = app.buttons["preview-selected-\(event)"]
             for _ in 0..<6 where !preview.isHittable { app.swipeUp() }
@@ -106,8 +104,7 @@ final class ReleaseSmokeTests: XCTestCase {
             XCTAssertTrue(lastEvent.label.contains("Preview · \(event == "opened" ? "Opening" : "Closing")"))
             XCTAssertFalse(app.alerts["Hingy"].exists)
         }
-        for _ in 0..<6 where !enabled.isHittable { app.swipeUp() }
-        enabled.tap()
+        setSwitch(enabled, to: true, in: app)
         capture("06-manual-previews-with-fold-sounds-paused")
     }
 
@@ -124,6 +121,15 @@ final class ReleaseSmokeTests: XCTestCase {
     private func searchLibrary(_ app: XCUIApplication, for query: String) {
         let search = app.searchFields.firstMatch
         search.tap()
+        // Search activation animates independently of the sheet on iPadOS 27.
+        // Wait for focus UI before typing, with one bounded retry of the tap.
+        let focused = NSPredicate { _, _ in
+            app.keyboards.firstMatch.exists || app.buttons["Cancel"].isHittable || app.buttons["close"].isHittable
+        }
+        if XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: focused, object: nil)], timeout: 3) != .completed {
+            search.tap()
+            XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: focused, object: nil)], timeout: 5), .completed)
+        }
         if search.buttons["Clear text"].exists { search.buttons["Clear text"].tap() }
         search.typeText(query)
     }
@@ -137,6 +143,23 @@ final class ReleaseSmokeTests: XCTestCase {
         if cancel.exists && cancel.isHittable { cancel.tap() }
         else if close.waitForExistence(timeout: 2) { close.tap() }
         XCTAssertTrue(app.buttons["Done"].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
+    private func setSwitch(_ toggle: XCUIElement, to enabled: Bool, in app: XCUIApplication) {
+        // A partially visible Form row can be hittable while its actual switch
+        // is behind the home indicator. Bring the whole row into the safe area.
+        for _ in 0..<6 {
+            if toggle.isHittable && toggle.frame.maxY < app.frame.maxY - 60 { break }
+            app.swipeUp()
+        }
+        XCTAssertTrue(toggle.isHittable)
+        let value = enabled ? "1" : "0"
+        if toggle.value as? String != value {
+            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap()
+        }
+        expectation(for: NSPredicate(format: "value == %@", value), evaluatedWith: toggle)
+        waitForExpectations(timeout: 5)
     }
 
     @MainActor
