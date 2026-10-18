@@ -127,8 +127,21 @@ final class ReleaseSmokeTests: XCTestCase {
     @MainActor
     private func openLibrary(_ app: XCUIApplication, event: String) {
         let choice = app.buttons["soundChoice-\(event)"]
-        for _ in 0..<6 where !choice.isHittable { app.swipeUp() }
+        // On Duo's outer display, isHittable can be true while a row is
+        // partially behind the navigation bar. Reveal the entire row first;
+        // a full-page swipe can overshoot from below the screen to the header.
+        let safeTop = app.frame.minY + 100
+        let safeBottom = app.frame.maxY - 70
+        for _ in 0..<12 {
+            if choice.isHittable && choice.frame.minY >= safeTop && choice.frame.maxY <= safeBottom { break }
+            let aboveHeader = choice.exists && choice.frame.minY < safeTop
+            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.4 : 0.7))
+            let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.65 : 0.45))
+            start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
+        }
         XCTAssertTrue(choice.isHittable)
+        XCTAssertGreaterThanOrEqual(choice.frame.minY, safeTop)
+        XCTAssertLessThanOrEqual(choice.frame.maxY, safeBottom)
         choice.tap()
         XCTAssertTrue(app.searchFields.firstMatch.waitForExistence(timeout: 5))
     }

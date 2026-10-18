@@ -49,7 +49,7 @@ jobs:
           shasum -a 256 SDKBuild/Build/Products/Release-Duo-iphoneos/DuoSound.app/DuoSound \
             SDKBuild/Build/Products/Release-Duo-iphonesimulator/DuoSound.app/DuoSound > TestResults/binary-sha256.txt
       - name: Test optimized typed scheme on iPadOS 27.0
-        timeout-minutes: 12
+        timeout-minutes: 15
         run: |
           udid=$(xcrun simctl create 'Hingy review iPad' com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M3 com.apple.CoreSimulator.SimRuntime.iOS-27-0)
           xcrun simctl bootstatus "$udid" -b
@@ -67,7 +67,7 @@ jobs:
         run: xcodebuild -downloadPlatform iOS -buildVersion 27.1 -architectureVariant arm64
       - name: Test audio, UI and actual public hinge callback on Duo
         if: ${{ !cancelled() && steps.compile.outcome == 'success' && steps.runtime.outcome == 'success' }}
-        timeout-minutes: 12
+        timeout-minutes: 15
         env:
           TEST_RUNNER_HINGY_DUO_INTEGRATION: '1'
         run: |
