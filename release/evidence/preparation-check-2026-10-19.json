@@ -1,0 +1,15 @@
+{
+  "assessed_on": "2026-10-19",
+  "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+  "checks": {
+    "preparation": {
+      "exit_code": 0,
+      "output": "Preparation checks passed.\nThis is not submission approval. Run --submission to see unresolved release gates.\n"
+    },
+    "submission": {
+      "exit_code": 1,
+      "output": "BLOCKED: Launch listing is still a draft\nBLOCKED: Release status is blocked\nBLOCKED: Unverified: audio_import_lifecycle_accessibility\nBLOCKED: Unverified: distribution_sdk_accepted_by_apple\nBLOCKED: Unverified: physical_open_close_and_handoff\nBLOCKED: Unverified: privacy_manifest_and_policy_audited\nBLOCKED: Unverified: public_urls_and_contact_verified\nBLOCKED: Unverified: real_store_screenshots_reviewed\nBLOCKED: Unverified: seller_age_rating_rights_and_availability\nBLOCKED: Actual reviewed iPhone and iPad screenshots are required for the current universal target\n"
+    }
+  },
+  "uploaded_or_submitted": false
+}

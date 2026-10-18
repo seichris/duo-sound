@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "app": {
+    "bundle_id": "com.seichris.duosound",
+    "udid": "BEC6CD9B-B52E-40C1-9E53-E4451871DADB",
+    "output_dir": "build/resubmission-captures-2026-10-19/iphone"
+  },
+  "steps": [
+    {
+      "action": "launch"
+    },
+    {
+      "action": "wait",
+      "duration_ms": 1500
+    },
+    {
+      "action": "screenshot",
+      "name": "iphone-home"
+    }
+  ]
+}

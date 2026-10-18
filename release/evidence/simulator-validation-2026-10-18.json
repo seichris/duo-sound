@@ -4,7 +4,7 @@
   "version": "1.0",
   "build": "4",
   "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
-  "candidate_commit": "83453b44c444882d07388fc968153003eda5c80e",
+  "candidate_commit": "8965c7e4804e6941c1c0abc6e9e3cbf21623983e",
   "scheme": "DuoSound-DuoSDK",
   "configuration": "Release-Duo",
   "sdk": "27.1",
@@ -31,12 +31,41 @@
       "failure": "Data Migration Failed; invalid device state; ipc/mig server died",
       "accepted": false,
       "source_sha256": "1de3da13203e311b4c32f9d2742de48d4e7c5068e9f125ca017da7702d7bd6f3"
+    },
+    {
+      "device": "iPhone Duo",
+      "udid": "1B7602A9-4580-49F7-81EA-A280B2DF8BA3",
+      "os": "27.1",
+      "os_build": "24A94401",
+      "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Targeted sound library audition, selection and relaunch persistence after native compact Search activation",
+      "summary": "release/evidence/duo-compact-search-local-2026-10-19.json",
+      "result_bundle": "/tmp/hingy-duo-compact-search.xcresult",
+      "test_source_note": "Contains compact Search helper; run started before the subsequent two-second expanded-field wait was added. Full CI validates the committed exact test helper.",
+      "accepted_as_full_suite": false
+    },
+    {
+      "device": "iPad Air 11-inch (M3)",
+      "udid": "970B4CC1-893F-4C30-95EF-FB3132DF116F",
+      "os": "27.0",
+      "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+      "test_commit": "8965c7e4804e6941c1c0abc6e9e3cbf21623983e",
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Exact committed library helper; audition, selection and relaunch persistence",
+      "summary": "release/evidence/ipad-compact-search-local-2026-10-19.json",
+      "result_bundle": "/tmp/hingy-ipad-compact-search.xcresult",
+      "accepted_as_full_suite": false
     }
   ],
   "current_ci": {
-    "standard_run": "https://github.com/seichris/duo-sound/actions/runs/39141416927",
-    "typed_sdk_run": "https://github.com/seichris/duo-sound/actions/runs/39141416905",
-    "status": "Safe-area library UI test repair committed; current product source unchanged. Rechecks pending; first attempts remain failed.",
+    "standard_run": "https://github.com/seichris/duo-sound/actions/runs/39143953412",
+    "typed_sdk_run": "https://github.com/seichris/duo-sound/actions/runs/39143953403",
+    "status": "At exact PR head 8965c7e: standard iPhone and iPad test steps passed 16/0/1 each; typed Duo passed 17/0/0. SDK workflow remains failed overall because additional typed iPad run timed out at Xcode app.launch for privacy testing (15/1/1). Earlier full typed iPad current-source pass remains recorded. Targeted exact-helper local iPad check passed. No failure was discarded or relabelled green.",
     "standard_first_attempt": {
       "iphone": {
         "os": "26.0.1",
@@ -52,10 +81,10 @@
         "skipped": 1,
         "hosted_audio_model_passed": 12,
         "ui_passed": 3,
-        "failure": "XCTest could not terminate the prior app process at the start of the library test; library test body did not run",
+        "failure": "XCTest could not terminate the prior app process while launching the library test; functional library assertions did not run",
         "summary": "release/evidence/standard-ipad-first-attempt-2026-10-18.json"
       },
-      "retry": "A fresh-runner job retry was requested; pending, not green"
+      "retry": "Superseded; full fresh run 39143953412 passed both devices."
     },
     "sdk27_first_attempt": {
       "ipad": {
@@ -72,14 +101,118 @@
         "skipped": 0,
         "hosted_audio_model_passed": 12,
         "actual_public_hinge_initial_callback": "Passed; closed 0 degrees and silent initial baseline",
-        "failure": "Library test tapped a partially visible choice row at y17.7..69.7 behind navigation bar at y24..82; no sheet opened. Workflow hit 12-minute step timeout during test completion.",
+        "failure": "Opening sounds sheet opened; AX attachment contains compact Search button but no text field. Test incorrectly assumed the field already existed. Workflow also reached its 12-minute step timeout during completion.",
         "summary": "release/evidence/sdk27-duo-first-attempt-2026-10-18.json",
         "initial_capture": "release/evidence/duo-public-hinge-initial-2026-10-18.png"
       },
       "accepted_as_full_suite": false
     },
-    "standard_recheck": "https://github.com/seichris/duo-sound/actions/runs/39143826990",
-    "typed_sdk_recheck": "https://github.com/seichris/duo-sound/actions/runs/39143826991"
+    "standard_recheck": "https://github.com/seichris/duo-sound/actions/runs/39146623517",
+    "typed_sdk_recheck": "https://github.com/seichris/duo-sound/actions/runs/39146623513",
+    "standard_completed": {
+      "run": "https://github.com/seichris/duo-sound/actions/runs/39143953412",
+      "commit": "f75319714450c647bb8d7ed742ba8fb202ddabea",
+      "result": "Passed",
+      "iphone": {
+        "os": "26.0.1",
+        "passed": 16,
+        "failed": 0,
+        "skipped": 1,
+        "summary": "release/evidence/standard-phone-2026-10-19.json"
+      },
+      "ipad": {
+        "os": "18.5",
+        "passed": 16,
+        "failed": 0,
+        "skipped": 1,
+        "summary": "release/evidence/standard-ipad-2026-10-19.json"
+      },
+      "skip": "Duo-only public hinge integration test intentionally skipped on unsupported devices"
+    },
+    "sdk27_completed": {
+      "run": "https://github.com/seichris/duo-sound/actions/runs/39143953403",
+      "ipad": {
+        "os": "27.0",
+        "passed": 16,
+        "failed": 0,
+        "skipped": 1,
+        "summary": "release/evidence/sdk27-ipad-2026-10-19.json"
+      },
+      "duo": {
+        "os": "27.1",
+        "passed": 16,
+        "failed": 1,
+        "skipped": 0,
+        "hosted_audio_model_passed": 12,
+        "actual_public_hinge_initial_callback": "Passed",
+        "failure": "Library search helper expected an editable text field before opening the native compact Search button",
+        "summary": "release/evidence/sdk27-duo-2026-10-19.json"
+      },
+      "pr_head": "f75319714450c647bb8d7ed742ba8fb202ddabea",
+      "checkout_commit": "5662f49f935b8e6df0764ca98708760cdde437ca"
+    },
+    "sdk27_final": {
+      "run": "https://github.com/seichris/duo-sound/actions/runs/39146623513",
+      "pr_head": "8965c7e4804e6941c1c0abc6e9e3cbf21623983e",
+      "checkout_commit": "ae0bf639ddf5da97f8907ca448423d2bee108a9b",
+      "checkout_note": "GitHub pull_request workflow tests its generated merge checkout, not the raw PR head. Product source fingerprint confirmed in artifact.",
+      "workflow_result": "Failed due to iPad app-launch timeout; Duo step passed its zero-skip/full-suite assertion",
+      "duo": {
+        "os": "27.1",
+        "passed": 17,
+        "failed": 0,
+        "skipped": 0,
+        "hosted_audio_model_passed": 12,
+        "ui_passed": 5,
+        "actual_public_hinge_initial_callback": "Passed",
+        "library_search_audition_selection_persistence": "Passed",
+        "summary": "release/evidence/sdk27-duo-final-2026-10-19.json"
+      },
+      "ipad": {
+        "os": "27.0",
+        "passed": 15,
+        "failed": 1,
+        "skipped": 1,
+        "hosted_audio_model_passed": 12,
+        "library_ui": "Passed",
+        "failure": "testPreviewLaunchAndPrivacy timed out in app.launch via Xcode, before privacy/control assertions. Other audio/model and UI tests passed.",
+        "summary": "release/evidence/sdk27-ipad-recheck-2026-10-19.json"
+      },
+      "accepted_as_fully_green_workflow": false,
+      "toolchain": "Xcode 27.1 (27A9275), SDK 27.1",
+      "unsigned_compilation": "Optimized Release-Duo device and simulator builds passed",
+      "binary_hashes": [
+        {
+          "sha256": "3d5c0fcaaf6bf00d69bf384aa3f0269c889dd782b3fc85f65db566639f62be08",
+          "path": "SDKBuild/Build/Products/Release-Duo-iphoneos/DuoSound.app/DuoSound"
+        },
+        {
+          "sha256": "7492f87bba7d2bd23c2cf5780402e08a77dc918d92de5af4f3dae4114c8b9ad7",
+          "path": "SDKBuild/Build/Products/Release-Duo-iphonesimulator/DuoSound.app/DuoSound"
+        }
+      ]
+    },
+    "standard_final": {
+      "run": "https://github.com/seichris/duo-sound/actions/runs/39146623517",
+      "pr_head": "8965c7e4804e6941c1c0abc6e9e3cbf21623983e",
+      "test_steps_result": "Passed",
+      "iphone": {
+        "os": "26.0.1",
+        "passed": 16,
+        "failed": 0,
+        "skipped": 1,
+        "summary": "release/evidence/standard-phone-final-2026-10-19.json"
+      },
+      "ipad": {
+        "os": "18.5",
+        "passed": 16,
+        "failed": 0,
+        "skipped": 1,
+        "summary": "release/evidence/standard-ipad-final-2026-10-19.json"
+      },
+      "skip": "Intentional Duo-only integration skip on unsupported devices",
+      "workflow_result": "Passed"
+    }
   },
   "historical_pre_queue_ci": {
     "source_sha256": "5686d5f2400d00447f3b4c7ed1d07e2513dd0e640828df8a3c009ad9e7858096",
@@ -115,7 +248,7 @@
     "Reviewer OS iPadOS 27.2 is not covered.",
     "No physical devices are available; no physical release gate is satisfied by this evidence."
   ],
-  "teardown": "First retry devices were verified Shutdown. A later Duo-only boot retry failed migration again; bounded shutdown then timed out, so final Duo teardown is unconfirmed. No global CoreSimulator reset attempted.",
+  "teardown": "All five task-created retry/capture simulators confirmed Shutdown in final exact-UDID inventory. Named agent-device session hingy-duo-pose was already absent. Other task simulator and shared Device Hub selection were left untouched. No global reset or additional simulator deletion.",
   "cleanup": {
     "approved_groups": [
       1,
@@ -140,5 +273,33 @@
     "summary": "release/evidence/sdk27-ipad-pre-logo-summary.json",
     "current_logo_candidate": false
   },
-  "local_logo_ui": "release/evidence/logo-validation-2026-10-18.json"
+  "local_logo_ui": "release/evidence/logo-validation-2026-10-18.json",
+  "final_task_simulator_inventory": [
+    {
+      "name": "Hingy iPhone store capture",
+      "udid": "BEC6CD9B-B52E-40C1-9E53-E4451871DADB",
+      "state": "Shutdown"
+    },
+    {
+      "name": "Hingy iPad 13 store capture",
+      "udid": "869A3555-BD8D-497D-8773-2994E82AC589",
+      "state": "Shutdown"
+    },
+    {
+      "name": "Hingy iPad retry",
+      "udid": "970B4CC1-893F-4C30-95EF-FB3132DF116F",
+      "state": "Shutdown"
+    },
+    {
+      "name": "Hingy Duo pose check",
+      "udid": "1B7602A9-4580-49F7-81EA-A280B2DF8BA3",
+      "state": "Shutdown"
+    },
+    {
+      "name": "Hingy Duo retry",
+      "udid": "C547792F-834F-4820-8D93-73A405622C05",
+      "state": "Shutdown"
+    }
+  ],
+  "prior_tested_pr_head": "f75319714450c647bb8d7ed742ba8fb202ddabea"
 }

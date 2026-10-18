@@ -1,0 +1,59 @@
+{
+  "status": "draft, no uploads",
+  "captures": [
+    {
+      "device_family": "ipad",
+      "device": "Hingy iPad 13 store capture",
+      "device_type": "com.apple.CoreSimulator.SimDeviceType.iPad-Pro-13-inch-M4-8GB",
+      "udid": "869A3555-BD8D-497D-8773-2994E82AC589",
+      "os": "27.0",
+      "locale": "en-US",
+      "source": "simulator",
+      "version": "1.0",
+      "build": "4",
+      "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+      "binary_sha256": "eb4ee63ca77b40fdbf70951037cd05c64f6ade058efede55467c94676ee37013",
+      "reviewed": false,
+      "result": "Command '['xcrun', 'simctl', 'launch', '869A3555-BD8D-497D-8773-2994E82AC589', 'com.seichris.duosound', '-AppleLanguages', '(en)', '-AppleLocale', 'en_US']' timed out after 45 seconds",
+      "shutdown": "Initial bounded shutdown timed out; subsequent explicit shutdown returned exit 0."
+    },
+    {
+      "device_family": "iphone",
+      "device": "Hingy iPhone store capture",
+      "device_type": "com.apple.CoreSimulator.SimDeviceType.iPhone-17-Pro-Max",
+      "udid": "BEC6CD9B-B52E-40C1-9E53-E4451871DADB",
+      "os": "27.0",
+      "locale": "en-US",
+      "source": "simulator",
+      "version": "1.0",
+      "build": "4",
+      "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+      "binary_sha256": "eb4ee63ca77b40fdbf70951037cd05c64f6ade058efede55467c94676ee37013",
+      "reviewed": false,
+      "result": "Command '['xcrun', 'simctl', 'install', 'BEC6CD9B-B52E-40C1-9E53-E4451871DADB', '/tmp/hingy-queued-release/Build/Products/Release-Duo-iphonesimulator/DuoSound.app']' timed out after 60 seconds",
+      "shutdown_exit_code": 0
+    }
+  ],
+  "acceptance": "Local iPad/phone capture attempts did not yield usable app screenshots. Two separately reviewed native current-source iPhone CI captures are in release/screenshots.json; iPad and Duo slots remain incomplete.",
+  "ipad_plain_retry": {
+    "udid": "869A3555-BD8D-497D-8773-2994E82AC589",
+    "retry": "Bounded plain launch on already migrated and installed capture iPad",
+    "reviewed": true,
+    "uploaded": false,
+    "result": "Captured; requires visual review",
+    "capture": "build/resubmission-captures-2026-10-19/ipad-home-plain-retry.png",
+    "sha256": "50c235669f8cda6166ff674e1482132d2d40c1a5a5962553778b0cc1f424400c",
+    "shutdown_exit_code": 0,
+    "accepted": false,
+    "review_note": "Rejected after visual inspection: framebuffer shows Apple boot logo, not Hingy, despite simctl launch returning success. Dimensions alone do not establish a usable capture."
+  },
+  "reviewed_iphone_candidate_preflight": {
+    "tool": "asc screenshots validate",
+    "path": "release/screenshots/2026-10-19",
+    "display_type": "APP_IPHONE_67",
+    "ready_files": 2,
+    "error_count": 0,
+    "warning_count": 0,
+    "uploaded": false
+  }
+}

@@ -1,6 +1,6 @@
 # Screenshot plan and provenance
 
-Research date: September 14, 2026. Source: https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/
+Specifications rechecked: October 19, 2026. Source: https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/
 
 Apple currently lists **1398×2034 / 2034×1398** for Duo's outer display and **2007×2853 / 2853×2007** for its inner display. The 6.9-inch group also accepts **1320×2868**, **1290×2796**, and **1260×2736** (and landscape equivalents). For supported iPads, the 13-inch group accepts **2064×2752** or **2048×2732**, plus landscape. Recheck App Store Connect's actual required slots when uploading; do not infer a Duo simulator's marketing dimensions from another device.
 
@@ -18,6 +18,8 @@ For launch, add genuine physical-hinge imagery only after the real device build 
 
 ## Capture workflow
 
-Use the UI-test attachments from CI for **preview QA only**. They are generated from the running app, not marketing mockups; a successful test does not equal visual approval. For launch, use `scripts/capture_screenshot.sh <simulator-UDID> <output.png>` after manually navigating the validated build to the desired state. This captures the actual simulator pixels without rescaling. Real-device screenshots should be exported from that device. Keep raw files, candidate/build identity, device/OS, and review notes in a private release workspace; avoid committing personal media.
+Automated UI-test captures start as preview QA. A successful test alone does not approve an image. A native CI capture may become a raw store candidate only after a separate visual review confirms the actual UI, readable content, disclosure of simulated input, accepted native dimensions, source/build identity and complete provenance. Preserve the original pixels and attachment identity. Do not stretch, relabel devices or fabricate status. Manual capture is also supported with `scripts/capture_screenshot.sh <simulator-UDID> <output.png>` after navigating the validated build to the desired state; verify the pixels show Hingy, since a successful launch command can still return a boot frame on an unhealthy simulator.
 
-`release/screenshots.json` is deliberately empty until final captures exist. To complete it, copy accepted PNGs into `release/screenshots/`, record their dimensions and SHA-256 values, and record whether they depict real or simulated hinge input. A labelled simulation QA capture is not a launch-hardware screenshot. The release checker verifies checksums, dimensions, and review evidence. No screenshots or App Store assets have been uploaded by this preparation PR.
+Two visually reviewed native iPhone CI candidates are recorded in `release/screenshots.json` with source, device/OS, dimensions, hashes and review notes. They show the actual demo home and library search. They are not physical-hinge imagery, final marketing-page approval or proof of audio output. Required iPad and Duo inner/outer screenshots remain incomplete. The local 13-inch iPad boot-logo image was rejected despite correct dimensions.
+
+For additional accepted images, copy PNGs into `release/screenshots/` and record whether they depict real or simulated hinge input. Real-device captures must come from that device; avoid personal media. The release checker verifies paths, checksums and dimensions, while the separate store-screenshot gate remains false until the full required set is reviewed. No current screenshots or App Store assets have been uploaded by this preparation PR.

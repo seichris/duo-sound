@@ -1,5 +1,48 @@
 {
   "schema_version": 1,
-  "captures": [],
-  "note": "Populate with actual, reviewed release captures. Each entry needs path, sha256, width, height, device_family (iphone or ipad), locale, and source (physical-device or simulator). Do not invent a Duo capture from another device."
+  "captures": [
+    {
+      "path": "release/screenshots/2026-10-19/iphone-home.png",
+      "sha256": "495f51931f9a366bd9681b8bb726eddae461c741662158087cc020ca2cf270d4",
+      "width": 1320,
+      "height": 2868,
+      "device_family": "iphone",
+      "locale": "en-US",
+      "source": "simulator",
+      "device": "iPhone 17 Pro Max",
+      "os": "26.0.1",
+      "version": "1.0",
+      "build": "4",
+      "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+      "ci_run": "https://github.com/seichris/duo-sound/actions/runs/39143953412",
+      "original_attachment": "D882AF8C-D991-4A66-9892-3C84BF33E65D.png",
+      "reviewed_on": "2026-10-19",
+      "review_note": "Home showing visible Demo / Simulated hinge disclosure; native pixels, no resizing, no hardware claim",
+      "uploaded": false,
+      "pr_head": "f75319714450c647bb8d7ed742ba8fb202ddabea",
+      "checkout_note": "PR workflow capture; head identifies the reviewed change. Raw checkout commit not independently stored by this standard workflow."
+    },
+    {
+      "path": "release/screenshots/2026-10-19/iphone-library-search.png",
+      "sha256": "ba0db75291fbc761c2ca7d585de2888d02ff0a2c115b498f63552e3e854fd6da",
+      "width": 1320,
+      "height": 2868,
+      "device_family": "iphone",
+      "locale": "en-US",
+      "source": "simulator",
+      "device": "iPhone 17 Pro Max",
+      "os": "26.0.1",
+      "version": "1.0",
+      "build": "4",
+      "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+      "ci_run": "https://github.com/seichris/duo-sound/actions/runs/39143953412",
+      "original_attachment": "1C28FCDB-0841-4C27-9751-F3A4909F17C6.png",
+      "reviewed_on": "2026-10-19",
+      "review_note": "Crystal library search, selection and audition feedback; keyboard visible; native pixels, no resizing, no hardware claim",
+      "uploaded": false,
+      "pr_head": "f75319714450c647bb8d7ed742ba8fb202ddabea",
+      "checkout_note": "PR workflow capture; head identifies the reviewed change. Raw checkout commit not independently stored by this standard workflow."
+    }
+  ],
+  "note": "Two reviewed native iPhone simulator candidate captures only. Required iPad 13-inch and Duo inner/outer assets remain incomplete. No upload. Native captures show actual UI and retain simulation disclosure; these do not establish physical hardware behavior."
 }
