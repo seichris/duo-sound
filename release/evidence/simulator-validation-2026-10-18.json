@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "assessed_on": "2026-10-18",
+  "version": "1.0",
+  "build": "4",
+  "source_sha256": "5686d5f2400d00447f3b4c7ed1d07e2513dd0e640828df8a3c009ad9e7858096",
+  "ci_head_sha": "a86e51d35bbd5e0c40c843a376c8f68681b0dd54",
+  "ci_run": "https://github.com/seichris/duo-sound/actions/runs/39133213710",
+  "ci_artifact": "preview-ui-tests-not-hardware-validation",
+  "scheme": "DuoSound",
+  "configuration": "Debug",
+  "sdk": "18.5",
+  "results": [
+    {
+      "device": "iPad Air 11-inch (M3)",
+      "os": "18.5",
+      "platform": "iOS Simulator",
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "hosted_audio_model_tests": 11,
+      "ui_tests": 4
+    },
+    {
+      "device": "iPhone 17 Pro Max",
+      "os": "26.0.1",
+      "platform": "iOS Simulator",
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "hosted_audio_model_tests": 11,
+      "ui_tests": 4
+    }
+  ],
+  "local_followup": {
+    "configuration": "Release-Duo",
+    "sdk": "iphonesimulator27.1",
+    "binary_sha256": "e91e0275c96addd74ec1400853ae44a7f199f5f06031fb3680b983988cddf7b0",
+    "duo_simulator": "B23F8615-A0FB-4EC8-9E1A-6EC727D4A249",
+    "ipad_simulator": "2E76084F-26DF-409C-B9D5-F28506F011EB",
+    "install_and_launch_commands": "Reported success on both devices",
+    "duo_ui_automation": "Remote automation session timed out; display capture was black",
+    "runtime_acceptance": "Incomplete on both devices; no additional passing tests",
+    "storage_observation": "Available space fell from 7.2 GiB to 131 MiB during attempts; cause not attributed",
+    "teardown": "Both task-created simulators shut down; existing other-task Duo untouched"
+  },
+  "limitations": [
+    "Default scheme does not compile or exercise the typed UIHingeInteraction adapter.",
+    "Player progress and audio category checks do not establish physical audible output or Silent Mode behavior.",
+    "Route and interruption events are injected into handlers, not produced by physical accessories or calls.",
+    "Manual simulated hinge controls do not validate Device Hub hinge callbacks or physical display handoff.",
+    "Reviewer OS iPadOS 27.2 is not covered.",
+    "No physical devices are available; no physical release gate is satisfied by this evidence."
+  ]
+}
