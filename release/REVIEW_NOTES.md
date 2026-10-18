@@ -2,6 +2,8 @@
 
 **Do not paste these notes as evidence that testing has happened.** Complete `readiness.json` and replace this heading with version/build/device/OS details from the tested candidate before submission. No review account is needed because the app has no login.
 
+Candidate under preparation: **1.0 (4)**. Rejected uploaded build: **1.0 (3)**. Current simulator and SDK evidence is in `docs/RESUBMISSION_VALIDATION.md`; no replacement upload or physical validation is claimed.
+
 ## Product and scope
 
 Hingy offers independently selected opening and closing sound effects through the public hinge API on supported hardware. It is a **foreground-only** experience, not an iOS system sound replacement or background fold listener. On unsupported hardware, sound previews and explicitly labelled simulation do not claim to detect a physical hinge.
@@ -14,7 +16,7 @@ On iPad or an iPhone without a hinge: tap **Preview** under Opening or Closing, 
 
 With the app visible and active on supported hardware, establish its initial hinge state; the first observation is silent. Open and close, and verify the separate selections. Confirm actual endpoint/handoff behavior against the attached validation report. Use Preview to audition effects, change the volume, select Off, and import a short audio file through Files. A suitable fixture can be generated with `scripts/generate_assets.py` for testing; no protected third-party audio is bundled.
 
-Manual Preview buttons and library play buttons work on iPhone and iPad without a hinge, even in Silent Mode or when fold sounds are disabled. Simulated folds also play in Silent Mode when fold sounds are enabled. Automatic fold effects respect Silent Mode. Both respect system/effect volume and current output routing. It intentionally suppresses pending effects when inactive, interrupted, locked, or suspended. No microphone, camera, background-audio entitlement, private API, account, ads, purchases, or analytics SDK is used. There is no remote content catalogue or user-to-user sharing service.
+Audio-session setup and teardown run on a serial background queue; controls remain on the main actor and stale requests are cancelled after inactivity. Manual Preview buttons and library play buttons work on iPhone and iPad without a hinge, even in Silent Mode or when fold sounds are disabled. Simulated folds also play in Silent Mode when fold sounds are enabled. Automatic fold effects respect Silent Mode. Both respect system/effect volume and current output routing. It intentionally suppresses pending effects when inactive, interrupted, locked, or suspended. No microphone, camera, background-audio entitlement, private API, account, ads, purchases, or analytics SDK is used. There is no remote content catalogue or user-to-user sharing service.
 
 ## Attach before submitting
 

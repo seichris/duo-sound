@@ -1,10 +1,14 @@
 # App Store release preparation
 
-Status: **metadata configured, blocked for submission**. Updated September 15, 2026.
+Status: **resubmission candidate prepared, release blocked**. Updated October 18, 2026.
+
+The live October 18 read-only check found version 1.0 **REJECTED**, attached to uploaded build 3. PR #3 prepares **1.0 (4)** with iPad audio fixes and the typed SDK 27.1 hinge adapter. No replacement build has been uploaded or submitted. See [current validation](RESUBMISSION_VALIDATION.md), [simulator plan](SIMULATOR_RESUBMISSION_PLAN.md), and the unsent `release/REVIEW_RESPONSE_DRAFT.md`. The September 15 account snapshot below is retained as history and does not describe current review status.
+
+## Historical preparation snapshot — September 15
 
 The marketing name candidate is **Hingy**. Research and rejected keyword intents are in [ASO_SEO_RESEARCH.md](ASO_SEO_RESEARCH.md); the machine-readable listing is `release/listing.json`. A matching App Store Connect record is now visible under **WEB3 FZCO**; no exact-name reservation, signing, TestFlight upload, review submission, live site deployment, or agreement acceptance has been performed. The owner has authorized the release attempt and supplied the support contact; Apple upload remains gated by the verified SDK, build, screenshots, availability, and review-contact requirements below.
 
-## Live identity check
+## Historical identity check — September 15
 
 Read-only reconciliation against the authenticated App Store Connect account on September 15, 2026:
 
@@ -57,7 +61,7 @@ After validating the candidate, run `python3 scripts/release_check.py --fingerpr
 ```sh
 python3 scripts/release_check.py --submission
 python3 scripts/export_listing.py
-BUILD_NUMBER=1 bash scripts/archive_app.sh  # choose a unique real build number
+BUILD_NUMBER=4 bash scripts/archive_app.sh  # choose a unique real build number
 ```
 
 The archive helper requires local Xcode/signing setup and the evidence gate. It archives/exports only; it never uploads or submits. Inspect its ExportOptions against the installed Xcode's `xcodebuild -help` when the release SDK ships. Use Xcode Organizer/App Store Connect deliberately to upload the approved build, review processing/privacy warnings, assign screenshots/metadata, and request review. Keep certificates, API keys, passwords, review contact details and account agreements out of the public repository.

@@ -1,55 +1,144 @@
 {
   "schema_version": 1,
-  "assessed_on": "2026-10-18",
+  "assessed_on": "2026-10-19",
   "version": "1.0",
   "build": "4",
-  "source_sha256": "5686d5f2400d00447f3b4c7ed1d07e2513dd0e640828df8a3c009ad9e7858096",
-  "ci_head_sha": "a86e51d35bbd5e0c40c843a376c8f68681b0dd54",
-  "ci_run": "https://github.com/seichris/duo-sound/actions/runs/39133213710",
-  "ci_artifact": "preview-ui-tests-not-hardware-validation",
-  "scheme": "DuoSound",
-  "configuration": "Debug",
-  "sdk": "18.5",
-  "results": [
+  "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+  "candidate_commit": "83453b44c444882d07388fc968153003eda5c80e",
+  "scheme": "DuoSound-DuoSDK",
+  "configuration": "Release-Duo",
+  "sdk": "27.1",
+  "local_results": [
     {
       "device": "iPad Air 11-inch (M3)",
-      "os": "18.5",
-      "platform": "iOS Simulator",
+      "udid": "970B4CC1-893F-4C30-95EF-FB3132DF116F",
+      "os": "27.0",
       "passed": 15,
-      "failed": 0,
+      "failed": 1,
       "skipped": 0,
-      "hosted_audio_model_tests": 11,
-      "ui_tests": 4
+      "hosted_audio_model_passed": 12,
+      "ui_passed": 3,
+      "failure": "testSoundLibraryAuditionSelectionAndPersistence: Test crashed with signal term.",
+      "result_bundle": "/tmp/hingy-ipad-final.xcresult",
+      "accepted": false,
+      "source_sha256": "1de3da13203e311b4c32f9d2742de48d4e7c5068e9f125ca017da7702d7bd6f3"
     },
     {
-      "device": "iPhone 17 Pro Max",
-      "os": "26.0.1",
-      "platform": "iOS Simulator",
-      "passed": 15,
-      "failed": 0,
-      "skipped": 0,
-      "hosted_audio_model_tests": 11,
-      "ui_tests": 4
+      "device": "iPhone Duo",
+      "udid": "C547792F-834F-4820-8D93-73A405622C05",
+      "os": "27.1",
+      "result": "Environment failed before app installation",
+      "failure": "Data Migration Failed; invalid device state; ipc/mig server died",
+      "accepted": false,
+      "source_sha256": "1de3da13203e311b4c32f9d2742de48d4e7c5068e9f125ca017da7702d7bd6f3"
     }
   ],
-  "local_followup": {
-    "configuration": "Release-Duo",
-    "sdk": "iphonesimulator27.1",
-    "binary_sha256": "e91e0275c96addd74ec1400853ae44a7f199f5f06031fb3680b983988cddf7b0",
-    "duo_simulator": "B23F8615-A0FB-4EC8-9E1A-6EC727D4A249",
-    "ipad_simulator": "2E76084F-26DF-409C-B9D5-F28506F011EB",
-    "install_and_launch_commands": "Reported success on both devices",
-    "duo_ui_automation": "Remote automation session timed out; display capture was black",
-    "runtime_acceptance": "Incomplete on both devices; no additional passing tests",
-    "storage_observation": "Available space fell from 7.2 GiB to 131 MiB during attempts; cause not attributed",
-    "teardown": "Both task-created simulators shut down; existing other-task Duo untouched"
+  "current_ci": {
+    "standard_run": "https://github.com/seichris/duo-sound/actions/runs/39141416927",
+    "typed_sdk_run": "https://github.com/seichris/duo-sound/actions/runs/39141416905",
+    "status": "Safe-area library UI test repair committed; current product source unchanged. Rechecks pending; first attempts remain failed.",
+    "standard_first_attempt": {
+      "iphone": {
+        "os": "26.0.1",
+        "passed": 16,
+        "failed": 0,
+        "skipped": 1,
+        "summary": "release/evidence/standard-iphone-2026-10-18.json"
+      },
+      "ipad": {
+        "os": "18.5",
+        "passed": 15,
+        "failed": 1,
+        "skipped": 1,
+        "hosted_audio_model_passed": 12,
+        "ui_passed": 3,
+        "failure": "XCTest could not terminate the prior app process at the start of the library test; library test body did not run",
+        "summary": "release/evidence/standard-ipad-first-attempt-2026-10-18.json"
+      },
+      "retry": "A fresh-runner job retry was requested; pending, not green"
+    },
+    "sdk27_first_attempt": {
+      "ipad": {
+        "passed": 15,
+        "failed": 1,
+        "skipped": 1,
+        "failure": "XCTest failed to terminate the prior app before selected-preview UI test launch",
+        "hosted_audio_model_passed": 12,
+        "summary": "release/evidence/sdk27-ipad-first-attempt-2026-10-18.json"
+      },
+      "duo": {
+        "passed": 16,
+        "failed": 1,
+        "skipped": 0,
+        "hosted_audio_model_passed": 12,
+        "actual_public_hinge_initial_callback": "Passed; closed 0 degrees and silent initial baseline",
+        "failure": "Library test tapped a partially visible choice row at y17.7..69.7 behind navigation bar at y24..82; no sheet opened. Workflow hit 12-minute step timeout during test completion.",
+        "summary": "release/evidence/sdk27-duo-first-attempt-2026-10-18.json",
+        "initial_capture": "release/evidence/duo-public-hinge-initial-2026-10-18.png"
+      },
+      "accepted_as_full_suite": false
+    },
+    "standard_recheck": "https://github.com/seichris/duo-sound/actions/runs/39143826990",
+    "typed_sdk_recheck": "https://github.com/seichris/duo-sound/actions/runs/39143826991"
+  },
+  "historical_pre_queue_ci": {
+    "source_sha256": "5686d5f2400d00447f3b4c7ed1d07e2513dd0e640828df8a3c009ad9e7858096",
+    "run": "https://github.com/seichris/duo-sound/actions/runs/39133213710",
+    "results": [
+      {
+        "device": "iPad Air 11-inch (M3)",
+        "os": "18.5",
+        "platform": "iOS Simulator",
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "hosted_audio_model_tests": 11,
+        "ui_tests": 4
+      },
+      {
+        "device": "iPhone 17 Pro Max",
+        "os": "26.0.1",
+        "platform": "iOS Simulator",
+        "passed": 15,
+        "failed": 0,
+        "skipped": 0,
+        "hosted_audio_model_tests": 11,
+        "ui_tests": 4
+      }
+    ],
+    "current_candidate_validation": false
   },
   "limitations": [
-    "Default scheme does not compile or exercise the typed UIHingeInteraction adapter.",
     "Player progress and audio category checks do not establish physical audible output or Silent Mode behavior.",
     "Route and interruption events are injected into handlers, not produced by physical accessories or calls.",
     "Manual simulated hinge controls do not validate Device Hub hinge callbacks or physical display handoff.",
     "Reviewer OS iPadOS 27.2 is not covered.",
     "No physical devices are available; no physical release gate is satisfied by this evidence."
-  ]
+  ],
+  "teardown": "First retry devices were verified Shutdown. A later Duo-only boot retry failed migration again; bounded shutdown then timed out, so final Duo teardown is unconfirmed. No global CoreSimulator reset attempted.",
+  "cleanup": {
+    "approved_groups": [
+      1,
+      2,
+      3
+    ],
+    "manifest_digest": "cd4cec1e72ff4d1a08538faec49da6f7d7651ee97413d7611ab2352a7c87a749",
+    "targets_deleted": 7,
+    "observed_free_delta_bytes": 3312345088,
+    "scope": "Five exact caches and two old task-created simulators; no source/archive deletion",
+    "verification_exception": "Unrelated concurrent cleanup removed two protected Bicino build directories; Hingy protected paths remained intact. Original verifier failure preserved in local cleanup ledger."
+  },
+  "completed_pre_logo_ipad": {
+    "source_sha256": "1de3da13203e311b4c32f9d2742de48d4e7c5068e9f125ca017da7702d7bd6f3",
+    "run": "https://github.com/seichris/duo-sound/actions/runs/39139621412",
+    "passed": 16,
+    "failed": 0,
+    "skipped": 1,
+    "skip_reason": "Duo-only public hinge integration test on iPad",
+    "hosted_audio_model_passed": 12,
+    "ui_passed": 4,
+    "summary": "release/evidence/sdk27-ipad-pre-logo-summary.json",
+    "current_logo_candidate": false
+  },
+  "local_logo_ui": "release/evidence/logo-validation-2026-10-18.json"
 }

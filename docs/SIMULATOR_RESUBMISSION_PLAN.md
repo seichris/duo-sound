@@ -1,6 +1,6 @@
 # Hingy simulator validation and resubmission preparation
 
-Assessed October 18, 2026. Candidate: version 1.0 (4), PR #3. No physical iPad or Duo is available.
+Started October 18; checkpoint updated October 19, 2026 (Singapore). Candidate: version 1.0 (4), PR #3. No physical iPad or Duo is available.
 
 ## What simulator validation establishes
 
@@ -12,18 +12,22 @@ Apple's [App Review Guideline 2.1(a)](https://developer.apple.com/app-store/revi
 
 ## Recorded results
 
-| Check | Evidence | Scope |
+The current logo candidate uses a serial background audio queue. Product fingerprint: `1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb`.
+
+| Check | Result | Scope |
 | --- | --- | --- |
-| Core logic | 39 tests passed | Portable detector, sound generation, settings and file validation |
-| Release preparation | 18 tests passed | Packaging/preparation checks; submission gate remains blocked |
-| iPad runtime | 11 hosted audio/model tests and 4 UI tests passed, no skips | iPad Air 11-inch (M3), iPadOS 18.5, default scheme |
-| iPhone runtime | 11 hosted audio/model tests and 4 UI tests passed, no skips | iPhone 17 Pro Max, iOS 26.0.1, default scheme |
-| Typed Duo adapter | SDK 27.1 unsigned device and simulator Release-Duo builds succeeded | Compilation, version/build identity; no hardware runtime proof |
-| Current ASC metadata | `asc validate` reports zero blocking errors | Existing rejected version and attached build 3; App Privacy publication cannot be verified by this API |
+| Core / release preparation | 39 / 18 tests passed | Product logic and packaging |
+| SDK 27.1 | Optimized unsigned device and simulator builds passed | Compilation and source/assets identity |
+| iPhone iOS 26.0.1 | 16 passed / 0 failed / 1 intentional Duo-only skip | Audio, UI and relaunch persistence |
+| iPadOS 18.5 | 15 passed / 1 failed / 1 intentional skip | All 12 audio/model tests passed; XCTest failed to terminate the preceding app before library testing |
+| Typed iPadOS 27.0 | 15 passed / 1 failed / 1 intentional skip | All 12 audio/model tests and library persistence passed; XCTest termination failed before selected-preview UI testing |
+| Typed Duo iOS 27.1 | 16 passed / 1 failed / 0 skipped | All audio/model tests, actual initial public hinge sample, previews and manual simulation passed; library test tap was obscured by the navigation bar |
+| Local current-logo iPad | About/privacy check passed | Actual new-logo app opens the About and privacy screens |
+| ASC metadata | Zero errors and warnings | Existing rejected version / uploaded build 3; API cannot verify App Privacy publication |
 
-The hosted audio tests exercise all 40 built-in opening/closing clips, playback progress, imported clips, explicit-preview audio category, nil-hinge updates, route-notification policy and inactive/interrupted cancellation. They invoke route/interruption handlers synthetically. They do not exercise a real Bluetooth/headphone transition or a physical Silent Mode switch.
+A test-harness fix now reveals the whole library choice row inside the safe area before tapping. The fresh [standard CI](https://github.com/seichris/duo-sound/actions/runs/39143826990) and [typed iPad/Duo CI](https://github.com/seichris/duo-sound/actions/runs/39143826991) rechecks remain pending. First failures are preserved in [runtime evidence](../release/evidence/simulator-validation-2026-10-18.json); a partial suite is not called acceptance. See [SDK compile evidence](../release/evidence/sdk-compile-2026-10-18-logo.json).
 
-CI: [passing audio/UI run](https://github.com/seichris/duo-sound/actions/runs/39133213710), [passing release-preparation run](https://github.com/seichris/duo-sound/actions/runs/39133213818). See [machine-readable simulator evidence](../release/evidence/simulator-validation-2026-10-18.json) and [SDK compile evidence](../release/evidence/sdk-compile-2026-10-18.json).
+Hosted tests cover all 40 built-in clips, actual player progress, imported audio, explicit-preview session category, nil hinge data and cancellation. The slow-activation test blocks a worker while the main actor cancels the request. Accessory/interruption events are synthetic. The Duo integration test receives the real initial callback; it does not change the simulator's physical pose or test display handoff.
 
 ## Remaining simulator work
 
@@ -34,7 +38,7 @@ Use dedicated Hingy devices; do not reset CoreSimulator globally or change anoth
 3. Run the same audio and UI suites on Duo. Keep results for the typed scheme separate from older-OS/default-scheme CI results.
 4. Capture actual candidate screens for iPhone, iPad and Duo's inner/outer display sizes. Check search/sheets, text clipping and safe areas in each pose. Populate `release/screenshots.json` only with reviewed, correctly sized captures and their real provenance. A simulator screenshot can be a store asset; it is not physical-device evidence.
 
-Fresh local simulator attempts in this follow-up did not complete runtime acceptance: the optimized build installed on a dedicated Duo and its process launched, but UI automation timed out and the display capture was black. The dedicated iPad's installation and launch commands eventually reported success after long delays; no completed UI/runtime test result was obtained. Available disk space fell from 7.2 GiB to 131 MiB during the attempts, and this task's two simulators were shut down. These are unresolved local runtime/tooling symptoms under severe storage pressure, not passing tests and not an established reproduction of Apple's reported sound failure. No global simulator reset or modification of the other task's active Duo session was performed. The task-created simulators remain available for a later retry after storage is sufficient.
+The approved cleanup removed the old task-created iPad/Duo devices and five exact build-cache directories, reclaiming an observed 3.08 GiB. Source, test results and products were preserved. The retry used fresh dedicated simulators; it did not reset CoreSimulator or modify the other task's simulator. The local iPad produced a partial test result and actual QA captures; the new Duo failed data migration before installation. A clean Xcode 27.1 GitHub runner provides a separate retry path. Do not call these local attempts complete acceptance.
 
 ## Submission package
 

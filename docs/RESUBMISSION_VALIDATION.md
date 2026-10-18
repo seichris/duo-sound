@@ -1,4 +1,4 @@
-# Hingy resubmission investigation — October 18, 2026
+# Hingy resubmission investigation — October 18–19, 2026
 
 ## Review issue and evidence boundary
 
@@ -8,6 +8,7 @@ The October 18 App Store Connect API check confirms version 1.0 is `REJECTED`, a
 
 ## Defects addressed
 
+- Audio-session activation/deactivation and player setup previously ran on the main actor. The SDK 27 runtime warned that these calls can block UI responsiveness. They now run on one serial background queue; a lock-protected cancellation token prevents an activation that finishes late from starting a stale sound. Lifecycle notifications are delivered to the model on the main queue. A hosted regression deliberately blocks activation and verifies that the main actor remains responsive and inactivity cancels playback.
 - Every sound previously used `.ambient`, which intentionally mutes in Silent Mode, even for an explicit Preview tap. Manual selected/library auditions and simulated folds now use `.playback` with `.mixWithOthers`. Physical fold effects retain `.ambient`. System/effect volume, Off selections and current output routing remain respected.
 - A nil hinge update reset observation by stopping the shared audio player. Nil is normal on unsupported iPads and when an interaction leaves its hierarchy. It now cancels pending/playing physical fold effects without cutting off an explicit audition.
 - Every route notification except category changes previously stopped playback. Benign route-configuration notifications from session setup could cancel the sound that just started. Only output-device arrival/removal, explicit route overrides and unavailable routes cancel playback; inactivity, interruptions and media-service resets still stop it without replay.
@@ -25,14 +26,23 @@ Sources: [UIHingeInteraction](https://developer.apple.com/documentation/uikit/ui
 
 ## Validation
 
-- Core package: 39 tests passed, zero failures.
-- Release-preparation checks: 18 tests passed, zero failures; ordinary preparation checks pass.
-- Completed CI runtime evidence: 11 hosted AVAudioPlayer/model tests and 4 UI tests passed on each of the iPad Air 11-inch (M3) simulator (iPadOS 18.5) and iPhone 17 Pro Max simulator (iOS 26.0.1), with zero failures or skips. [CI run](https://github.com/seichris/duo-sound/actions/runs/39133213710). These use the default scheme and do not cover the typed Duo adapter at runtime.
-- Typed Duo adapter: simulator Debug-Duo and unsigned device Release-Duo builds compiled with SDK 27.1. Optimized device and simulator builds succeeded; [the source-bound compile manifest](../release/evidence/sdk-compile-2026-10-18.json) records SDK, build number and binary hashes. These are compile checks, not signed-device or audible-playback evidence.
-- The installed iPadOS 27.0 test runner stalled before tests executed, including the baseline attempt. Initial launch attempts ended without a test result and were stopped. A fresh dedicated iPad simulator also stalled. Do not count these as passing tests or as a reproduced app freeze.
-- The stable Xcode 26.6 / iPadOS 26.5 attempt also stalled before test execution, after a successful build. Its compiler-discovery probe needed a temporary local wrapper that removed only verbose output from the macro probe; actual compiler/linker calls were forwarded unchanged. No audio/UI runtime suite has completed locally. The reviewer OS, iPadOS 27.2, is not installed. The 27.1 runtime is Duo-only and rejects creation of an iPad device.
+Current product fingerprint: `1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb`. The supplied logo is included. Test-harness and documentation changes do not change this product fingerprint.
+
+- **Builds and unit checks:** 39 portable tests and 18 release-preparation tests passed. Optimized unsigned Release-Duo device and simulator builds passed with SDK 27.1 / Xcode 27A9275. The [compile manifest](../release/evidence/sdk-compile-2026-10-18-logo.json) binds source, bundle/build, executable, asset catalogue and logo hashes. No signed delivery or upload acceptance is established.
+- **iPhone simulator:** 16 hosted/UI tests passed, zero failed, one intentional Duo-only skip on iOS 26.0.1. [Standard CI first attempt](https://github.com/seichris/duo-sound/actions/runs/39141416927/attempts/1).
+- **iPadOS 18.5:** 12 audio/model and 3 UI tests passed; one UI test failed before its body because XCTest could not terminate the previous app for relaunch. The library test did not run in that attempt. The Duo-only test intentionally skipped. A fresh-runner retry was requested; no pending retry is counted as green.
+- **iPadOS 27.0, typed scheme:** 12 audio/model and 3 UI tests passed, including library audition/selection/persistence. Selected-preview UI testing failed before its body because XCTest could not terminate the prior app. Totals: 15 passed / 1 failed / 1 intentional Duo-only skip. [SDK CI first attempt](https://github.com/seichris/duo-sound/actions/runs/39141416905).
+- **Duo iOS 27.1, typed scheme:** all 12 audio/model tests and 4 UI tests passed, including the **actual public hinge callback**, a closed 0-degree reading and a silent initial baseline. One library UI test failed: its tap landed on a partly visible choice row beneath the navigation bar, so the sheet did not open. Totals: 16 passed / 1 failed / 0 skipped. The step also reached its 12-minute timeout during completion. The initial sample does not prove opening/closing transitions or display handoff.
+- **Test repair under validation:** `openLibrary` now reveals the entire row below the navigation bar and above the bottom safe area using bounded, small drags. Typed-scheme test steps have a 15-minute limit. This fixes a demonstrated harness targeting error without changing application behavior. Current rechecks: [standard CI](https://github.com/seichris/duo-sound/actions/runs/39143826990), [typed iPad/Duo CI](https://github.com/seichris/duo-sound/actions/runs/39143826991). Pending checks are not acceptance.
+- **Local evidence:** the audio-queue source passed 12 audio/model and 3 UI tests on iPadOS 27.0, while the library runner ended with SIGTERM. The current-logo About/privacy UI check passed separately. Local Duo retries failed CoreSimulator data migration before installation; no local Duo app result is claimed. The reviewer OS, iPadOS 27.2, is not installed.
+
+The [machine-readable evidence](../release/evidence/simulator-validation-2026-10-18.json) preserves each failure and its source identity. All original 40 clip auditions, actual player progress, imported audio, session categories, cancellation and slow-activation responsiveness are covered by hosted tests. Route/interruption events are synthetic. These results do not establish audible physical output, accessory transitions or physical Silent Mode behavior.
+
+Earlier successful runs that predate the queue or logo are historical and do not replace current-candidate results. Actual QA screenshots remain separate from reviewed store assets.
 
 ## Candidate and remaining gates
+
+The publisher-supplied blue/white logo is the app icon, About-screen logo and the source for site/screenshot-tool branding. The original is preserved under `branding/`. Earlier exported/uploaded store screenshots predate this artwork and remain historical.
 
 Local version/build is 1.0 (4), with the build number persisted in `release/listing.json` so project regeneration cannot reset it to 1. All shared Archive actions use the evidence-gated AppStore configuration. No build has been uploaded or resubmitted by this change.
 

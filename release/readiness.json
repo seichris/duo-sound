@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "status": "blocked",
-  "assessed_on": "2026-10-18",
-  "validated_source_sha256": null,
+  "assessed_on": "2026-10-19",
+  "validated_source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
   "owner": {
     "legal_name": "WEB3 FZCO",
     "support_email": "jensen@web3.consulting",
@@ -16,8 +16,8 @@
   },
   "evidence": {
     "public_sdk_compiles": {
-      "passed": false,
-      "reference": null
+      "passed": true,
+      "reference": "release/evidence/sdk-compile-2026-10-18-logo.json"
     },
     "physical_open_close_and_handoff": {
       "passed": false,
@@ -48,5 +48,5 @@
       "reference": null
     }
   },
-  "notes": "An October 18 simulator retry found synchronous audio-session activation/deactivation on the main actor. The candidate now moves session/player work to a serial background queue with immediate cancellation. Source-bound compilation and simulator results are being refreshed. Physical playback/handoff, review OS coverage, store assets, privacy publication and distribution acceptance remain unverified."
+  "notes": "Candidate 1.0 (4) includes the supplied logo. Current fingerprint has successful optimized SDK 27.1 device/simulator builds, all 12 hosted audio/model tests on iPad and Duo, a full iPhone suite pass and an actual initial public Duo hinge callback pass. Full acceptance remains incomplete: iPad runs had XCTest process-termination failures and the Duo library test tapped beneath the navigation bar. A bounded safe-area scrolling helper fixes the demonstrated harness error; new rechecks are pending. Original failures are preserved. No physical devices are available, and physical playback/handoff, reviewer OS 27.2, reviewed current store assets, App Privacy publication, distribution acceptance and other existing gates remain unverified. Nothing uploaded or submitted."
 }
