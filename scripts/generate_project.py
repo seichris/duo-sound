@@ -9,6 +9,7 @@ PROJECT = ROOT / 'DuoSound.xcodeproj'
 PROJECT.mkdir(exist_ok=True)
 objects = {}
 owner = json.loads((ROOT / 'release/readiness.json').read_text())['owner']
+listing = json.loads((ROOT / 'release/listing.json').read_text())
 
 def uid(name):
     return hashlib.sha1(name.encode()).hexdigest()[:24].upper()
@@ -52,17 +53,17 @@ for name in ['Debug', 'Release', 'Debug-Duo', 'Release-Duo', 'AppStore']:
     debug = name.startswith('Debug')
     duo = name.endswith('-Duo') or name == 'AppStore'
     shared = {'CLANG_ENABLE_MODULES': 'YES', 'CLANG_ENABLE_OBJC_ARC': 'YES', 'SDKROOT': 'iphoneos',
-              # The public hinge interaction is runtime-bridged, so the
-              # distribution candidate can be built with the supported stable
-              # SDK while still running on iOS 27.1 Duo devices.
+              # Duo configurations require the iOS 27.1 SDK. Runtime availability
+              # checks preserve previews on older supported iPhones and iPads.
               'IPHONEOS_DEPLOYMENT_TARGET': '17.0', 'SWIFT_VERSION': '5.0', 'ENABLE_USER_SCRIPT_SANDBOXING': 'YES',
               'SWIFT_OPTIMIZATION_LEVEL': '-Onone' if debug else '-O', 'DEBUG_INFORMATION_FORMAT': 'dwarf' if debug else 'dwarf-with-dsym',
+              'ENABLE_TESTABILITY': 'YES' if debug else 'NO',
               'SWIFT_ACTIVE_COMPILATION_CONDITIONS': ' '.join(['$(inherited)'] + (['DEBUG'] if debug else []) + (['DUO_HINGE_SDK'] if duo else []) + (['APP_STORE_RELEASE'] if name == 'AppStore' else []))}
     project_configs.append(add('project:' + name, isa='XCBuildConfiguration', name=name, buildSettings=shared))
     target_settings = {
         'PRODUCT_NAME': 'DuoSound', 'PRODUCT_BUNDLE_IDENTIFIER': owner['bundle_id'], 'INFOPLIST_FILE': 'App/Info.plist',
         'GENERATE_INFOPLIST_FILE': 'NO', 'TARGETED_DEVICE_FAMILY': '1,2', 'SUPPORTED_PLATFORMS': 'iphoneos iphonesimulator',
-        'SUPPORTS_MACCATALYST': 'NO', 'CODE_SIGN_STYLE': 'Automatic', 'CURRENT_PROJECT_VERSION': '1', 'MARKETING_VERSION': '1.0',
+        'SUPPORTS_MACCATALYST': 'NO', 'CODE_SIGN_STYLE': 'Automatic', 'CURRENT_PROJECT_VERSION': listing['build_number'], 'MARKETING_VERSION': listing['version'],
         'LD_RUNPATH_SEARCH_PATHS': ['$(inherited)', '@executable_path/Frameworks'], 'ENABLE_PREVIEWS': 'YES', 'ASSETCATALOG_COMPILER_APPICON_NAME': 'AppIcon',
         'ENABLE_USER_SCRIPT_SANDBOXING': 'NO',
         'DUO_SUPPORT_URL': owner.get('support_url') or 'https://github.com/seichris/duo-sound/issues',
@@ -75,7 +76,7 @@ project_list = add('project-configs', isa='XCConfigurationList', buildConfigurat
 target_list = add('target-configs', isa='XCConfigurationList', buildConfigurations=target_configs, defaultConfigurationIsVisible='0', defaultConfigurationName='Release')
 target = add('target', isa='PBXNativeTarget', buildConfigurationList=target_list, buildPhases=phases, buildRules=[], dependencies=[],
              name='DuoSound', productName='DuoSound', productReference=product, productType='com.apple.product-type.application')
-# UI smoke tests run only in the standard preview scheme, never as hardware evidence.
+# UI tests run in preview and Duo schemes; simulation is never hardware evidence.
 ui_builds = []
 for path in sorted(ROOT.glob('UITests/*.swift')):
     relative = str(path.relative_to(ROOT))
@@ -99,9 +100,31 @@ dependency = add('ui-dependency', isa='PBXTargetDependency', target=target, targ
 ui_target = add('ui-target', isa='PBXNativeTarget', buildConfigurationList=ui_list, buildPhases=ui_phases,
                 buildRules=[], dependencies=[dependency], name='DuoSoundUITests', productName='DuoSoundUITests',
                 productReference=ui_product, productType='com.apple.product-type.bundle.ui-testing')
+# Hosted tests exercise AVFoundation and AppModel on the actual iOS runtime.
+unit_builds = []
+for path in sorted(ROOT.glob('AppTests/*.swift')):
+    relative = str(path.relative_to(ROOT))
+    ref = add(relative, isa='PBXFileReference', lastKnownFileType='sourcecode.swift', path=relative, sourceTree='<group>')
+    objects[group]['children'].append(ref)
+    unit_builds.append(add(relative + ':build', isa='PBXBuildFile', fileRef=ref))
+unit_product = add('unit-product', isa='PBXFileReference', explicitFileType='wrapper.cfbundle', path='DuoSoundAppTests.xctest', sourceTree='BUILT_PRODUCTS_DIR')
+objects[products]['children'].append(unit_product)
+unit_phases = [add('unit-'+phase, isa=kind, buildActionMask='2147483647', files=files, runOnlyForDeploymentPostprocessing='0')
+               for phase, kind, files in [('sources','PBXSourcesBuildPhase',unit_builds),('frameworks','PBXFrameworksBuildPhase',[]),('resources','PBXResourcesBuildPhase',[])]]
+unit_configs = []
+for name in ['Debug', 'Release', 'Debug-Duo', 'Release-Duo', 'AppStore']:
+    unit_configs.append(add('unit:'+name, isa='XCBuildConfiguration', name=name, buildSettings={
+        'PRODUCT_NAME':'DuoSoundAppTests', 'PRODUCT_BUNDLE_IDENTIFIER':owner['bundle_id']+'.apptests',
+        'GENERATE_INFOPLIST_FILE':'YES', 'TARGETED_DEVICE_FAMILY':'1,2', 'CODE_SIGN_STYLE':'Automatic',
+        'TEST_HOST':'$(BUILT_PRODUCTS_DIR)/DuoSound.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DuoSound',
+        'BUNDLE_LOADER':'$(TEST_HOST)', 'LD_RUNPATH_SEARCH_PATHS':['$(inherited)','@executable_path/Frameworks','@loader_path/Frameworks']}))
+unit_list = add('unit-configs', isa='XCConfigurationList', buildConfigurations=unit_configs, defaultConfigurationIsVisible='0', defaultConfigurationName='Release')
+unit_target = add('unit-target', isa='PBXNativeTarget', buildConfigurationList=unit_list, buildPhases=unit_phases,
+                  buildRules=[], dependencies=[dependency], name='DuoSoundAppTests', productName='DuoSoundAppTests',
+                  productReference=unit_product, productType='com.apple.product-type.bundle.unit-test')
 project = add('project', isa='PBXProject', attributes={'LastUpgradeCheck': '1600'}, buildConfigurationList=project_list,
               compatibilityVersion='Xcode 14.0', developmentRegion='en', hasScannedForEncodings='0', knownRegions=['en', 'Base'],
-              mainGroup=group, productRefGroup=products, projectDirPath='', projectRoot='', targets=[target, ui_target])
+              mainGroup=group, productRefGroup=products, projectDirPath='', projectRoot='', targets=[target, ui_target, unit_target])
 content = '// !$*UTF8*$!\n{\n archiveVersion = 1;\n classes = {};\n objectVersion = 56;\n objects = {\n'
 content += '\n'.join(f'  {key} = {render(value)};' for key, value in objects.items())
 content += '\n };\n rootObject = ' + project + ';\n}\n'
@@ -112,9 +135,10 @@ for name, suffix in [('DuoSound', ''), ('DuoSound-DuoSDK', '-Duo'), ('DuoSound-A
     ref = f'<BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{target}" BuildableName="DuoSound.app" BlueprintName="DuoSound" ReferencedContainer="container:DuoSound.xcodeproj"/>'
     debug_config = 'AppStore' if suffix == 'AppStore' else 'Debug' + suffix
     release_config = 'AppStore' if suffix == 'AppStore' else 'Release' + suffix
-    archive_config = 'AppStore' if suffix == 'AppStore' else release_config
+    archive_config = 'AppStore'
     ui_ref = f'<BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{ui_target}" BuildableName="DuoSoundUITests.xctest" BlueprintName="DuoSoundUITests" ReferencedContainer="container:DuoSound.xcodeproj"/>'
-    testables = f'<Testables><TestableReference skipped="NO">{ui_ref}</TestableReference></Testables>' if not suffix else '<Testables/>'
+    unit_ref = f'<BuildableReference BuildableIdentifier="primary" BlueprintIdentifier="{unit_target}" BuildableName="DuoSoundAppTests.xctest" BlueprintName="DuoSoundAppTests" ReferencedContainer="container:DuoSound.xcodeproj"/>'
+    testables = f'<Testables><TestableReference skipped="NO">{unit_ref}</TestableReference><TestableReference skipped="NO">{ui_ref}</TestableReference></Testables>' if suffix != 'AppStore' else '<Testables/>'
     (schemes / f'{name}.xcscheme').write_text(f'''<?xml version="1.0" encoding="UTF-8"?>
 <Scheme LastUpgradeVersion="1600" version="1.3">
 <BuildAction parallelizeBuildables="YES" buildImplicitDependencies="YES"><BuildActionEntries><BuildActionEntry buildForTesting="YES" buildForRunning="YES" buildForProfiling="YES" buildForArchiving="YES" buildForAnalyzing="YES">{ref}</BuildActionEntry></BuildActionEntries></BuildAction>

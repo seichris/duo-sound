@@ -45,7 +45,7 @@ jobs:
           -configuration Release -sdk iphonesimulator
           -destination 'generic/platform=iOS Simulator'
           -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO build
-      - name: Select available iPhone simulator
+      - name: Select available iPhone and iPad simulators
         id: simulator
         run: |
           python3 - <<'PY'
@@ -54,8 +54,13 @@ jobs:
           phones=[p for group in data['devices'].values() for p in group if p['name'].startswith('iPhone') and p.get('isAvailable')]
           phones.sort(key=lambda p: ('Pro Max' in p['name'],p['name']),reverse=True)
           if not phones: raise SystemExit('No available iPhone simulator')
+          tablets=[p for group in data['devices'].values() for p in group if p['name'].startswith('iPad') and p.get('isAvailable')]
+          tablets.sort(key=lambda p: ('Air 11' in p['name'],p['name']),reverse=True)
+          if not tablets: raise SystemExit('No available iPad simulator')
           with open(os.environ['GITHUB_OUTPUT'],'a') as f: f.write('udid='+phones[0]['udid']+'\n')
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f: f.write('ipad_udid='+tablets[0]['udid']+'\n')
           print('QA simulator:',phones[0]['name'])
+          print('iPad QA simulator:',tablets[0]['name'])
           PY
       - name: UI smoke tests and actual preview screenshots
         run: |
@@ -70,6 +75,13 @@ jobs:
           if [ -d TestResults/DuoSound.xcresult ]; then
             xcrun xcresulttool export attachments --path TestResults/DuoSound.xcresult --output-path TestResults/Attachments
           fi
+      - name: iPad audio regression and UI tests
+        run: |
+          xcrun simctl bootstatus '${{ steps.simulator.outputs.ipad_udid }}' -b
+          xcodebuild -project DuoSound.xcodeproj -scheme DuoSound -configuration Debug \
+            -destination 'platform=iOS Simulator,id=${{ steps.simulator.outputs.ipad_udid }}' \
+            -derivedDataPath DerivedData -resultBundlePath TestResults/Hingy-iPad.xcresult \
+            -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO test
       - uses: actions/upload-artifact@v4
         if: always()
         with:

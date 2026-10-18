@@ -41,14 +41,14 @@ struct ContentView: View {
                             .accessibilityLabel("Effect volume")
                     }
                 } footer: {
-                    Text("Respects Silent Mode and system volume. Audio follows your current output, including headphones. Preview buttons work even when fold sounds are paused.")
+                    Text("Automatic fold sounds respect Silent Mode. Preview and simulated folds play even in Silent Mode. Preview also works when fold sounds are paused. All sounds use system and effect volume and your selected audio output, including headphones.")
                 }
                 soundSection(.opened)
                 soundSection(.closed)
                 Section {
-                    Toggle("Simulate hinge", isOn: Binding(get: { model.isDemo }, set: model.setDemo))
+                    Toggle("Simulate hinge", isOn: Binding(get: { model.isDemo }, set: { model.setDemo($0) }))
                     if model.isDemo {
-                        Slider(value: Binding(get: { model.demoAngle }, set: model.setDemoAngle), in: 0...180, step: 1)
+                        Slider(value: Binding(get: { model.demoAngle }, set: { model.setDemoAngle($0) }), in: 0...180, step: 1)
                             .accessibilityLabel("Simulated hinge angle").accessibilityIdentifier("demoAngle")
                         HStack {
                             Button { model.setDemoAngle(180) } label: { Label("Open", systemImage: "arrow.up.left.and.arrow.down.right") }
@@ -59,7 +59,7 @@ struct ContentView: View {
                         }.buttonStyle(.bordered)
                     }
                 } header: { Text("Try a fold") } footer: {
-                    Text(model.isDemo ? "Simulated events only; these controls do not read your phone’s hinge." : "Automatic detection needs a build with the Duo hinge SDK and a supported device. This build never guesses from screen size, rotation, or lock state.")
+                    Text(model.isDemo ? "Simulated events only; these controls do not read your phone’s hinge." : model.hardwareAvailable == false ? "This device has no available hinge. You can preview every sound or turn on Simulate hinge to try opening and closing." : "Automatic detection needs a supported hinge. It never guesses from screen size, rotation, or lock state.")
                 }
                 Section {
                     Label("Foreground only", systemImage: "info.circle")
@@ -89,7 +89,7 @@ struct ContentView: View {
                         }
                         Section("Built for iPhone Duo") {
                             Text("Inspired by Scrunch. Original Swift implementation and original synthesized sounds; no Scrunch code or sound assets are bundled.")
-                            Text("Hinge integration uses Apple’s public UIHingeInteraction on iOS 27.1 and newer. The default build remains a demo; Duo builds use the same runtime bridge and the app stays foreground only.")
+                            Text("Hinge integration uses Apple’s public UIHingeInteraction on iOS 27.1 and newer. Sound previews also work on iPhone and iPad without a hinge. Fold effects work only while Hingy is visible and active.")
                         }
                     }
                     .navigationTitle("About Hingy")
@@ -133,6 +133,7 @@ struct ContentView: View {
             HStack {
                 Button { model.preview(event) } label: { Label("Preview", systemImage: "play.fill") }
                     .accessibilityLabel("Preview \(event.title.lowercased()) sound")
+                    .accessibilityIdentifier("preview-selected-\(event.rawValue)")
                 Spacer()
                 Button { importEvent = event; showImporter = true } label: { Label("Import", systemImage: "square.and.arrow.down") }
                     .accessibilityLabel("Import \(event.title.lowercased()) sound")
@@ -154,6 +155,13 @@ struct SoundLibraryView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    Text(model.lastEvent)
+                        .font(.footnote).foregroundStyle(.secondary)
+                        .accessibilityIdentifier("libraryPreviewStatus")
+                } footer: {
+                    Text("Preview plays in Silent Mode. Check system and effect volume and your audio output if you cannot hear it.")
+                }
                 if search.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Section {
                         row(.off)

@@ -35,7 +35,7 @@ struct SoundHelpView: View {
     var body: some View {
         Form {
             Section("No sound?") {
-                Text("Turn off Silent Mode, check system and effect volume, and check whether audio is routed to headphones or Bluetooth. Select a sound other than Off, then tap Preview.")
+                Text("Select a sound other than Off, then tap Preview. Previews and simulated folds play even in Silent Mode. Check system and effect volume and whether audio is routed to headphones or Bluetooth. Automatic fold sounds respect Silent Mode.")
             }
             Section("When fold effects work") {
                 Text("Hingy must be visible and active. The default preview simulates the hinge; it does not detect a physical fold. Hardware support requires a validated Duo SDK build. Locking or switching apps stops observation and cancels pending effects.")

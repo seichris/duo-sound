@@ -1,4 +1,22 @@
-# iPhone Duo research — September 20, 2026
+# iPhone Duo research
+
+## October 18, 2026 SDK audit
+
+The current adapter uses typed `UIHingeInteraction(updateHandler:)` from the installed iOS 27.1 SDK, replacing the September Objective-C allocation, dynamic selector and key-value bridge. Apple documents an initial update, nullable `update.hinge` when a view leaves its hinge-providing hierarchy, and `UIHinge.angle` in radians. The adapter converts radians to degrees. Observation is enabled only while the app is active and outside simulation; re-enabling delivers the current state, allowing the model to establish a silent baseline after foreground return. Runtime availability checks retain iOS 17 compatibility; Duo configurations now require Xcode/iOS SDK 27.1 or newer. Default preview configurations can still compile with SDK 26.
+
+Sources checked: [UIHingeInteraction](https://developer.apple.com/documentation/uikit/uihingeinteraction), [UIHinge](https://developer.apple.com/documentation/uikit/uihinge), [Duo preparation](https://developer.apple.com/documentation/technologyoverviews/preparing-your-app-for-iphone-duo), and matching public headers in Xcode 27.1 build 27A9275. The local installation is named Xcode-27.1-RC; compile success does not establish upload acceptance.
+
+The native Form, List and NavigationStack provide adaptive layout. No width, screen model, orientation or scene transition is interpreted as a fold. Camera and multiscene APIs are not needed for this foreground sound app. Physical open/close/display-handoff behavior remains a separate release gate.
+
+Audio auditions now use `.playback` with `.mixWithOthers`, following Apple’s [playback category documentation](https://developer.apple.com/documentation/avfaudio/avaudiosession/category-swift.struct/playback). Manual previews and simulated folds work in Silent Mode; physical fold effects retain `.ambient`. Missing hinge updates and session-configuration notifications do not interrupt auditions. Actual output-device changes, inactivity and interruptions stop playback. No background mode is added.
+
+Apple’s [screenshot specifications](https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications) require Duo screenshots starting April 2027 for submissions built with SDK 27.1 or later. This requirement is separate from the September sound rejection.
+
+See [the resubmission validation report](RESUBMISSION_VALIDATION.md) for current evidence and outstanding gates.
+
+## Historical research — September 20, 2026
+
+The following records the earlier implementation and toolchain; it is not current validation.
 
 ## Scope and conclusion
 

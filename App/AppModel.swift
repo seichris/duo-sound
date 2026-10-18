@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 @MainActor
 final class AppModel: ObservableObject {
@@ -19,15 +20,16 @@ final class AppModel: ObservableObject {
         #endif
     }
     private var store: SettingsStore?
-    private let audio = SoundPlayer()
+    private let audio: SoundPlayer
     private var detector = FoldDetector()
     private var pending: Task<Void, Never>?
     private let epoch = ContinuousClock.now
     private var generated: [String: Data] = [:]
 
-    init() {
+    init(directory: URL? = nil, audio: SoundPlayer? = nil) {
+        self.audio = audio ?? SoundPlayer()
         do {
-            let directory = try FileManager.default.url(for: .applicationSupportDirectory,
+            let directory = try directory ?? FileManager.default.url(for: .applicationSupportDirectory,
                 in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("DuoSound", isDirectory: true)
             let storage = SettingsStore(directory: directory)
             store = storage
@@ -73,13 +75,27 @@ final class AppModel: ObservableObject {
         hardwareAvailable = value != nil
         guard !isDemo else { return }
         guard let value else {
-            resetObservation(); return
+            // Missing hinge data is normal on iPad and during hierarchy changes.
+            // Cancel physical fold work without cutting off manual previews.
+            resetObservation(stopPreview: false); return
         }
         receive(value)
     }
     func interruptAudio() {
         // Never resume an old effect after a call, route change, or media reset.
         resetObservation()
+    }
+    func audioRouteChanged(_ notification: Notification) {
+        guard let raw = (notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? NSNumber)?.uintValue,
+              let reason = AVAudioSession.RouteChangeReason(rawValue: raw) else { return }
+        switch reason {
+        case .oldDeviceUnavailable, .newDeviceAvailable, .override, .noSuitableRouteForCategory:
+            interruptAudio()
+        default:
+            // Our session activation/configuration can post category and route
+            // configuration changes. These must not cancel the sound just started.
+            break
+        }
     }
     func updateSettings(_ edit: (inout SoundSettings) -> Void) {
         var next = settings
@@ -96,7 +112,7 @@ final class AppModel: ObservableObject {
     }
     func preview(_ event: FoldEvent, preset: SoundPreset? = nil) {
         guard isActive else { return }
-        play(event, label: "Preview", preset: preset)
+        play(event, label: "Preview", preset: preset, purpose: .preview)
     }
     func importSound(from url: URL, event: FoldEvent) {
         let scoped = url.startAccessingSecurityScopedResource()
@@ -125,10 +141,10 @@ final class AppModel: ObservableObject {
         } catch { errorMessage = "Could not import audio: \(error.localizedDescription)" }
     }
 
-    private func resetObservation() {
+    private func resetObservation(stopPreview: Bool = true) {
         pending?.cancel(); pending = nil
         detector.reset()
-        audio.stop()
+        if stopPreview { audio.stop() } else { audio.stopFoldSound() }
         angle = isDemo ? demoAngle : nil
         if isActive && isDemo { _ = detector.ingest(angle: demoAngle, at: now) }
     }
@@ -151,9 +167,10 @@ final class AppModel: ObservableObject {
     }
     private func trigger(_ event: FoldEvent) {
         guard isActive, settings.enabled else { return }
-        play(event, label: isDemo ? "Demo fold" : "Hinge")
+        play(event, label: isDemo ? "Demo fold" : "Hinge", purpose: isDemo ? .preview : .fold)
     }
-    private func play(_ event: FoldEvent, label: String, preset override: SoundPreset? = nil) {
+    private func play(_ event: FoldEvent, label: String, preset override: SoundPreset? = nil,
+                      purpose: SoundPlayer.Purpose) {
         let preset = override ?? settings.preset(for: event)
         guard preset != .off else {
             audio.stop(); lastEvent = "\(label) · \(event.title) sound is off"; return
@@ -173,7 +190,7 @@ final class AppModel: ObservableObject {
                     generated[key] = rendered; data = rendered
                 }
             }
-            try audio.play(data, volume: settings.volume)
+            try audio.play(data, volume: settings.volume, purpose: purpose)
             lastEvent = "\(label) · \(event.title) · \(preset.title)"
         } catch { errorMessage = error.localizedDescription }
     }

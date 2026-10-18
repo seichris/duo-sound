@@ -1,26 +1,22 @@
 import SwiftUI
 
-// The default scheme intentionally remains a simulation.  The Duo build uses
-// UIKit's public UIHingeInteraction, but resolves the class at runtime so the
-// distribution binary can be built with Apple's supported stable SDK.  This
-// keeps the app installable on older iOS releases while allowing iOS 27.1 to
-// provide real hinge updates.
 #if DUO_HINGE_SDK
-import ObjectiveC
 import UIKit
 #endif
 
 @MainActor
 struct HingeObservation: ViewModifier {
     @ObservedObject var model: AppModel
+
     @ViewBuilder func body(content: Content) -> some View {
         #if DUO_HINGE_SDK
         content.background(
-            HingeInteractionBridge { angle in
-                model.receiveHardware(angle: angle)
-            }
-            .frame(width: 0, height: 0)
+            HingeInteractionBridge(model: model)
+                .frame(width: 0, height: 0)
         )
+        .onAppear {
+            if #unavailable(iOS 27.1) { model.receiveHardware(angle: nil) }
+        }
         #else
         content
         #endif
@@ -28,66 +24,59 @@ struct HingeObservation: ViewModifier {
 }
 
 #if DUO_HINGE_SDK
-/// A zero-size view that installs Apple's public hinge interaction into the
-/// SwiftUI hierarchy.  The runtime lookup is deliberate: Xcode 26.6 can build
-/// this release while iOS 27.1 supplies the class on a supported Duo device.
+/// Uses Apple's typed SDK declarations with runtime availability checks.
 @MainActor
 private struct HingeInteractionBridge: UIViewRepresentable {
-    let onAngle: (Double?) -> Void
+    @ObservedObject var model: AppModel
 
-    func makeCoordinator() -> Coordinator {
-        Coordinator(onAngle: onAngle)
-    }
+    func makeCoordinator() -> Coordinator { Coordinator(model: model) }
 
     func makeUIView(context: Context) -> UIView {
         let view = UIView(frame: .zero)
-        if let interaction = context.coordinator.makeInteraction() {
+        if #available(iOS 27.1, *) {
+            let coordinator = context.coordinator
+            let interaction = UIHingeInteraction { [weak coordinator] _, update in
+                coordinator?.receive(update.hinge.map { Double($0.angle) * 180 / .pi })
+            }
+            interaction.isEnabled = false
             view.addInteraction(interaction)
-        } else {
-            // This is expected on ordinary iPhones and on iOS versions before
-            // 27.1.  AppModel reports the resulting lack of hinge data.
-            onAngle(nil)
         }
         return view
     }
 
-    func updateUIView(_ uiView: UIView, context: Context) {}
+    func updateUIView(_ view: UIView, context: Context) {
+        if #available(iOS 27.1, *),
+           let interaction = view.interactions.compactMap({ $0 as? UIHingeInteraction }).first {
+            let enabled = model.isActive && !model.isDemo
+            guard interaction.isEnabled != enabled else { return }
+            context.coordinator.invalidate()
+            // Re-enabling delivers the current sample, silently rebaselining
+            // after foreground return or leaving simulation.
+            interaction.isEnabled = enabled
+        }
+    }
+
+    static func dismantleUIView(_ view: UIView, coordinator: Coordinator) {
+        coordinator.invalidate()
+    }
 
     @MainActor
     final class Coordinator {
-        private let onAngle: (Double?) -> Void
-        private var interaction: UIInteraction?
+        private weak var model: AppModel?
+        private var generation = 0
 
-        init(onAngle: @escaping (Double?) -> Void) {
-            self.onAngle = onAngle
-        }
+        init(model: AppModel) { self.model = model }
+        func invalidate() { generation += 1 }
 
-        func makeInteraction() -> UIInteraction? {
-            guard #available(iOS 27.1, *) else { return nil }
-            guard let interactionType = NSClassFromString("UIHingeInteraction") as? NSObject.Type else {
-                return nil
+        func receive(_ angle: Double?) {
+            let expected = generation
+            // Initial/re-enable updates can arrive during updateUIView. Publish
+            // after that render pass, discarding callbacks from old lifecycles.
+            Task { @MainActor [weak self] in
+                guard let self, self.generation == expected, let model = self.model,
+                      model.isActive, !model.isDemo else { return }
+                model.receiveHardware(angle: angle)
             }
-
-            // UIHingeInteraction has an unavailable `init` in the SDK.  Use
-            // Objective-C runtime allocation only to call its documented
-            // `initWithUpdateHandler:` initializer; no private selector or
-            // framework symbol is used.
-            let raw = class_createInstance(interactionType, 0) as! NSObject
-            let handler: @convention(block) (AnyObject, AnyObject) -> Void = { [onAngle] _, update in
-                let hinge = (update as? NSObject)?.value(forKey: "hinge") as? NSObject
-                let radians = (hinge?.value(forKey: "angle") as? NSNumber)?.doubleValue
-                let degrees = radians.map { $0 * 180 / .pi }
-                Task { @MainActor in
-                    onAngle(degrees)
-                }
-            }
-            let selector = NSSelectorFromString("initWithUpdateHandler:")
-            guard let initialized = raw.perform(selector, with: handler)?.takeUnretainedValue() as? NSObject,
-                  let interaction = initialized as? UIInteraction else {
-                return nil
-            }
-            self.interaction = interaction
-            return interaction
         }
     }
 }

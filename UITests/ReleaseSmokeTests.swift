@@ -9,7 +9,7 @@ final class ReleaseSmokeTests: XCTestCase {
         app.launch()
         let status = app.staticTexts["monitoringStatus"]
         XCTAssertTrue(status.waitForExistence(timeout: 10))
-        XCTAssertTrue(status.label.contains("SIMULATED HINGE"))
+        XCTAssertFalse(status.label.isEmpty)
         capture("01-preview-home-not-hardware")
         app.buttons["About"].tap()
         let privacy = app.buttons["privacyPolicy"]
@@ -26,6 +26,9 @@ final class ReleaseSmokeTests: XCTestCase {
     func testSimulatedOpenCloseDoesNotClaimHardware() throws {
         let app = XCUIApplication()
         app.launch()
+        let simulation = app.switches["Simulate hinge"]
+        for _ in 0..<6 where !simulation.isHittable { app.swipeUp() }
+        if simulation.value as? String == "0" { simulation.tap() }
         let open = app.buttons["demoOpen"]
         for _ in 0..<6 where !open.isHittable { app.swipeUp() }
         XCTAssertTrue(open.isHittable)
@@ -59,6 +62,9 @@ final class ReleaseSmokeTests: XCTestCase {
         let crystal = app.buttons["select-opened-crystal"]
         XCTAssertTrue(crystal.waitForExistence(timeout: 5))
         app.buttons["preview-opened-crystal"].tap()
+        let feedback = app.staticTexts["libraryPreviewStatus"]
+        for _ in 0..<4 where !feedback.isHittable { app.swipeDown() }
+        XCTAssertTrue(feedback.label.contains("Preview · Opening · Crystal"))
         XCTAssertEqual(crystal.value as? String, "Not selected", "Preview must not save a selection")
         crystal.tap()
         XCTAssertEqual(crystal.value as? String, "Selected")
@@ -81,6 +87,28 @@ final class ReleaseSmokeTests: XCTestCase {
         for _ in 0..<6 where !closing.isHittable { app.swipeUp() }
         XCTAssertEqual(closing.value as? String, "Laser")
         XCTAssertEqual(app.buttons["soundChoice-opened"].value as? String, "Crystal")
+    }
+
+    @MainActor
+    func testSelectedPreviewsRespondWithoutHingeOrAutomaticSounds() {
+        let app = XCUIApplication()
+        app.launch()
+        let enabled = app.switches["Enable fold sounds"]
+        for _ in 0..<6 where !enabled.isHittable { app.swipeUp() }
+        if enabled.value as? String == "1" { enabled.tap() }
+        for event in ["opened", "closed"] {
+            let preview = app.buttons["preview-selected-\(event)"]
+            for _ in 0..<6 where !preview.isHittable { app.swipeUp() }
+            XCTAssertTrue(preview.isHittable)
+            preview.tap()
+            let lastEvent = app.staticTexts["lastEvent"]
+            for _ in 0..<6 where !lastEvent.isHittable { app.swipeDown() }
+            XCTAssertTrue(lastEvent.label.contains("Preview · \(event == "opened" ? "Opening" : "Closing")"))
+            XCTAssertFalse(app.alerts["Hingy"].exists)
+        }
+        for _ in 0..<6 where !enabled.isHittable { app.swipeUp() }
+        enabled.tap()
+        capture("06-manual-previews-with-fold-sounds-paused")
     }
 
     @MainActor

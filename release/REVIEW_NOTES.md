@@ -10,9 +10,11 @@ The distinct intended interaction is a physical fold with individually assigned 
 
 ## Reviewer flow for the validated hardware build
 
+On iPad or an iPhone without a hinge: tap **Preview** under Opening or Closing, or open the sound library and tap a play button. These controls do not require hinge hardware and work even in Silent Mode or with fold sounds paused. Select a non-Off sound and use nonzero system/effect volume. Audio follows the current route, including headphones or Bluetooth. **Simulate hinge** provides explicitly labelled manual Open/Close controls; these also play in Silent Mode when fold sounds are enabled.
+
 With the app visible and active on supported hardware, establish its initial hinge state; the first observation is silent. Open and close, and verify the separate selections. Confirm actual endpoint/handoff behavior against the attached validation report. Use Preview to audition effects, change the volume, select Off, and import a short audio file through Files. A suitable fixture can be generated with `scripts/generate_assets.py` for testing; no protected third-party audio is bundled.
 
-The app respects Silent Mode and current output routing. It intentionally suppresses pending effects when inactive, interrupted, locked, or suspended. No microphone, camera, background-audio entitlement, private API, account, ads, purchases, or analytics SDK is used. There is no remote content catalogue or user-to-user sharing service.
+Manual Preview buttons and library play buttons work on iPhone and iPad without a hinge, even in Silent Mode or when fold sounds are disabled. Simulated folds also play in Silent Mode when fold sounds are enabled. Automatic fold effects respect Silent Mode. Both respect system/effect volume and current output routing. It intentionally suppresses pending effects when inactive, interrupted, locked, or suspended. No microphone, camera, background-audio entitlement, private API, account, ads, purchases, or analytics SDK is used. There is no remote content catalogue or user-to-user sharing service.
 
 ## Attach before submitting
 

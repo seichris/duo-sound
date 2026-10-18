@@ -10,15 +10,16 @@ The added sound-library tests cover catalog completeness, readable labels, stabl
 
 ## First iOS simulator/device smoke test
 
-Open the default DuoSound scheme. Verify demo labelling, Open/Close and slider sounds; previews with automatic playback disabled; Silent Mode, headphones, music mixing, effect/system volume; a second effect replaces the first. Import a valid short WAV/M4A/MP3 supported by AVAudioPlayer; cancel an import; reject an invalid file, >8 MiB file and >5-second clip. Relaunch and verify selection/volume persistence. Missing custom audio must surface an error rather than quietly selecting another sound. Test Dynamic Type, VoiceOver, light/dark appearance and compact/landscape/iPad resizing. The supplied 1024-pixel RGB icon is validated by `scripts/generate_assets.py` and the Xcode build phase; review its appearance on supported devices before release.
+Open the default DuoSound scheme. Verify demo labelling, Open/Close and slider sounds; previews with automatic playback disabled; explicit previews and simulation audible in Silent Mode, physical folds muted in Silent Mode; headphones, music mixing, effect/system volume; a second effect replaces the first. Import a valid short WAV/M4A/MP3 supported by AVAudioPlayer; cancel an import; reject an invalid file, >8 MiB file and >5-second clip. Relaunch and verify selection/volume persistence. Missing custom audio must surface an error rather than quietly selecting another sound. Test Dynamic Type, VoiceOver, light/dark appearance and compact/landscape/iPad resizing. The supplied 1024-pixel RGB icon is validated by `scripts/generate_assets.py` and the Xcode build phase; review its appearance on supported devices before release.
 
 ## SDK activation — mandatory
 
-1. Verify the iOS 27.1 Duo runtime is installed and select a supported stable Xcode for distribution. This project was checked with Xcode 26.6 (build 17F113) and Xcode 27.1 beta (build 27A9269).
-2. Confirm the public `UIHingeInteraction`/`UIHinge` declarations in the iOS 27.1 SDK. The adapter uses a runtime bridge so a stable-SDK binary can load the public class only on iOS 27.1 or newer.
-3. Confirm that 0 degrees is closed, 180 degrees is flat, and endpoint angles are valid; do not assume this from our demo. Confirm whether an initial callback is delivered. The first live sample deliberately seeds a silent baseline, so without initial delivery the first gesture may be consumed as that baseline.
-4. Select **DuoSound-DuoSDK**, which sets `DUO_HINGE_SDK` in Debug-Duo/Release-Duo, and build with stable Xcode. A green default-scheme CI run says nothing about this path.
-5. Use the Duo Device Hub simulator when available. Test both a supported hinge and a nil hinge. Never infer hardware support from model strings or display geometry.
+1. Use Xcode 27.1 or newer for Duo configurations. The runtime bridge has been replaced by typed public `UIHingeInteraction` calls. The default preview configuration still supports SDK 26.
+2. Build **DuoSound-DuoSDK** for both device and simulator SDKs. A default-scheme green check does not cover the hinge adapter.
+3. Apple documents initial delivery and a new current-state update when `isEnabled` returns to true. Confirm silent first observation and foreground-return rebaselining in the simulator and on a physical Duo.
+4. Confirm the app's 0–180-degree convention, 8/22-degree thresholds and 80 ms dwell on hardware. Angle updates have no guaranteed frequency/precision. Missing hinge data must cancel pending fold work without cancelling manual sound previews.
+5. Run hosted **DuoSoundAppTests** and UI **DuoSoundUITests** on iPad as well as iPhone. Hosted tests check actual AVAudioPlayer progress, all 40 built-in auditions, imported audio, no-hinge updates, configuration notifications, route removal, inactive/interrupted playback and Silent Mode category policy. Simulator progress does not prove audible physical output.
+6. Test a fresh release installation on iPadOS 27.2 (the review OS). The local 27.0 and 26.5 runtimes cannot establish that result. On iPad without a hinge, selected/library previews and manual simulation must remain usable.
 
 ## Physical Duo acceptance — release blocking
 
