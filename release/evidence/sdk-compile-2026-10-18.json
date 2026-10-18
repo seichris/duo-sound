@@ -1,6 +1,6 @@
 {
   "date": "2026-10-18",
-  "source_sha256": "dd4ff83d0832c55abeab2a82fad5140c0086e2db066969d701fba6c07ce13190",
+  "source_sha256": "5686d5f2400d00447f3b4c7ed1d07e2513dd0e640828df8a3c009ad9e7858096",
   "toolchain_installation": "Xcode-27.1-RC.app",
   "scope": "Unsigned compilation only; no physical playback, handoff or upload acceptance established",
   "builds": [

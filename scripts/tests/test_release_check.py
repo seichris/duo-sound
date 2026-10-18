@@ -66,8 +66,10 @@ class ReleaseCheckTests(unittest.TestCase):
 
     def test_setting_ready_alone_does_not_approve_release(self):
         self.readiness['status']='ready'
+        self.readiness['evidence']['physical_open_close_and_handoff']={'passed':False,'reference':None}
         errors=rc.submission_errors(ROOT,self.readiness)
-        self.assertGreater(len(errors),8)
+        self.assertIn('Unverified: physical_open_close_and_handoff',errors)
+        self.assertNotIn('Release status is blocked',errors)
 
     def test_no_fake_contact_from_example_values(self):
         self.readiness['owner']['legal_name']='EXAMPLE Publisher'
