@@ -130,10 +130,13 @@ final class ReleaseSmokeTests: XCTestCase {
 
     @MainActor
     private func dismissLibrarySearch(_ app: XCUIApplication) {
-        // In iOS 27, the expanded searchable field replaces the sheet's
-        // navigation bar until its trailing close control is tapped.
+        // Search replaces the sheet toolbar. Older supported iOS versions use
+        // Cancel, while iOS 27 uses a trailing close control.
+        let cancel = app.buttons["Cancel"]
         let close = app.buttons["close"]
-        if close.waitForExistence(timeout: 2) { close.tap() }
+        if cancel.exists && cancel.isHittable { cancel.tap() }
+        else if close.waitForExistence(timeout: 2) { close.tap() }
+        XCTAssertTrue(app.buttons["Done"].waitForExistence(timeout: 5))
     }
 
     @MainActor
