@@ -4,6 +4,22 @@ final class ReleaseSmokeTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
 
     @MainActor
+    func testDuoPublicHingeProvidesSilentInitialReading() throws {
+        guard ProcessInfo.processInfo.environment["HINGY_DUO_INTEGRATION"] == "1" else {
+            throw XCTSkip("Requires the typed Duo scheme and a real Duo simulator hinge; run the Duo SDK workflow.")
+        }
+        let app = XCUIApplication()
+        app.launch()
+        let status = app.staticTexts["monitoringStatus"]
+        XCTAssertTrue(status.waitForExistence(timeout: 15))
+        expectation(for: NSPredicate(format: "label == %@", "FOREGROUND LISTENING"), evaluatedWith: status)
+        waitForExpectations(timeout: 15)
+        XCTAssertFalse(app.staticTexts["No hinge reading"].exists)
+        XCTAssertEqual(app.staticTexts["lastEvent"].label, "No sound triggered yet")
+        capture("00-public-duo-hinge-initial-reading-simulator")
+    }
+
+    @MainActor
     func testPreviewLaunchAndPrivacy() throws {
         let app = XCUIApplication()
         app.launch()
@@ -121,6 +137,11 @@ final class ReleaseSmokeTests: XCTestCase {
     private func searchLibrary(_ app: XCUIApplication, for query: String) {
         let search = app.searchFields.firstMatch
         search.tap()
+        if search.buttons["Clear text"].exists {
+            search.buttons["Clear text"].tap()
+            // Clearing can end editing on iPadOS 27; focus the field again.
+            search.tap()
+        }
         // Search activation animates independently of the sheet on iPadOS 27.
         // Wait for focus UI before typing, with one bounded retry of the tap.
         let focused = NSPredicate { _, _ in
@@ -130,7 +151,6 @@ final class ReleaseSmokeTests: XCTestCase {
             search.tap()
             XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: focused, object: nil)], timeout: 5), .completed)
         }
-        if search.buttons["Clear text"].exists { search.buttons["Clear text"].tap() }
         search.typeText(query)
     }
 
