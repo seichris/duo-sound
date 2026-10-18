@@ -143,12 +143,21 @@ final class ReleaseSmokeTests: XCTestCase {
         XCTAssertGreaterThanOrEqual(choice.frame.minY, safeTop)
         XCTAssertLessThanOrEqual(choice.frame.maxY, safeBottom)
         choice.tap()
-        XCTAssertTrue(app.searchFields.firstMatch.waitForExistence(timeout: 5))
+        let title = event == "opened" ? "Opening sounds" : "Closing sounds"
+        XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 5))
     }
 
     @MainActor
     private func searchLibrary(_ app: XCUIApplication, for query: String) {
         let search = app.searchFields.firstMatch
+        // Compact Duo sheets collapse searchable into a bottom Search button.
+        // Open that native control before expecting the editable field.
+        if !search.waitForExistence(timeout: 2) {
+            let activateSearch = app.buttons["Search"]
+            XCTAssertTrue(activateSearch.waitForExistence(timeout: 5))
+            activateSearch.tap()
+        }
+        XCTAssertTrue(search.waitForExistence(timeout: 5))
         search.tap()
         if search.buttons["Clear text"].exists {
             search.buttons["Clear text"].tap()
