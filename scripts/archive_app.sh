@@ -6,7 +6,7 @@ cd "$(dirname "$0")/.."
 [[ "$BUILD_NUMBER" =~ ^[1-9][0-9]*$ ]] || { echo 'Invalid BUILD_NUMBER' >&2; exit 1; }
 python3 scripts/generate_assets.py
 python3 scripts/generate_project.py
-python3 scripts/release_check.py --submission
+python3 scripts/release_check.py --archive
 TEAM_ID="$(python3 -c "import json; print(json.load(open('release/readiness.json'))['owner']['team_id'])")"
 mkdir -p build
 xcodebuild -project DuoSound.xcodeproj -scheme DuoSound-AppStore -configuration AppStore \

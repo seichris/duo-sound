@@ -1,0 +1,30 @@
+test_catalog_and_preserved_sources_validate (test_recorded_sounds.RecordedSoundIntegrityTests.test_catalog_and_preserved_sources_validate) ... ok
+test_changed_license_is_rejected (test_recorded_sounds.RecordedSoundIntegrityTests.test_changed_license_is_rejected) ... ok
+test_changed_preserved_source_is_rejected (test_recorded_sounds.RecordedSoundIntegrityTests.test_changed_preserved_source_is_rejected) ... ok
+test_changed_shipped_audio_is_rejected (test_recorded_sounds.RecordedSoundIntegrityTests.test_changed_shipped_audio_is_rejected) ... ok
+test_archive_does_not_require_future_apple_processing (test_release_check.ReleaseCheckTests.test_archive_does_not_require_future_apple_processing) ... ok
+test_bad_png_fails (test_release_check.ReleaseCheckTests.test_bad_png_fails) ... ok
+test_british_override_inherits_description (test_release_check.ReleaseCheckTests.test_british_override_inherits_description) ... ok
+test_competitor_keywords_fail (test_release_check.ReleaseCheckTests.test_competitor_keywords_fail) ... ok
+test_current_metadata_has_valid_limits (test_release_check.ReleaseCheckTests.test_current_metadata_has_valid_limits) ... ok
+test_deleting_evidence_cannot_bypass_gate (test_release_check.ReleaseCheckTests.test_deleting_evidence_cannot_bypass_gate) ... ok
+test_empty_locale_set_fails (test_release_check.ReleaseCheckTests.test_empty_locale_set_fails) ... ok
+test_keyword_byte_limit (test_release_check.ReleaseCheckTests.test_keyword_byte_limit) ... ok
+test_keyword_duplicates_fail (test_release_check.ReleaseCheckTests.test_keyword_duplicates_fail) ... ok
+test_locale_cycle_fails (test_release_check.ReleaseCheckTests.test_locale_cycle_fails) ... ok
+test_missing_disclosure_fails (test_release_check.ReleaseCheckTests.test_missing_disclosure_fails) ... ok
+test_no_fake_contact_from_example_values (test_release_check.ReleaseCheckTests.test_no_fake_contact_from_example_values) ... ok
+test_original_icon_is_rgb_not_transparent (test_release_check.ReleaseCheckTests.test_original_icon_is_rgb_not_transparent) ... ok
+test_overlong_title_fails (test_release_check.ReleaseCheckTests.test_overlong_title_fails) ... ok
+test_paths_cannot_escape (test_release_check.ReleaseCheckTests.test_paths_cannot_escape) ... ok
+test_physical_waiver_never_claims_a_physical_pass (test_release_check.ReleaseCheckTests.test_physical_waiver_never_claims_a_physical_pass) ... ok
+test_physical_waiver_requires_a_real_current_authorization_record (test_release_check.ReleaseCheckTests.test_physical_waiver_requires_a_real_current_authorization_record) ... ok
+test_setting_ready_alone_does_not_approve_release (test_release_check.ReleaseCheckTests.test_setting_ready_alone_does_not_approve_release) ... ok
+test_stale_fingerprint_fails (test_release_check.ReleaseCheckTests.test_stale_fingerprint_fails) ... ok
+test_unapproved_submission_is_explicitly_blocked (test_release_check.ReleaseCheckTests.test_unapproved_submission_is_explicitly_blocked) ... ok
+test_url_requires_https_without_credentials (test_release_check.ReleaseCheckTests.test_url_requires_https_without_credentials) ... ok
+
+----------------------------------------------------------------------
+Ran 25 tests in 0.684s
+
+OK

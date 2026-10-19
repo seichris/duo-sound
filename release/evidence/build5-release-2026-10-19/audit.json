@@ -1,0 +1,43 @@
+{
+  "candidate": "1.0 (5)",
+  "privacy": {
+    "published": true,
+    "observed_label": "Data Not Collected",
+    "publisher": "WEB3 FZCO",
+    "observed_route": "https://appstoreconnect.apple.com/apps/6812193737/distribution/privacy",
+    "proof": "privacy-published.png",
+    "policy_url": "https://github.com/seichris/duo-sound/blob/main/docs/PRIVACY.md",
+    "audit": "App/Sources use private JSON/file storage, user-selected file imports, local audio and local hinge observations; no network client, advertising/analytics SDK, microphone, permissions or remote catalogue. CC0 assets are audio resources, not third-party executable SDKs. No direct listed required-reason APIs in application sources: no UserDefaults, boot-uptime/mach_absolute_time, file timestamp/disk capacity or keyboard enumeration. ContinuousClock only measures local intervals. Archive manifests/linkage will be inspected after export.",
+    "required_reason_source": "https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitype"
+  },
+  "qa": {
+    "basis": "41 core tests; 13 hosted player/model tests plus full UI suite. iPhone/iPad 18/0/1 and Duo 19/0/0 on unchanged App/Sources. Recorded imports and previews validate decode, bounds, persistence, missing hinge, route/lifecycle cancellation, active-state and explicit labels. Static accessibility labels/IDs and actual UI captures inspected. No claim of physical output, human listening or full assistive-technology certification.",
+    "ci_reference": "release/evidence/build5-ci-2026-10-19.json"
+  },
+  "store": {
+    "six_native_candidates_reviewed": true,
+    "dimensions_validated": true,
+    "raw_simulation_and_no_hinge_labels_retained": true,
+    "content_rights": "USES_THIRD_PARTY_CONTENT",
+    "crude_humor": "INFREQUENT_OR_MILD",
+    "review_contact_complete": true,
+    "contact_values_not_published": true,
+    "availability_exists": true,
+    "enabled_territories": [
+      "GBR",
+      "USA"
+    ],
+    "availability_changed": false,
+    "copyright": "2026 WEB3 FZCO",
+    "source_credits": "third_party/audio/sources.json"
+  },
+  "source_binding": {
+    "tested_implementation": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+    "app_and_sources_unchanged": true
+  },
+  "release_tests": {
+    "passed": 25,
+    "failed": 0,
+    "log": "release-tests.log"
+  }
+}

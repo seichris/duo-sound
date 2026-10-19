@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "status": "blocked",
+  "status": "ready_for_archive",
   "assessed_on": "2026-10-19",
-  "validated_source_sha256": "3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442",
+  "validated_source_sha256": "0287c83e98774637b55506ce5d25c26415bc7fa5f78973f14c800cda3b88f45c",
   "owner": {
     "legal_name": "WEB3 FZCO",
     "support_email": "jensen@web3.consulting",
@@ -21,32 +21,36 @@
     },
     "physical_open_close_and_handoff": {
       "passed": false,
-      "reference": null
+      "reference": null,
+      "waiver": {
+        "basis": "owner_authorized_simulator_only",
+        "reference": "release/evidence/build5-release-2026-10-19/simulator-release-authorization.json"
+      }
     },
     "audio_import_lifecycle_accessibility": {
-      "passed": false,
-      "reference": null
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
     },
     "privacy_manifest_and_policy_audited": {
-      "passed": false,
-      "reference": null
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
     },
     "real_store_screenshots_reviewed": {
-      "passed": false,
-      "reference": null
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
     },
     "public_urls_and_contact_verified": {
-      "passed": false,
-      "reference": null
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
     },
     "seller_age_rating_rights_and_availability": {
-      "passed": false,
-      "reference": null
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
     },
     "distribution_sdk_accepted_by_apple": {
       "passed": false,
       "reference": null
     }
   },
-  "notes": "Candidate 1.0 (5), product source 3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442: all implementation CI workflows passed on d9b74e2. Standard iPhone iOS 26.0.1, iPadOS 18.5 and typed iPadOS 27.0 each 18/0/1 (Duo-only skip); Duo iOS 27.1 19/0/0. Core 41/0, release tests 22/0; optimized unsigned SDK device/simulator builds pass. Six current native screenshot candidates pass local asc validation. Third-party content and mild crude-humor declarations updated/read back. Existing uploaded build 3 remains rejected; API metadata preflight does not validate build 5. Local 13-inch iPad capture tests 2/0/0; MCP wrapper timed out after underlying success. Physical audio/handoff, listening/full accessibility/import QA, final store presentation, archive/privacy publication, owner/storefront and Apple distribution acceptance gates remain unverified. Archive preflight is blocked; no IPA, upload or submission."
+  "notes": "Owner explicitly authorizes simulator-only release and upload/reply/submission. Physical pass remains false with source-bound authorization. All remaining pre-archive privacy/store/source checks are audited; actual Apple build acceptance is checked after upload. Runtime App/Sources unchanged from passing CI; only release guard and metadata approval changed."
 }
