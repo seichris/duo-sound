@@ -1,0 +1,35 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "970B4CC1-893F-4C30-95EF-FB3132DF116F",
+        "deviceName" : "Hingy iPad retry",
+        "exportedFileName" : "CC8F816D-52E9-4EB2-B904-57AC2EAD0E91.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "09-offline-sound-credits_0_83DAE30B-FBC4-4529-BFF5-8D0818A0FC69.png",
+        "timestamp" : 1792370549.148
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "970B4CC1-893F-4C30-95EF-FB3132DF116F",
+        "deviceName" : "Hingy iPad retry",
+        "exportedFileName" : "0F8245B2-DDAC-4F21-92A1-13E58A68303C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "08-kenney-selection-persisted_0_333A2574-0A59-461D-895D-DB6BB6D60391.png",
+        "timestamp" : 1792370539.247
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "970B4CC1-893F-4C30-95EF-FB3132DF116F",
+        "deviceName" : "Hingy iPad retry",
+        "exportedFileName" : "68651B55-7908-4E5B-B439-33D0ABFF809B.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "07-fart-library-preview_0_A56FD326-1DC5-4A77-B230-0DFBCB97E3E2.png",
+        "timestamp" : 1792370489.01
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testRecordedSoundsAndOfflineCredits()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testRecordedSoundsAndOfflineCredits"
+  }
+]

@@ -2,7 +2,7 @@
   "schema_version": 1,
   "status": "blocked",
   "assessed_on": "2026-10-19",
-  "validated_source_sha256": null,
+  "validated_source_sha256": "3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442",
   "owner": {
     "legal_name": "WEB3 FZCO",
     "support_email": "jensen@web3.consulting",
@@ -16,8 +16,8 @@
   },
   "evidence": {
     "public_sdk_compiles": {
-      "passed": false,
-      "reference": null
+      "passed": true,
+      "reference": "release/evidence/recorded-audio-compile-2026-10-19.json"
     },
     "physical_open_close_and_handoff": {
       "passed": false,
@@ -48,5 +48,5 @@
       "reference": null
     }
   },
-  "notes": "Candidate 1.0 (5) adds 26 bundled CC0 recordings, including six farts and eight Kenney effects, to the original 20 procedural presets. Build 4 test/compile evidence and screenshots are historical and do not validate this changed candidate. New core/resource/playback/build validation is in progress. Physical audio/handoff, full store assets, privacy publication, distribution acceptance and other existing gates remain unverified. Nothing uploaded or submitted."
+  "notes": "Candidate 1.0 (5): 46 choices, including 26 bundled CC0 recordings (six farts, eight Kenney). Product source 3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442 passes local core 41/0, release tests 22/0, scoped iPad 14/0/0 and Duo 15/0/0. Optimized unsigned SDK 27.1 device and simulator builds pass. These are scoped simulator checks, not physical output/handoff or listening review. Full CI is recorded separately. Build 4 results/captures are historical. Current reviewed store assets, physical audio/handoff, privacy publication, distribution acceptance and remaining gates are unverified. Nothing uploaded or submitted."
 }

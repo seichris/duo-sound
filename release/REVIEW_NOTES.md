@@ -2,7 +2,7 @@
 
 **Do not paste these notes as evidence that testing has happened.** Complete `readiness.json` and replace this heading with version/build/device/OS details from the tested candidate before submission. No review account is needed because the app has no login.
 
-Candidate under preparation: **1.0 (5)**. Rejected uploaded build: **1.0 (3)**. Current simulator and SDK evidence is in `docs/RESUBMISSION_VALIDATION.md`; no replacement upload or physical validation is claimed.
+Candidate under preparation: **1.0 (5)**. Rejected uploaded build: **1.0 (3)**. Current scoped simulator and SDK evidence is in `docs/RECORDED_AUDIO_VALIDATION.md`; no replacement upload or physical validation is claimed.
 
 ## Product and scope
 

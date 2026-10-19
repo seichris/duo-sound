@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-19",
+  "candidate": "1.0 (5)",
+  "implementation_commit": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+  "product_source_sha256": "3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442",
+  "scope": "Local targeted regression checks; not the full SDK CI matrix or physical-device validation",
+  "library": {
+    "total_choices": 46,
+    "synthesized_presets": 20,
+    "recordings": 26,
+    "farts": 6,
+    "kenney": 8,
+    "other_recommended_recordings": 12,
+    "unique_clips": 66,
+    "direction_options": 92,
+    "wav_bytes": 1704102,
+    "new_asset_license": "CC0-1.0",
+    "auditioned": false,
+    "freesound_source": "official public HQ MP3 previews, not original WAV downloads"
+  },
+  "checks": {
+    "core": {
+      "passed": 41,
+      "failed": 0,
+      "log": "recorded-audio-2026-10-19/core-tests.log"
+    },
+    "release_preparation": {
+      "passed": 22,
+      "failed": 0,
+      "log": "recorded-audio-2026-10-19/release-tests.log"
+    },
+    "ipad": {
+      "passed": 14,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "13 hosted audio/model tests and recorded-sound/credits UI regression",
+      "summary": "recorded-audio-2026-10-19/ipad-summary.json",
+      "xcresult_local": "/tmp/hingy-recorded-ipad.xcresult",
+      "test_helper_note": "Same product code. New UI preview assertion subsequently made repeat-safe by checking unchanged selection instead of requiring an initially unselected sound. Final helper tested on Duo."
+    },
+    "duo": {
+      "passed": 15,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "13 hosted audio/model tests, recorded-sound/credits UI regression and actual public hinge silent initial callback",
+      "summary": "recorded-audio-2026-10-19/duo-summary.json",
+      "xcresult_local": "/tmp/hingy-recorded-duo.xcresult"
+    },
+    "public_sdk_compilation": {
+      "passed": true,
+      "reference": "recorded-audio-compile-2026-10-19.json",
+      "testability": false,
+      "signing": false
+    },
+    "offline_reproduction": {
+      "passed": true,
+      "identical_files": 28,
+      "method": "Re-ran prepare_recorded_sounds with isolated temporary OUTPUT; compared every generated WAV, manifest and credits byte-for-byte against committed resources. No network."
+    }
+  },
+  "ui_inspection": "Exported Tiny Fart search/feedback, persisted Wood Knock and offline credits attachments inspected. QA captures, not reviewed store assets. Duo system display overlays are retained.",
+  "remaining": "No physical output/handoff or subjective listening review, no iPadOS 27.2 test, no reviewed current store screenshots or App Store upload/submission. Other readiness gates remain blocked.",
+  "ci": {
+    "implementation_head": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+    "standard": {
+      "url": "https://github.com/seichris/duo-sound/actions/runs/39182370871",
+      "status": "in_progress",
+      "conclusion": "",
+      "head_sha": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+      "active_steps": [
+        "UI smoke tests and actual preview screenshots"
+      ]
+    },
+    "sdk": {
+      "url": "https://github.com/seichris/duo-sound/actions/runs/39182370955",
+      "status": "in_progress",
+      "conclusion": "",
+      "head_sha": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+      "active_steps": [
+        "Test optimized typed scheme on iPadOS 27.0"
+      ]
+    },
+    "preparation": {
+      "url": "https://github.com/seichris/duo-sound/actions/runs/39182370809",
+      "status": "completed",
+      "conclusion": "success",
+      "head_sha": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+      "active_steps": []
+    },
+    "observed_at_utc": "2026-10-19T00:56:12.398663+00:00"
+  }
+}

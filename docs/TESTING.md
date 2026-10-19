@@ -1,4 +1,4 @@
-> Build 5 adds the recorded-sound checks documented in [SOUND_LIBRARY.md](SOUND_LIBRARY.md). Older counts below describe build 4; current scoped results are in the build 5 evidence.
+> Build 5 adds the recorded-sound checks documented in [SOUND_LIBRARY.md](SOUND_LIBRARY.md). Older counts below describe build 4; current scoped results are in [build 5 validation](RECORDED_AUDIO_VALIDATION.md).
 
 # Validation and release gates
 

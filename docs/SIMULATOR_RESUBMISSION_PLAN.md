@@ -1,6 +1,6 @@
 # Hingy simulator validation and resubmission preparation
 
-> **Historical build 4 snapshot.** Build 5 adds the recorded-audio expansion described in [the sound library](SOUND_LIBRARY.md). The results below bind the earlier product fingerprint and do not validate changed build 5 assets. New validation is recorded separately.
+> **Historical build 4 snapshot.** Build 5 adds the recorded-audio expansion described in [the sound library](SOUND_LIBRARY.md). The results below bind the earlier product fingerprint and do not validate changed build 5 assets. Current scoped results are in [build 5 validation](RECORDED_AUDIO_VALIDATION.md).
 
 Started October 18; checkpoint updated October 19, 2026 (Singapore). Candidate: version 1.0 (4), PR #3. No physical iPad or Duo is available.
 

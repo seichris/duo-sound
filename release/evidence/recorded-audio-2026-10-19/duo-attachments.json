@@ -1,0 +1,50 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1B7602A9-4580-49F7-81EA-A280B2DF8BA3",
+        "deviceName" : "Hingy Duo pose check",
+        "exportedFileName" : "7EBA59D1-FE0B-462D-A348-75C380E496A9.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "00-public-duo-hinge-initial-reading-simulator_0_A2F7A8F6-3CD2-4EB7-A64E-1675028FE051.png",
+        "timestamp" : 1792370694.624
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testDuoPublicHingeProvidesSilentInitialReading()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testDuoPublicHingeProvidesSilentInitialReading"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1B7602A9-4580-49F7-81EA-A280B2DF8BA3",
+        "deviceName" : "Hingy Duo pose check",
+        "exportedFileName" : "107CF6E8-AA00-4E71-AD87-213FB23E7558.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "09-offline-sound-credits_0_C67DE61C-9190-487C-ACE1-7C8C63A15508.png",
+        "timestamp" : 1792370801.007
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1B7602A9-4580-49F7-81EA-A280B2DF8BA3",
+        "deviceName" : "Hingy Duo pose check",
+        "exportedFileName" : "56276391-438E-46A2-82A7-04AE3C08F692.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "08-kenney-selection-persisted_0_F41E720D-5D7A-4E7A-9097-EFDF6F7F4947.png",
+        "timestamp" : 1792370791.535
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "1B7602A9-4580-49F7-81EA-A280B2DF8BA3",
+        "deviceName" : "Hingy Duo pose check",
+        "exportedFileName" : "D4F6E1D1-9070-4C37-A335-8836C97F9F55.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "07-fart-library-preview_0_66B0CBC5-9EC3-47DD-A92E-DDCE8A035AA9.png",
+        "timestamp" : 1792370730.489
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testRecordedSoundsAndOfflineCredits()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testRecordedSoundsAndOfflineCredits"
+  }
+]

@@ -35,3 +35,5 @@ swift run -c release SoundPreview build/sound-library-expanded
 The new directory contains a local HTML player, 92 direction WAV exports, a manifest and offline credits. The tool refuses to overwrite existing output; it has no autoplay or network requests. CI exports the `offline-sound-library-92-options` artifact. Recordings intentionally appear identically in both direction exports. These samples do not establish physical hinge behavior.
 
 Core tests check all 46 entries, original 40 distinct procedural renders, 26 recording resources and credits, 2,209 independent non-custom selection combinations, legacy settings, format/duration/amplitude bounds and determinism. Hosted tests decode and start every preset in both directions, plus verify recorded-preview progress without hinge data. A UI regression searches and auditions a fart without selecting it, saves a Kenney effect across relaunch, and opens offline credits. Physical audio and Duo display handoff remain separate, unverified release gates.
+
+Completed build 5 checks and their scope are recorded in [RECORDED_AUDIO_VALIDATION.md](RECORDED_AUDIO_VALIDATION.md).

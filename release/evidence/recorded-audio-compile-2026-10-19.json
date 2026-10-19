@@ -1,0 +1,51 @@
+{
+  "date": "2026-10-19",
+  "source_sha256": "3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442",
+  "implementation_commit": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+  "toolchain_installation": "Xcode-27.1-RC.app",
+  "scope": "Unsigned optimized build 5 compilation only; no physical or App Store acceptance evidence",
+  "builds": [
+    {
+      "platform": "device",
+      "configuration": "Release-Duo",
+      "code_signing": false,
+      "testability": false,
+      "result": "BUILD SUCCEEDED",
+      "bundle_id": "com.seichris.duosound",
+      "version": "1.0",
+      "build": "5",
+      "sdk": "iphoneos27.1",
+      "xcode_build": "27A9275",
+      "device_families": [
+        1,
+        2
+      ],
+      "binary_sha256": "35339f8e21558a3782fb8526e74cdc421a8d5c3acbc174f2e788b9b2495b6c1c",
+      "assets_sha256": "5210253c17634276af0ed2ba4e68741e013e7bbb2a80d6a60a039e16a1cab755",
+      "recorded_manifest_sha256": "e4b2c4d75f3f6fa02b7ffeaaf482941112ba9964bedf05ba15bfd501754c8a19",
+      "bundled_wav_count": 26,
+      "log": "/tmp/hingy-recorded-final-device.log"
+    },
+    {
+      "platform": "simulator",
+      "configuration": "Release-Duo",
+      "code_signing": false,
+      "testability": false,
+      "result": "BUILD SUCCEEDED",
+      "bundle_id": "com.seichris.duosound",
+      "version": "1.0",
+      "build": "5",
+      "sdk": "iphonesimulator27.1",
+      "xcode_build": "27A9275",
+      "device_families": [
+        1,
+        2
+      ],
+      "binary_sha256": "07f38770923d31f41afc548a12a61d9d06930b13dc4967cac943fb7fcf50f833",
+      "assets_sha256": "5210253c17634276af0ed2ba4e68741e013e7bbb2a80d6a60a039e16a1cab755",
+      "recorded_manifest_sha256": "e4b2c4d75f3f6fa02b7ffeaaf482941112ba9964bedf05ba15bfd501754c8a19",
+      "bundled_wav_count": 26,
+      "log": "/tmp/hingy-recorded-final-simulator.log"
+    }
+  ]
+}
