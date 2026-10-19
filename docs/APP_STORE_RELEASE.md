@@ -2,7 +2,7 @@
 
 Status: **resubmission candidate prepared, release blocked**. Updated October 18, 2026.
 
-The live October 18 read-only check found version 1.0 **REJECTED**, attached to uploaded build 3. PR #3 prepares **1.0 (4)** with iPad audio fixes and the typed SDK 27.1 hinge adapter. No replacement build has been uploaded or submitted. See [current validation](RESUBMISSION_VALIDATION.md), [simulator plan](SIMULATOR_RESUBMISSION_PLAN.md), and the unsent `release/REVIEW_RESPONSE_DRAFT.md`. The September 15 account snapshot below is retained as history and does not describe current review status.
+The live October 18 read-only check found version 1.0 **REJECTED**, attached to uploaded build 3. PR #3 now prepares **1.0 (5)** (audio repair plus recorded-sound expansion) with iPad audio fixes and the typed SDK 27.1 hinge adapter. No replacement build has been uploaded or submitted. See [current validation](RESUBMISSION_VALIDATION.md), [simulator plan](SIMULATOR_RESUBMISSION_PLAN.md), and the unsent `release/REVIEW_RESPONSE_DRAFT.md`. The September 15 account snapshot below is retained as history and does not describe current review status.
 
 ## Historical preparation snapshot — September 15
 

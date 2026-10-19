@@ -21,7 +21,7 @@ struct SoundPreview {
             for preset in SoundPreset.presets(in: category) {
                 rows += "<section><h3>\(preset.title)</h3><p>\(preset.detail)</p><div class=pair>"
                 for event in FoldEvent.allCases {
-                    guard let data = SoundSynthesizer.wav(preset: preset, event: event) else { continue }
+                    guard let data = SoundLibrary.wav(preset: preset, event: event) else { continue }
                     let file = "\(preset.rawValue)-\(event.rawValue).wav"
                     try data.write(to: output.appendingPathComponent(file), options: .atomic)
                     manifest.append(Clip(preset: preset.rawValue, category: category.rawValue, event: event.rawValue,
@@ -33,12 +33,13 @@ struct SoundPreview {
         }
         let html = """
         <!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Hingy — original sound library</title>
+        <title>Hingy — offline sound library</title>
         <style>body{font:17px system-ui,sans-serif;max-width:850px;margin:40px auto;padding:0 20px}h1{line-height:1.1}section{padding:8px 0 20px;border-bottom:1px solid #bbb}.pair{display:flex;flex-wrap:wrap;gap:24px}audio{display:block;max-width:100%;margin-top:8px}h2{margin-top:40px}</style>
         <h1>\(SoundPreset.builtIns.count) sounds. Both directions.</h1>
-        <p>Original procedural audio exported from Hingy. Start at a low device volume. These unscaled files play at full effect level; the app defaults to 65% effect volume. This is an audio sampler, not evidence of physical hinge detection.</p>
-        <p>No network, autoplay, tracking, or third-party audio assets.</p>\(rows)</html>
+        <p>Original procedural presets and bundled CC0 recordings exported from Hingy. Recordings use the same clip in both directions; selections remain independent. Start at a low device volume. These unscaled files play at full effect level; the app defaults to 65% effect volume. This is an audio sampler, not evidence of physical hinge detection.</p>
+        <p>No network, autoplay, or tracking. See CREDITS.txt for recording sources and license information.</p>\(rows)</html>
         """
+        try (SoundLibrary.credits ?? "Credits unavailable").write(to: output.appendingPathComponent("CREDITS.txt"), atomically: true, encoding: .utf8)
         try html.write(to: output.appendingPathComponent("index.html"), atomically: true, encoding: .utf8)
         let encoder = JSONEncoder()
         encoder.outputFormatting = [.prettyPrinted, .sortedKeys]

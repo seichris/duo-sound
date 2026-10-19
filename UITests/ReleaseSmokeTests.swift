@@ -105,6 +105,51 @@ final class ReleaseSmokeTests: XCTestCase {
     }
 
     @MainActor
+    func testRecordedSoundsAndOfflineCredits() throws {
+        let app = XCUIApplication()
+        app.launch()
+        openLibrary(app, event: "opened")
+        searchLibrary(app, for: "Tiny Fart")
+        let fart = app.buttons["select-opened-tinyFart"]
+        XCTAssertTrue(fart.waitForExistence(timeout: 5))
+        let selectionBeforePreview = try XCTUnwrap(fart.value as? String)
+        app.buttons["preview-opened-tinyFart"].tap()
+        let status = app.staticTexts["libraryPreviewStatus"]
+        expectation(for: NSPredicate(format: "label CONTAINS %@", "Preview · Opening · Tiny Fart"), evaluatedWith: status)
+        waitForExpectations(timeout: 5)
+        XCTAssertEqual(fart.value as? String, selectionBeforePreview)
+        fart.tap()
+        capture("07-fart-library-preview")
+        dismissLibrarySearch(app)
+        app.buttons["Done"].tap()
+
+        openLibrary(app, event: "closed")
+        searchLibrary(app, for: "Wood Knock")
+        app.buttons["select-closed-woodKnock"].tap()
+        dismissLibrarySearch(app)
+        app.buttons["Done"].tap()
+        app.terminate()
+        app.launch()
+        openLibrary(app, event: "closed")
+        searchLibrary(app, for: "Wood Knock")
+        XCTAssertEqual(app.buttons["select-closed-woodKnock"].value as? String, "Selected")
+        capture("08-kenney-selection-persisted")
+        dismissLibrarySearch(app)
+        app.buttons["Done"].tap()
+        app.buttons["About"].tap()
+        let credits = app.buttons["soundCredits"]
+        for _ in 0..<6 where !credits.isHittable { app.swipeUp() }
+        XCTAssertTrue(credits.waitForExistence(timeout: 5))
+        credits.tap()
+        let text = app.staticTexts["soundCreditsText"]
+        XCTAssertTrue(text.waitForExistence(timeout: 5))
+        XCTAssertTrue(text.label.contains("Kenney"))
+        XCTAssertTrue(text.label.contains("CC0 1.0"))
+        XCTAssertTrue(text.label.contains("Tiny Fart"))
+        capture("09-offline-sound-credits")
+    }
+
+    @MainActor
     func testSelectedPreviewsRespondWithoutHingeOrAutomaticSounds() {
         let app = XCUIApplication()
         app.launch()

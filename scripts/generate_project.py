@@ -34,7 +34,7 @@ for path in sources:
     children.append(ref)
     builds.append(add(relative + ':build', isa='PBXBuildFile', fileRef=ref))
 resources = []
-for relative, kind, bundle in [('App/Info.plist', 'text.plist.xml', False), ('App/PrivacyInfo.xcprivacy', 'text.xml', True), ('App/PrivacySummary.txt', 'text', True), ('App/Assets.xcassets', 'folder.assetcatalog', True)]:
+for relative, kind, bundle in [('App/Info.plist', 'text.plist.xml', False), ('App/PrivacyInfo.xcprivacy', 'text.xml', True), ('App/PrivacySummary.txt', 'text', True), ('App/Assets.xcassets', 'folder.assetcatalog', True), ('Sources/DuoSoundCore/Resources/RecordedSounds', 'folder', True)]:
     ref = add(relative, isa='PBXFileReference', lastKnownFileType=kind, path=relative, sourceTree='<group>')
     children.append(ref)
     if bundle:
@@ -45,7 +45,7 @@ group = add('mainGroup', isa='PBXGroup', children=children + [products], sourceT
 phases = [add('release-preflight', isa='PBXShellScriptBuildPhase', buildActionMask='2147483647',
               files=[], inputPaths=[], outputPaths=[], runOnlyForDeploymentPostprocessing='0',
               alwaysOutOfDate='1', name='Generate icon and guard App Store release', shellPath='/bin/sh',
-              shellScript='set -eu\ncd "$SRCROOT"\n/usr/bin/python3 scripts/generate_assets.py\nif [ "$CONFIGURATION" = "AppStore" ]; then\n  /usr/bin/python3 scripts/release_check.py --submission\nfi\n')]
+              shellScript='set -eu\ncd "$SRCROOT"\n/usr/bin/python3 scripts/generate_assets.py\n/usr/bin/python3 scripts/check_recorded_sounds.py\nif [ "$CONFIGURATION" = "AppStore" ]; then\n  /usr/bin/python3 scripts/release_check.py --submission\nfi\n')]
 for name, kind, files in [('sources', 'PBXSourcesBuildPhase', builds), ('frameworks', 'PBXFrameworksBuildPhase', []), ('resources', 'PBXResourcesBuildPhase', resources)]:
     phases.append(add(name, isa=kind, buildActionMask='2147483647', files=files, runOnlyForDeploymentPostprocessing='0'))
 project_configs, target_configs = [], []

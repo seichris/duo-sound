@@ -1,5 +1,7 @@
 # Hingy resubmission investigation — October 18–19, 2026
 
+> **Historical build 4 snapshot.** Build 5 adds the recorded-audio expansion described in [the sound library](SOUND_LIBRARY.md). The results below bind the earlier product fingerprint and do not validate changed build 5 assets. New validation is recorded separately.
+
 ## Review issue and evidence boundary
 
 Apple rejected version 1.0 (3) under 2.1(a) on September 23 after sound controls appeared unresponsive on an iPad Air 11-inch (M3), iPadOS 27.2. The rejection text does not distinguish a frozen UI, inaudible audio, or playback cancellation. Its precise device-side cause is not established by source inspection alone.

@@ -4,7 +4,7 @@ import Foundation
 public enum SoundSynthesizer {
     public static let sampleRate = 44_100
     public static func wav(preset: SoundPreset, event: FoldEvent) -> Data? {
-        guard let duration = preset.duration else { return nil }
+        guard !preset.isRecorded, let duration = preset.duration else { return nil }
         let count = Int(duration * Double(sampleRate))
         let opening = event == .opened
         var noise: UInt64 = opening ? 417 : 913
@@ -146,7 +146,7 @@ public enum SoundSynthesizer {
                 phase += 2 * .pi * powerNotes[index] / Double(sampleRate)
                 sample = (sin(phase) + 0.20 * sin(phase * 2)) * 0.40
                     * pulse(local, length: index == 4 ? 0.26 : 0.11)
-            case .off, .custom: sample = 0
+            default: return nil
             }
             let value = max(-0.85, min(0.85, sample * ramp))
             pcm.append(Int16((value * Double(Int16.max)).rounded()))

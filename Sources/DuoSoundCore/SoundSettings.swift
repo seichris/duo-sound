@@ -2,11 +2,12 @@ import Foundation
 
 /// Stable categories for browsing, not persisted selection identifiers.
 public enum SoundCategory: String, CaseIterable, Sendable {
-    case musical, mechanical, nature, playful, scienceFiction
+    case musical, mechanical, nature, playful, scienceFiction, everyday, interface, farts
 
     public var title: String {
         switch self {
         case .scienceFiction: return "Sci-Fi"
+        case .interface: return "Clicks & Impacts"
         default: return rawValue.capitalized
         }
     }
@@ -17,6 +18,10 @@ public enum SoundPreset: String, Codable, CaseIterable, Sendable {
     case chime, paper, arcade, orbit, click
     case crystal, marimba, musicBox, zipper, latch, typewriter
     case waterDrop, bird, rain, bubble, spring, cork, laser, robot, powerUp
+    case tinyFart, microFart, wetPop, lowRumble, squeaker, wetSplutter
+    case canTab, corkPop, zipShut, waterPlip, catHello, creakyHinge, lockClick, pageFlick
+    case rubberDucky, bubblePop, suctionPlop, jawBoing
+    case buttonClick, softSwitch, confirm, softOpen, softClose, glassTap, metalTap, woodKnock
     case off, custom
 
     public var title: String {
@@ -24,7 +29,7 @@ public enum SoundPreset: String, Codable, CaseIterable, Sendable {
         case .musicBox: return "Music Box"
         case .waterDrop: return "Water Drop"
         case .powerUp: return "Power Up / Down"
-        default: return rawValue.capitalized
+        default: return SoundLibrary.recording(for: self)?.title ?? rawValue.capitalized
         }
     }
 
@@ -35,6 +40,11 @@ public enum SoundPreset: String, Codable, CaseIterable, Sendable {
         case .waterDrop, .bird, .rain: return .nature
         case .arcade, .bubble, .spring, .cork: return .playful
         case .orbit, .laser, .robot, .powerUp: return .scienceFiction
+        case .tinyFart, .microFart, .wetPop, .lowRumble, .squeaker, .wetSplutter: return .farts
+        case .canTab, .corkPop, .zipShut, .creakyHinge, .lockClick, .pageFlick: return .everyday
+        case .waterPlip, .catHello: return .nature
+        case .rubberDucky, .bubblePop, .suctionPlop, .jawBoing: return .playful
+        case .buttonClick, .softSwitch, .confirm, .softOpen, .softClose, .glassTap, .metalTap, .woodKnock: return .interface
         case .off, .custom: return nil
         }
     }
@@ -63,6 +73,7 @@ public enum SoundPreset: String, Codable, CaseIterable, Sendable {
         case .powerUp: return "An ascending startup or descending shutdown."
         case .off: return "No sound for this direction."
         case .custom: return "Your imported audio clip."
+        default: return SoundLibrary.recording(for: self)?.detail ?? "A bundled sound recording."
         }
     }
 
@@ -87,10 +98,20 @@ public enum SoundPreset: String, Codable, CaseIterable, Sendable {
         case .robot: return 0.50
         case .powerUp: return 0.70
         case .off, .custom: return nil
+        default: return SoundLibrary.recording(for: self)?.duration
         }
     }
 
     public static var builtIns: [Self] { allCases.filter { $0.category != nil } }
+    public var isRecorded: Bool {
+        switch self {
+        case .chime, .paper, .arcade, .orbit, .click, .crystal, .marimba, .musicBox,
+             .zipper, .latch, .typewriter, .waterDrop, .bird, .rain, .bubble, .spring,
+             .cork, .laser, .robot, .powerUp, .off, .custom: return false
+        default: return true
+        }
+    }
+    public static var synthesized: [Self] { builtIns.filter { !$0.isRecorded } }
     public static func presets(in category: SoundCategory) -> [Self] {
         builtIns.filter { $0.category == category }
     }
@@ -135,13 +156,14 @@ public struct SoundSettings: Codable, Equatable, Sendable {
 }
 
 public enum SoundFailure: LocalizedError {
-    case invalidSettings, tooLarge, invalidAudio, missingSound, playbackFailed
+    case invalidSettings, tooLarge, invalidAudio, missingSound, missingBuiltIn, playbackFailed
     public var errorDescription: String? {
         switch self {
         case .invalidSettings: return "Saved settings are invalid. Your files have not been deleted."
         case .tooLarge: return "Choose an audio file smaller than 8 MB."
         case .invalidAudio: return "Choose a playable, unprotected audio clip between 0 and 5 seconds."
         case .missingSound: return "The custom sound is missing. Import it again or choose a built-in sound."
+        case .missingBuiltIn: return "This built-in sound is unavailable. Please choose another sound."
         case .playbackFailed: return "Audio could not start. Check the audio output and try the preview again."
         }
     }

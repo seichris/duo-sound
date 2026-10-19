@@ -1,6 +1,7 @@
 {
   "schema_version": 1,
-  "captures": [
+  "note": "Build 4 captures retained as historical references. New build 5 sound catalog and credits require fresh reviewed screenshots; no uploads.",
+  "historical_build_4_captures": [
     {
       "path": "release/screenshots/2026-10-19/iphone-home.png",
       "sha256": "495f51931f9a366bd9681b8bb726eddae461c741662158087cc020ca2cf270d4",
@@ -44,5 +45,5 @@
       "checkout_note": "PR workflow capture; head identifies the reviewed change. Raw checkout commit not independently stored by this standard workflow."
     }
   ],
-  "note": "Two reviewed native iPhone simulator candidate captures only. Required iPad 13-inch and Duo inner/outer assets remain incomplete. No upload. Native captures show actual UI and retain simulation disclosure; these do not establish physical hardware behavior."
+  "captures": []
 }

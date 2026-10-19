@@ -10,6 +10,7 @@ from pathlib import Path
 import plistlib
 import re
 import struct
+from check_recorded_sounds import validate as validate_recorded_sounds
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -165,6 +166,10 @@ def check(root, submission=False):
     listing = load(root/'release/listing.json')
     readiness = load(root/'release/readiness.json')
     errors = listing_errors(listing)
+    try:
+        validate_recorded_sounds(root)
+    except (AssertionError, OSError, ValueError, KeyError) as error:
+        errors.append(f'Recorded audio integrity: {error}')
     if listing.get('schema_version') != 1 or readiness.get('schema_version') != 1:
         errors.append('Unknown release schema')
     if set(readiness.get('evidence',{})) != REQUIRED_EVIDENCE:

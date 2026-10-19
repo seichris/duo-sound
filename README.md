@@ -6,7 +6,7 @@ A native SwiftUI sound toy for opening and closing iPhone Duo, inspired by [Scru
 
 ## Included
 
-Independent opening and closing sounds; 20 original procedural presets across Musical, Mechanical, Nature, Playful and Sci-Fi categories; a searchable library with non-destructive per-sound previews; per-event Off; effect volume; explicit previews; imported audio up to 5 seconds / 8 MiB; visible demo slider and Open/Close controls; private atomic settings storage; an isolated public-API hinge adapter; 39 portable tests; a dependency-free Xcode project; macOS CI for the core and the default iOS simulator build.
+Independent opening and closing sounds; 46 choices: 20 original procedural presets and 26 bundled CC0 recordings, including six farts and eight Kenney effects; a searchable library with non-destructive per-sound previews; per-event Off; effect volume; explicit previews; imported audio up to 5 seconds / 8 MiB; visible demo slider and Open/Close controls; private atomic settings storage; an isolated public-API hinge adapter; 41 portable tests; a dependency-free Xcode project; macOS CI for the core and the default iOS simulator build.
 
 Automatic fold sounds respect Silent Mode. Explicit previews and simulated folds play in Silent Mode; both mix with other audio and follow the current output route. Nothing records microphone input or requests camera, notification, motion, or background permissions. Settings and copied imports stay in Application Support. No accounts, analytics, network clients, or copied Scrunch assets.
 
@@ -22,7 +22,7 @@ Select **DuoSound-DuoSDK** for the live hinge path. That scheme sets `DUO_HINGE_
 
 An angle below 8 degrees is treated as closed; opening is detected at 22 degrees, not only at fully flat. These are tunable **app thresholds**, not Apple specifications. The 0–180-degree convention and actual callback/scene lifecycle behavior must be verified on the released SDK and device. Neither screen resizing nor app activation is used as a proxy for folding. First observations, source changes and foreground resumes silently rebaseline. No historical events are reconstructed.
 
-See [the full sound library and offline audio sampler](docs/SOUND_LIBRARY.md) for all 20 presets and 40 direction-specific clips. Existing saved selections and custom imports remain compatible.
+See [the full sound library and offline audio sampler](docs/SOUND_LIBRARY.md) for all 46 choices (40 procedural renders plus 26 recordings, independently selectable for either direction). Existing saved selections and custom imports remain compatible.
 
 ## Tests and structure
 
@@ -36,7 +36,7 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Duo
 
 `Sources/DuoSoundCore` contains detection, synthesis and persistence. `App` contains UI, playback, lifecycle coordination and the guarded hinge adapter. Core sources are compiled directly into the app; the Swift package exists for portable tests and adds no dependency. `.github/workflows/ci.yml` checks core tests, project regeneration and the standard iOS build; it does **not** validate Duo hardware. No code-signing credentials are stored.
 
-**Local validation:** 39 XCTest tests passed on Swift 6.2.1/macOS. The September runtime-bridge validation no longer applies to this source. See [the resubmission report](docs/RESUBMISSION_VALIDATION.md) for current toolchain and test evidence. These are compile/simulator checks, not physical-device evidence. The App Store candidate is signed separately during release.
+**Local validation:** 41 XCTest tests passed on Swift 6.2.1/macOS. The September runtime-bridge validation no longer applies to this source. See [the resubmission report](docs/RESUBMISSION_VALIDATION.md) for current toolchain and test evidence. These are compile/simulator checks, not physical-device evidence. The App Store candidate is signed separately during release.
 
 ## Important limitation
 

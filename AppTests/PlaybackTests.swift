@@ -43,6 +43,16 @@ final class PlaybackTests: XCTestCase {
         }
     }
 
+    func testRecordedFartProgressSurvivesMissingHinge() async throws {
+        model.setDemo(false)
+        model.receiveHardware(angle: nil)
+        model.preview(.closed, preset: .tinyFart)
+        model.receiveHardware(angle: nil)
+        try await assertPlaybackAdvances()
+        await assertEventContains("Tiny Fart")
+        XCTAssertEqual(AVAudioSession.sharedInstance().category, .playback)
+    }
+
     func testMissingHingeDoesNotCancelIPadPreview() async throws {
         model.setDemo(false)
         model.receiveHardware(angle: nil)

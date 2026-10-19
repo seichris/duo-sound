@@ -1,6 +1,20 @@
 import SwiftUI
 
 @MainActor
+struct SoundCreditsView: View {
+    var body: some View {
+        ScrollView {
+            Text(SoundLibrary.credits ?? "Sound credits could not be loaded.")
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .textSelection(.enabled).padding()
+                .accessibilityIdentifier("soundCreditsText")
+        }
+        .navigationTitle("Sound credits")
+        .navigationBarTitleDisplayMode(.inline)
+    }
+}
+
+@MainActor
 struct PrivacyView: View {
     private var summary: String {
         guard let url = Bundle.main.url(forResource: "PrivacySummary", withExtension: "txt"),

@@ -1,0 +1,138 @@
+Hingy sound credits
+
+20 original procedural presets by the Hingy project.
+26 additional recordings under CC0 1.0 Universal. Attribution is not required; creators are credited here for provenance.
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Recordings are converted to mono 44.1 kHz PCM16 WAV, with quiet boundaries trimmed, gain adjusted and short boundary fades.
+Freesound recordings use the official public HQ MP3 previews; they are not original WAV downloads.
+
+Tiny Fart — Breviceps
+Fart 1
+https://freesound.org/people/Breviceps/sounds/445998/
+License: CC0 1.0 Universal
+
+Micro Fart — MacKaffee
+fart.mp3
+https://freesound.org/people/MacKaffee/sounds/326143/
+License: CC0 1.0 Universal
+
+Wet Pop — DSISStudios
+Short Fart_04.wav
+https://freesound.org/people/DSISStudios/sounds/640801/
+License: CC0 1.0 Universal
+
+Low Rumble — DSISStudios
+Short Fart_02.wav
+https://freesound.org/people/DSISStudios/sounds/521092/
+License: CC0 1.0 Universal
+
+Squeaker — DSISStudios
+Medium Fart_01
+https://freesound.org/people/DSISStudios/sounds/241002/
+License: CC0 1.0 Universal
+
+Wet Splutter — DSISStudios
+Short Fart_03.wav
+https://freesound.org/people/DSISStudios/sounds/521091/
+License: CC0 1.0 Universal
+
+Can Tab — tripjazz
+Opening Can
+https://freesound.org/people/tripjazz/sounds/509247/
+License: CC0 1.0 Universal
+
+Cork Pop — dr19
+Cork pop
+https://freesound.org/people/dr19/sounds/575527/
+License: CC0 1.0 Universal
+
+Zip Shut — bmacphail
+Zipper Zipping Slow.wav
+https://freesound.org/people/bmacphail/sounds/569540/
+License: CC0 1.0 Universal
+
+Water Plip — bolkmar
+Water drop (splash)
+https://freesound.org/people/bolkmar/sounds/451126/
+License: CC0 1.0 Universal
+
+Cat Hello — steffcaffrey
+Cat Meow1.wav
+https://freesound.org/people/steffcaffrey/sounds/262312/
+License: CC0 1.0 Universal
+
+Rubber Ducky — Slothfully_So
+Rubber Duck
+https://freesound.org/people/Slothfully_So/sounds/685067/
+License: CC0 1.0 Universal
+
+Bubble Pop — Anthousai
+plastic - bubble wrap - single pop.wav
+https://freesound.org/people/Anthousai/sounds/399334/
+License: CC0 1.0 Universal
+
+Suction Plop — michorvath
+Suction Cup
+https://freesound.org/people/michorvath/sounds/386885/
+License: CC0 1.0 Universal
+
+Jaw Boing — suzenako
+boing.wav
+https://freesound.org/people/suzenako/sounds/537060/
+License: CC0 1.0 Universal
+
+Creaky Hinge — laleksic
+door_creak_open.wav
+https://opengameart.org/node/143670
+License: CC0 1.0 Universal
+
+Lock Click — laleksic
+lock.wav
+https://opengameart.org/node/143670
+License: CC0 1.0 Universal
+
+Page Flick — laleksic
+turn_page.wav
+https://opengameart.org/node/143670
+License: CC0 1.0 Universal
+
+Button Click — Kenney
+Audio/click_001.ogg
+https://kenney.nl/assets/interface-sounds
+License: CC0 1.0 Universal
+
+Soft Switch — Kenney
+Audio/switch_001.ogg
+https://kenney.nl/assets/interface-sounds
+License: CC0 1.0 Universal
+
+Confirm — Kenney
+Audio/confirmation_001.ogg
+https://kenney.nl/assets/interface-sounds
+License: CC0 1.0 Universal
+
+Soft Open — Kenney
+Audio/open_001.ogg
+https://kenney.nl/assets/interface-sounds
+License: CC0 1.0 Universal
+
+Soft Close — Kenney
+Audio/close_001.ogg
+https://kenney.nl/assets/interface-sounds
+License: CC0 1.0 Universal
+
+Glass Tap — Kenney
+Audio/impactGlass_light_000.ogg
+https://kenney.nl/assets/impact-sounds
+License: CC0 1.0 Universal
+
+Metal Tap — Kenney
+Audio/impactMetal_light_000.ogg
+https://kenney.nl/assets/impact-sounds
+License: CC0 1.0 Universal
+
+Wood Knock — Kenney
+Audio/impactWood_medium_000.ogg
+https://kenney.nl/assets/impact-sounds
+License: CC0 1.0 Universal

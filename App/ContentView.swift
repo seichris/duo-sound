@@ -96,9 +96,11 @@ struct ContentView: View {
                                 .accessibilityIdentifier("privacyPolicy")
                             NavigationLink("Help with sounds") { SoundHelpView() }
                                 .accessibilityIdentifier("soundHelp")
+                            NavigationLink("Sound credits") { SoundCreditsView() }
+                                .accessibilityIdentifier("soundCredits")
                         }
                         Section("Built for iPhone Duo") {
-                            Text("Inspired by Scrunch. Original Swift implementation and original synthesized sounds; no Scrunch code or sound assets are bundled.")
+                            Text("Inspired by Scrunch. Original Swift implementation, 20 original synthesized presets, and 26 CC0 recordings. No Scrunch code or sound assets are bundled.")
                             Text("Hinge integration uses Apple’s public UIHingeInteraction on iOS 27.1 and newer. Sound previews also work on iPhone and iPad without a hinge. Fold effects work only while Hingy is visible and active.")
                         }
                     }
@@ -149,7 +151,7 @@ struct ContentView: View {
                     .accessibilityLabel("Import \(event.title.lowercased()) sound")
             }.buttonStyle(.bordered)
         } header: { Text("When \(event.title.lowercased())") }
-          footer: { Text("\(SoundPreset.builtIns.count) original presets, or your own audio clip up to 5 seconds and 8 MiB.") }
+          footer: { Text("\(SoundPreset.builtIns.count) sounds, including original presets and CC0 recordings, or your own clip up to 5 seconds and 8 MiB.") }
     }
 }
 

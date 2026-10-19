@@ -3,10 +3,36 @@ import XCTest
 @testable import DuoSoundCore
 
 final class SoundLibraryTests: XCTestCase {
+    func testRecordedResourcesAndCreditsAreAvailableOffline() throws {
+        let recorded = SoundPreset.builtIns.filter(\.isRecorded)
+        XCTAssertEqual(recorded.count, 26)
+        XCTAssertEqual(Set(recorded.map(\.rawValue)), Set(SoundLibrary.recordings.map(\.id)))
+        let credits = try XCTUnwrap(SoundLibrary.credits)
+        for preset in recorded {
+            XCTAssertTrue(credits.contains(preset.title))
+            XCTAssertEqual(SoundLibrary.wav(preset: preset, event: .opened),
+                           SoundLibrary.wav(preset: preset, event: .closed))
+            XCTAssertNil(SoundSynthesizer.wav(preset: preset, event: .opened))
+        }
+        XCTAssertTrue(credits.contains("Kenney"))
+        XCTAssertTrue(credits.contains("CC0 1.0"))
+    }
+
+    func testFartsAndKenneyEffectsCanPersistInEitherSelector() throws {
+        let choices: [SoundPreset] = [.tinyFart, .squeaker, .woodKnock, .softOpen]
+        for choice in choices {
+            var settings = SoundSettings()
+            settings.select(choice, for: .opened)
+            settings.select(choice, for: .closed)
+            let decoded = try JSONDecoder().decode(SoundSettings.self, from: JSONEncoder().encode(settings))
+            XCTAssertEqual(try decoded.validated(), settings)
+        }
+    }
+
     func testEveryBuiltInAppearsExactlyOnceInTheBrowser() {
         let catalog = SoundCategory.allCases.flatMap(SoundPreset.presets(in:))
-        XCTAssertEqual(SoundPreset.builtIns.count, 20)
-        XCTAssertEqual(catalog.count, 20)
+        XCTAssertEqual(SoundPreset.builtIns.count, 46)
+        XCTAssertEqual(catalog.count, 46)
         XCTAssertEqual(Set(catalog), Set(SoundPreset.builtIns))
         XCTAssertFalse(catalog.contains(.off))
         XCTAssertFalse(catalog.contains(.custom))
@@ -14,7 +40,7 @@ final class SoundLibraryTests: XCTestCase {
     }
 
     func testCatalogLabelsAreUniqueAndReadable() {
-        XCTAssertEqual(Set(SoundPreset.builtIns.map(\.title)).count, 20)
+        XCTAssertEqual(Set(SoundPreset.builtIns.map(\.title)).count, 46)
         XCTAssertEqual(SoundPreset.musicBox.title, "Music Box")
         XCTAssertEqual(SoundPreset.waterDrop.title, "Water Drop")
         XCTAssertEqual(SoundPreset.powerUp.title, "Power Up / Down")
@@ -70,9 +96,9 @@ final class SoundLibraryTests: XCTestCase {
 
     func testAllFortyClipsAreDifferent() throws {
         var clips = Set<Data>()
-        for preset in SoundPreset.builtIns {
+        for preset in SoundPreset.synthesized {
             for event in FoldEvent.allCases {
-                let clip = try XCTUnwrap(SoundSynthesizer.wav(preset: preset, event: event))
+                let clip = try XCTUnwrap(SoundLibrary.wav(preset: preset, event: event))
                 XCTAssertTrue(clips.insert(clip).inserted, "Duplicate audio: \(preset) \(event)")
             }
         }
@@ -83,10 +109,11 @@ final class SoundLibraryTests: XCTestCase {
         for preset in SoundPreset.builtIns {
             let duration = try XCTUnwrap(preset.duration)
             XCTAssertGreaterThan(duration, 0)
-            XCTAssertLessThan(duration, 1)
+            XCTAssertLessThanOrEqual(duration, 5)
             for event in FoldEvent.allCases {
-                let data = try XCTUnwrap(SoundSynthesizer.wav(preset: preset, event: event))
-                XCTAssertEqual(data.count, 44 + Int(duration * 44_100) * 2)
+                let data = try XCTUnwrap(SoundLibrary.wav(preset: preset, event: event))
+                let frames = preset.isRecorded ? Int((duration * 44_100).rounded()) : Int(duration * 44_100)
+                XCTAssertEqual(data.count, 44 + frames * 2)
                 XCTAssertEqual(Array(data[20..<24]), [1, 0, 1, 0]) // PCM, mono
                 XCTAssertEqual(Array(data[32..<36]), [2, 0, 16, 0]) // block alignment, 16 bits
             }
@@ -98,7 +125,7 @@ final class SoundLibraryTests: XCTestCase {
     func testClipsAreAudibleBoundedAndStartAndEndAtZero() throws {
         for preset in SoundPreset.builtIns {
             for event in FoldEvent.allCases {
-                let data = try XCTUnwrap(SoundSynthesizer.wav(preset: preset, event: event))
+                let data = try XCTUnwrap(SoundLibrary.wav(preset: preset, event: event))
                 let samples = stride(from: 44, to: data.count, by: 2).map {
                     Double(Int16(bitPattern: UInt16(data[$0]) | UInt16(data[$0 + 1]) << 8)) / 32_767
                 }
@@ -115,8 +142,8 @@ final class SoundLibraryTests: XCTestCase {
     func testBothDirectionsRemainDeterministic() {
         for preset in SoundPreset.builtIns {
             for event in FoldEvent.allCases {
-                XCTAssertEqual(SoundSynthesizer.wav(preset: preset, event: event),
-                               SoundSynthesizer.wav(preset: preset, event: event))
+                XCTAssertEqual(SoundLibrary.wav(preset: preset, event: event),
+                               SoundLibrary.wav(preset: preset, event: event))
             }
         }
     }

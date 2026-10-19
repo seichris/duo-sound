@@ -8,7 +8,7 @@ let package = Package(
         .executable(name: "SoundPreview", targets: ["SoundPreview"])
     ],
     targets: [
-        .target(name: "DuoSoundCore"),
+        .target(name: "DuoSoundCore", resources: [.copy("Resources/RecordedSounds")]),
         .executableTarget(name: "SoundPreview", dependencies: ["DuoSoundCore"], path: "Tools/SoundPreview"),
         .testTarget(name: "DuoSoundCoreTests", dependencies: ["DuoSoundCore"])
     ]

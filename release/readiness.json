@@ -2,7 +2,7 @@
   "schema_version": 1,
   "status": "blocked",
   "assessed_on": "2026-10-19",
-  "validated_source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+  "validated_source_sha256": null,
   "owner": {
     "legal_name": "WEB3 FZCO",
     "support_email": "jensen@web3.consulting",
@@ -16,8 +16,8 @@
   },
   "evidence": {
     "public_sdk_compiles": {
-      "passed": true,
-      "reference": "release/evidence/sdk-compile-2026-10-18-logo.json"
+      "passed": false,
+      "reference": null
     },
     "physical_open_close_and_handoff": {
       "passed": false,
@@ -48,5 +48,5 @@
       "reference": null
     }
   },
-  "notes": "Candidate 1.0 (4) includes the supplied logo and successful optimized SDK 27.1 device/simulator builds. Same product fingerprint passed full iPhone 26.0.1, iPad 18.5 and typed iPad 27.0 hosted/UI suites (16/0/1 each, intentional Duo-only skip). Typed Duo 27.1 now passed 17/0/0, including the actual initial public hinge callback and library persistence. The SDK recheck is failed overall: its additional iPad run passed 15 and timed out at Xcode app.launch for privacy testing (one intentional skip). Earlier passes and failures remain recorded. Exact committed library flow passed locally on iPad; local Duo also passed. The exact-helper standard recheck passed its iPhone/iPad test steps, 16/0/1 each. No physical devices are available; physical output/handoff, reviewer OS 27.2, reviewed full store assets, privacy publication, distribution acceptance and other gates remain unverified. Two native iPhone CI screenshot candidates are reviewed and locally validated; iPad and Duo slots remain incomplete. Nothing uploaded or submitted."
+  "notes": "Candidate 1.0 (5) adds 26 bundled CC0 recordings, including six farts and eight Kenney effects, to the original 20 procedural presets. Build 4 test/compile evidence and screenshots are historical and do not validate this changed candidate. New core/resource/playback/build validation is in progress. Physical audio/handoff, full store assets, privacy publication, distribution acceptance and other existing gates remain unverified. Nothing uploaded or submitted."
 }

@@ -181,11 +181,11 @@ final class AppModel: ObservableObject {
                 guard let record = settings.imported(for: event), let store else { throw SoundFailure.missingSound }
                 data = try SettingsStore.readBounded(store.soundURL(for: record), limit: 8 * 1_024 * 1_024)
             } else {
-                let key = preset.rawValue + event.rawValue
+                let key = preset.rawValue + (preset.isRecorded ? "" : event.rawValue)
                 if let cached = generated[key] { data = cached }
                 else {
-                    guard let rendered = SoundSynthesizer.wav(preset: preset, event: event) else {
-                        throw SoundFailure.missingSound
+                    guard let rendered = SoundLibrary.wav(preset: preset, event: event) else {
+                        throw SoundFailure.missingBuiltIn
                     }
                     generated[key] = rendered; data = rendered
                 }

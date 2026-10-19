@@ -83,7 +83,7 @@ final class FoldDetectorTests: XCTestCase {
 
 final class SoundSynthesizerTests: XCTestCase {
     func testAllPresetsProduceValidBoundedPCM() throws {
-        for preset in SoundPreset.builtIns {
+        for preset in SoundPreset.synthesized {
             for event in FoldEvent.allCases {
                 let data = try XCTUnwrap(SoundSynthesizer.wav(preset: preset, event: event))
                 XCTAssertEqual(String(data: data[0..<4], encoding: .utf8), "RIFF")
@@ -103,12 +103,12 @@ final class SoundSynthesizerTests: XCTestCase {
         }
     }
     func testSynthesisIsDeterministic() {
-        for preset in SoundPreset.builtIns {
+        for preset in SoundPreset.synthesized {
             XCTAssertEqual(SoundSynthesizer.wav(preset: preset, event: .opened), SoundSynthesizer.wav(preset: preset, event: .opened))
         }
     }
     func testOpeningAndClosingDiffer() {
-        for preset in SoundPreset.builtIns {
+        for preset in SoundPreset.synthesized {
             XCTAssertNotEqual(SoundSynthesizer.wav(preset: preset, event: .opened), SoundSynthesizer.wav(preset: preset, event: .closed))
         }
     }
