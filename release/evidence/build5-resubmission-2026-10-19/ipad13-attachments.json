@@ -1,0 +1,59 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "869A3555-BD8D-497D-8773-2994E82AC589",
+        "deviceName" : "Hingy iPad 13 store capture",
+        "exportedFileName" : "E589F216-FEB5-43DB-AB46-E9A02C3F9F8E.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "02-privacy-summary_0_AC16FD35-12DE-4693-BBCD-E4B690DA5E15.png",
+        "timestamp" : 1792372233.84
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "869A3555-BD8D-497D-8773-2994E82AC589",
+        "deviceName" : "Hingy iPad 13 store capture",
+        "exportedFileName" : "63E133A6-97C6-44B9-BF0D-035BD0FD334D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "01-preview-home-not-hardware_0_98623EFE-87B2-4B62-A9B6-F0607D149EF3.png",
+        "timestamp" : 1792372226.933
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testPreviewLaunchAndPrivacy()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testPreviewLaunchAndPrivacy"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "869A3555-BD8D-497D-8773-2994E82AC589",
+        "deviceName" : "Hingy iPad 13 store capture",
+        "exportedFileName" : "C3F3A708-6043-43DC-893C-3DD30ADAF747.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "09-offline-sound-credits_0_8EBE9617-412E-4A34-8C88-222264550A67.png",
+        "timestamp" : 1792372358.4
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "869A3555-BD8D-497D-8773-2994E82AC589",
+        "deviceName" : "Hingy iPad 13 store capture",
+        "exportedFileName" : "F65FA8A1-B91B-4F13-8ADB-40F1D8A4DA25.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "08-kenney-selection-persisted_0_05A40B8F-9359-403F-B8C6-0D6BB34D33CF.png",
+        "timestamp" : 1792372347.71
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "869A3555-BD8D-497D-8773-2994E82AC589",
+        "deviceName" : "Hingy iPad 13 store capture",
+        "exportedFileName" : "6ABC7F2E-E43C-4306-979F-20A778A5A2B4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "07-fart-library-preview_0_D355AF12-6412-4FF2-9669-90A84E7635B3.png",
+        "timestamp" : 1792372288.197
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testRecordedSoundsAndOfflineCredits()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testRecordedSoundsAndOfflineCredits"
+  }
+]

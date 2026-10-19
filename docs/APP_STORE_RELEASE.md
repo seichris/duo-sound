@@ -1,6 +1,6 @@
 # App Store release preparation
 
-Status: **resubmission candidate prepared, release blocked**. Updated October 18, 2026.
+Status: **resubmission candidate prepared, release blocked**. Updated October 19, 2026. See the [build 5 preparation package](../release/BUILD_5_RESUBMISSION.md) for current CI, native screenshots, declaration updates and remaining archive gates.
 
 The live October 18 read-only check found version 1.0 **REJECTED**, attached to uploaded build 3. PR #3 now prepares **1.0 (5)** (audio repair plus recorded-sound expansion) with iPad audio fixes and the typed SDK 27.1 hinge adapter. No replacement build has been uploaded or submitted. See [current validation](RESUBMISSION_VALIDATION.md), [simulator plan](SIMULATOR_RESUBMISSION_PLAN.md), and the unsent `release/REVIEW_RESPONSE_DRAFT.md`. The September 15 account snapshot below is retained as history and does not describe current review status.
 
@@ -61,7 +61,7 @@ After validating the candidate, run `python3 scripts/release_check.py --fingerpr
 ```sh
 python3 scripts/release_check.py --submission
 python3 scripts/export_listing.py
-BUILD_NUMBER=4 bash scripts/archive_app.sh  # choose a unique real build number
+BUILD_NUMBER=5 bash scripts/archive_app.sh  # recheck that build 5 remains unused before upload
 ```
 
 The archive helper requires local Xcode/signing setup and the evidence gate. It archives/exports only; it never uploads or submits. Inspect its ExportOptions against the installed Xcode's `xcodebuild -help` when the release SDK ships. Use Xcode Organizer/App Store Connect deliberately to upload the approved build, review processing/privacy warnings, assign screenshots/metadata, and request review. Keep certificates, API keys, passwords, review contact details and account agreements out of the public repository.

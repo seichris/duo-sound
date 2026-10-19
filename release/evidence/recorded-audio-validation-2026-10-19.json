@@ -64,21 +64,17 @@
     "implementation_head": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
     "standard": {
       "url": "https://github.com/seichris/duo-sound/actions/runs/39182370871",
-      "status": "in_progress",
-      "conclusion": "",
+      "status": "completed",
+      "conclusion": "success",
       "head_sha": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
-      "active_steps": [
-        "UI smoke tests and actual preview screenshots"
-      ]
+      "active_steps": []
     },
     "sdk": {
       "url": "https://github.com/seichris/duo-sound/actions/runs/39182370955",
-      "status": "in_progress",
-      "conclusion": "",
+      "status": "completed",
+      "conclusion": "success",
       "head_sha": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
-      "active_steps": [
-        "Test optimized typed scheme on iPadOS 27.0"
-      ]
+      "active_steps": []
     },
     "preparation": {
       "url": "https://github.com/seichris/duo-sound/actions/runs/39182370809",
@@ -87,6 +83,7 @@
       "head_sha": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
       "active_steps": []
     },
-    "observed_at_utc": "2026-10-19T00:56:12.398663+00:00"
+    "observed_at_utc": "2026-10-19T01:16:37.435564+00:00",
+    "final_report": "release/evidence/build5-ci-2026-10-19.json"
   }
 }

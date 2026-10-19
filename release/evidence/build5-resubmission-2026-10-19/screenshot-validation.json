@@ -1,0 +1,113 @@
+[
+  {
+    "path": "release/screenshots/build5-2026-10-19/iphone-home.png",
+    "displayType": "APP_IPHONE_69",
+    "apiDisplayType": "APP_IPHONE_67",
+    "totalFiles": 1,
+    "readyFiles": 1,
+    "errorCount": 0,
+    "warningCount": 0,
+    "files": [
+      {
+        "order": 1,
+        "filePath": "release/screenshots/build5-2026-10-19/iphone-home.png",
+        "fileName": "iphone-home.png",
+        "width": 1320,
+        "height": 2868,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "path": "release/screenshots/build5-2026-10-19/iphone-kenney-library.png",
+    "displayType": "APP_IPHONE_69",
+    "apiDisplayType": "APP_IPHONE_67",
+    "totalFiles": 1,
+    "readyFiles": 1,
+    "errorCount": 0,
+    "warningCount": 0,
+    "files": [
+      {
+        "order": 1,
+        "filePath": "release/screenshots/build5-2026-10-19/iphone-kenney-library.png",
+        "fileName": "iphone-kenney-library.png",
+        "width": 1320,
+        "height": 2868,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "path": "release/screenshots/build5-2026-10-19/iphone-fart-library.png",
+    "displayType": "APP_IPHONE_69",
+    "apiDisplayType": "APP_IPHONE_67",
+    "totalFiles": 1,
+    "readyFiles": 1,
+    "errorCount": 0,
+    "warningCount": 0,
+    "files": [
+      {
+        "order": 1,
+        "filePath": "release/screenshots/build5-2026-10-19/iphone-fart-library.png",
+        "fileName": "iphone-fart-library.png",
+        "width": 1320,
+        "height": 2868,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "path": "release/screenshots/build5-2026-10-19/ipad-home.png",
+    "displayType": "APP_IPAD_PRO_3GEN_129",
+    "totalFiles": 1,
+    "readyFiles": 1,
+    "errorCount": 0,
+    "warningCount": 0,
+    "files": [
+      {
+        "order": 1,
+        "filePath": "release/screenshots/build5-2026-10-19/ipad-home.png",
+        "fileName": "ipad-home.png",
+        "width": 2064,
+        "height": 2752,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "path": "release/screenshots/build5-2026-10-19/ipad-kenney-library.png",
+    "displayType": "APP_IPAD_PRO_3GEN_129",
+    "totalFiles": 1,
+    "readyFiles": 1,
+    "errorCount": 0,
+    "warningCount": 0,
+    "files": [
+      {
+        "order": 1,
+        "filePath": "release/screenshots/build5-2026-10-19/ipad-kenney-library.png",
+        "fileName": "ipad-kenney-library.png",
+        "width": 2064,
+        "height": 2752,
+        "status": "ok"
+      }
+    ]
+  },
+  {
+    "path": "release/screenshots/build5-2026-10-19/ipad-fart-library.png",
+    "displayType": "APP_IPAD_PRO_3GEN_129",
+    "totalFiles": 1,
+    "readyFiles": 1,
+    "errorCount": 0,
+    "warningCount": 0,
+    "files": [
+      {
+        "order": 1,
+        "filePath": "release/screenshots/build5-2026-10-19/ipad-fart-library.png",
+        "fileName": "ipad-fart-library.png",
+        "width": 2064,
+        "height": 2752,
+        "status": "ok"
+      }
+    ]
+  }
+]

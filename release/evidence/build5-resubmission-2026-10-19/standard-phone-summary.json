@@ -1,0 +1,49 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "modelName" : "iPhone 17 Pro Max",
+        "osBuildNumber" : "23A8464",
+        "osVersion" : "26.0.1",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 18,
+      "skippedTests" : 1,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "DuoSound · Built with macOS 15.7.9",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792371475.623,
+  "passedTests" : 18,
+  "result" : "Passed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 1,
+  "startTime" : 1792371166.351,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - DuoSound",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "60% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 2.93s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 19
+}

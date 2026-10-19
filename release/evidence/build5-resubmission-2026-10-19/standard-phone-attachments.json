@@ -1,0 +1,113 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "exportedFileName" : "64C1871C-6598-400A-AC23-31683DDADE16.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "02-privacy-summary_0_630C1427-2B4A-4031-B170-E851D380A139.png",
+        "timestamp" : 1792371284.96
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "exportedFileName" : "C2C397A9-76CB-4112-B68E-45F7E5CCF3BD.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "01-preview-home-not-hardware_0_9259D624-B302-4F81-8E0C-5545D309DF4E.png",
+        "timestamp" : 1792371280.577
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testPreviewLaunchAndPrivacy()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testPreviewLaunchAndPrivacy"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "exportedFileName" : "91B18547-EC43-4055-BBA7-7748CB460B7D.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "09-offline-sound-credits_0_4BABF008-3960-49DF-85D8-5751EBDD05F8.png",
+        "timestamp" : 1792371355.403
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "exportedFileName" : "C6663BF5-3C2C-4ABF-B7C0-910621D0F298.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "08-kenney-selection-persisted_0_3AEF753D-775D-4ECB-8073-1F22B346D6D8.png",
+        "timestamp" : 1792371346.07
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "exportedFileName" : "B876E29A-1C57-4A22-AEE2-6E274AEFFB1F.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "07-fart-library-preview_0_4176E74D-6BEA-443B-B27B-766A8A19BD39.png",
+        "timestamp" : 1792371307.342
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testRecordedSoundsAndOfflineCredits()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testRecordedSoundsAndOfflineCredits"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "exportedFileName" : "348A1207-B303-4665-AF5A-8C0EF1413EED.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "06-manual-previews-with-fold-sounds-paused_0_1D4C0208-6E72-410E-97CD-C35ACA236639.png",
+        "timestamp" : 1792371378.034
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testSelectedPreviewsRespondWithoutHingeOrAutomaticSounds()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testSelectedPreviewsRespondWithoutHingeOrAutomaticSounds"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "exportedFileName" : "61AE7B56-C24E-4F32-9DB3-C5513ADA9EB4.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "04-simulated-closing-not-hardware_0_00307DBF-D6DB-40A3-8CF2-C5373A5B40FE.png",
+        "timestamp" : 1792371409.602
+      },
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "exportedFileName" : "0571C03E-428D-47DF-98FF-900FC7F14D2C.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "03-simulated-opening-not-hardware_0_20DB8DC6-F46E-4E21-A253-C5CF89091889.png",
+        "timestamp" : 1792371397.504
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testSimulatedOpenCloseDoesNotClaimHardware()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testSimulatedOpenCloseDoesNotClaimHardware"
+  },
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName" : "Hingy iPhone QA",
+        "exportedFileName" : "8EAFA38D-61DB-4FDF-8EF2-936705BB1EBA.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "05-crystal-library-not-hardware_0_BD16A5E7-AFFB-47FB-8CEB-8367267463D9.png",
+        "timestamp" : 1792371436.518
+      }
+    ],
+    "testIdentifier" : "ReleaseSmokeTests/testSoundLibraryAuditionSelectionAndPersistence()",
+    "testIdentifierURL" : "test://com.apple.xcode/DuoSound/DuoSoundUITests/ReleaseSmokeTests/testSoundLibraryAuditionSelectionAndPersistence"
+  }
+]

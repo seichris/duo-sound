@@ -1,0 +1,27 @@
+{
+  "checked_at_utc": "2026-10-19T01:12:37.375237+00:00",
+  "checks": {
+    "support_url": {
+      "url": "https://github.com/seichris/duo-sound/issues",
+      "final_url": "https://github.com/seichris/duo-sound/issues",
+      "http_status": 200,
+      "bytes_read": 264960,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "privacy_url": {
+      "url": "https://github.com/seichris/duo-sound/blob/main/docs/PRIVACY.md",
+      "final_url": "https://github.com/seichris/duo-sound/blob/main/docs/PRIVACY.md",
+      "http_status": 200,
+      "bytes_read": 221621,
+      "content_type": "text/html; charset=utf-8"
+    },
+    "marketing_url": {
+      "url": "https://github.com/seichris/duo-sound",
+      "final_url": "https://github.com/seichris/duo-sound",
+      "http_status": 200,
+      "bytes_read": 289006,
+      "content_type": "text/html; charset=utf-8"
+    }
+  },
+  "scope": "Public URL reachability only. Does not verify ownership of the mailbox, legal/privacy approval or final distribution archive."
+}

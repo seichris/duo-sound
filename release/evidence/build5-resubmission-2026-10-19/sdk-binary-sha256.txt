@@ -1,0 +1,2 @@
+3e2d28c7897d9b91a166ba9ac36ad613fd26077eca85d21a094e751cbdb27f35  SDKBuild/Build/Products/Release-Duo-iphoneos/DuoSound.app/DuoSound
+04f025e655271b7ca3b090d94e120328aeeb2005f5a4925a572b5143fa4845c0  SDKBuild/Build/Products/Release-Duo-iphonesimulator/DuoSound.app/DuoSound

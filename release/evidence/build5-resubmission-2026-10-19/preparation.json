@@ -1,0 +1,72 @@
+{
+  "candidate": "1.0 (5)",
+  "checked_at_utc": "2026-10-19T01:17:09.066723+00:00",
+  "product_source_sha256": "3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442",
+  "source_implementation_commit": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+  "local_capture_checkout": "2943b99d24c30e066d04e46363f683fcf1f16fc1",
+  "ipad13_capture": {
+    "passed": 2,
+    "failed": 0,
+    "skipped": 0,
+    "summary": "ipad13-summary.json",
+    "attachments": "ipad13-attachments.json",
+    "configuration": "Release-Duo",
+    "testability": true,
+    "tool_response": "XcodeBuildMCP test_sim wrapper timed out after 300 seconds",
+    "underlying_result": "xcresult summary Passed and xcodebuild TEST EXECUTE SUCCEEDED, independently inspected after wrapper timeout",
+    "log_local": "/Users/chris/Library/Developer/XcodeBuildMCP/workspaces/duo-sound-7f75a5e0183b/logs/test_sim_2026-10-19T01-07-29-703Z_pid74265_4bcdeaa0.log"
+  },
+  "screenshots": {
+    "count": 6,
+    "iphone": {
+      "size": [
+        1320,
+        2868
+      ],
+      "count": 3
+    },
+    "ipad": {
+      "size": [
+        2064,
+        2752
+      ],
+      "count": 3
+    },
+    "native_pixels": true,
+    "asc_validation_errors": 0,
+    "asc_validation_warnings": 0,
+    "final_store_presentation_approved": false,
+    "uploaded": false
+  },
+  "app_store_connect": {
+    "app_id": "6812193737",
+    "version_id": "534d131b-2621-48b8-a04b-c196b5b70ec4",
+    "state": "REJECTED",
+    "newest_uploaded_build": "3",
+    "build5_uploaded": false,
+    "content_rights": "USES_THIRD_PARTY_CONTENT",
+    "profanity_or_crude_humor": "INFREQUENT_OR_MILD",
+    "age_rating_reason": "Six mild bodily-function joke recordings; Apple defines bodily-function jokes within profanity or crude humor. Only this questionnaire field was changed; no rating override.",
+    "age_rating_source": "https://developer.apple.com/help/app-store-connect/reference/app-information/age-ratings-values-and-definitions/",
+    "privacy_publication": "unverified; public API advisory, no cached asc web session, browser-extension surfaces unavailable",
+    "preflight_scope": "Existing uploaded build 3 metadata, not processing or acceptance of build 5"
+  },
+  "signing": {
+    "valid_local_apple_distribution_identity": true,
+    "private_keys_exported_or_modified": false,
+    "archive_created": false,
+    "ipa_exported": false,
+    "reason": "Repository submission guard fails on remaining required evidence and draft launch status before xcodebuild archive"
+  },
+  "sdk_sources": {
+    "duo": "https://developer.apple.com/iphone-duo/",
+    "minimum_upload": "https://developer.apple.com/news/upcoming-requirements/",
+    "screenshots": "https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications/"
+  },
+  "remaining": "Physical audio/open-close/display handoff; listening and full import/accessibility QA; archive privacy audit and published App Privacy; final store presentation; owner/contact/storefront and distribution acceptance gates. No review reply, upload or submission.",
+  "ci_all_passed": true,
+  "ci_report": "release/evidence/build5-ci-2026-10-19.json",
+  "standard_checkout_commit": "f1ee09ab5dd54ae076f53ae214007fd9fb5d0ad9",
+  "current_submission_check": "submission-status-blocked.txt",
+  "archive_guard_check": "archive-preflight-blocked.log"
+}
