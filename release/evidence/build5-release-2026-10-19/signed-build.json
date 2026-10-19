@@ -1,0 +1,25 @@
+{
+  "version": "1.0",
+  "build": "5",
+  "bundle_id": "com.seichris.duosound",
+  "sdk": "iphoneos27.1",
+  "xcode_build": "27A9275",
+  "team": "4H5PK8686H",
+  "distribution_signature_verified": true,
+  "privacy_manifest": {
+    "NSPrivacyAccessedAPITypes": [],
+    "NSPrivacyCollectedDataTypes": [],
+    "NSPrivacyTracking": false,
+    "NSPrivacyTrackingDomains": []
+  },
+  "recorded_wavs": 26,
+  "binary_sha256": "21abdb299cd37cc4f286c7ce816818c42a000efe568ee4cbd4237cbab09719e3",
+  "ipa_path": "/tmp/hingy-build5-release/export/DuoSound.ipa",
+  "ipa_sha256": "ac30b89d5cc4da7c40db50ec0603a90e57629e84741832fad9d321706668f008",
+  "ipa_bytes": 4976616,
+  "source_commit": "e48383ce7b81c9b54f3958c8162f022db71c6832",
+  "source_sha256": "0287c83e98774637b55506ce5d25c26415bc7fa5f78973f14c800cda3b88f45c",
+  "private_keys_exported": false,
+  "retained_ipa_path": "/Users/chris/.codex/worktrees/hingy-ipad-playback/duo-sound/build/app-store-1.0-build5/Hingy-1.0-build5.ipa",
+  "retained_archive_path": "/Users/chris/.codex/worktrees/hingy-ipad-playback/duo-sound/build/app-store-1.0-build5/Hingy.xcarchive"
+}

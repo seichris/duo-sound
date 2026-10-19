@@ -1,6 +1,10 @@
 # Hingy 1.0 (5) resubmission preparation
 
-Prepared October 19, 2026. **Preparation complete within the recorded scope; signed archive and submission remain blocked.** No replacement build, screenshots or review reply have been uploaded/sent.
+**Current outcome: build 1.0 (5) signed, uploaded and submitted October 19, 2026; Waiting for Review. The rejection reply was sent.** See [the final submission receipt](BUILD_5_SUBMITTED.md).
+
+## Historical preparation checkpoint
+
+The remainder records the earlier blocked preparation checkpoint, before the owner authorized simulator-only release and the final privacy/store/signing checks were completed. It is retained for provenance and does not describe current submission status.
 
 Implementation: `d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7`; product fingerprint `3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442`. Documentation, evidence and screenshot follow-ups leave the product fingerprint unchanged.
 

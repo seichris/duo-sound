@@ -1,5 +1,7 @@
 # Build 5 recorded-audio validation — October 19, 2026
 
+**Release follow-through:** build 1.0 (5) is now signed, uploaded and Waiting for Review. See [the final receipt](../release/BUILD_5_SUBMITTED.md). The runtime validation below remains applicable because App/Sources are unchanged; its preparation/blocked-release statements record the earlier checkpoint. The final source fingerprint additionally includes the revised release workflow and approved listing.
+
 Candidate **1.0 (5)** expands Hingy to 46 choices: 20 existing synthesized presets and 26 bundled CC0 recordings. The added set is GPT's recommended 18 CC0 recordings plus eight Kenney effects. Source declarations were independently checked before acquisition; optional CC BY clips and the unedited reserve are excluded. [Library and processing details](SOUND_LIBRARY.md), [source ledger](../third_party/audio/sources.json).
 
 Implementation commit: `d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7`. Product fingerprint: `3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442`. Later documentation/evidence edits do not change this product fingerprint. The earlier build 4 reports remain historical.
@@ -28,4 +30,4 @@ The implementation commit starts [standard CI](https://github.com/seichris/duo-s
 
 The Freesound inputs are official public HQ MP3 previews, not original WAV downloads. Preserved source bytes and actual processing metadata make the packaged assets reproducible offline. The 26 WAVs total 1,704,102 bytes, and the local sampler exports 92 direction options without autoplay or network access.
 
-Neither GPT's research nor this technical validation constitutes a listening review. Perceived balance and unwanted recorded content still need listening QA. There is no physical-device output/handoff proof, iPadOS 27.2 test, signed archive, replacement upload or submission. Six current native iPhone/13-inch iPad candidates have since passed local asc validation; final storefront presentation and the other existing readiness gates remain unverified. Only the public-SDK compilation gate has been updated to this candidate.
+At this earlier validation checkpoint, neither GPT's research nor this technical validation constituted a listening review. Perceived balance and unwanted recorded content still need listening QA. There is no physical-device output/handoff proof, iPadOS 27.2 test, signed archive, replacement upload or submission. Six current native iPhone/13-inch iPad candidates have since passed local asc validation; final storefront presentation and the other existing readiness gates remain unverified. Only the public-SDK compilation gate has been updated to this candidate.

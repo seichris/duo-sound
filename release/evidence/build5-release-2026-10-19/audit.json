@@ -7,8 +7,17 @@
     "observed_route": "https://appstoreconnect.apple.com/apps/6812193737/distribution/privacy",
     "proof": "privacy-published.png",
     "policy_url": "https://github.com/seichris/duo-sound/blob/main/docs/PRIVACY.md",
-    "audit": "App/Sources use private JSON/file storage, user-selected file imports, local audio and local hinge observations; no network client, advertising/analytics SDK, microphone, permissions or remote catalogue. CC0 assets are audio resources, not third-party executable SDKs. No direct listed required-reason APIs in application sources: no UserDefaults, boot-uptime/mach_absolute_time, file timestamp/disk capacity or keyboard enumeration. ContinuousClock only measures local intervals. Archive manifests/linkage will be inspected after export.",
-    "required_reason_source": "https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitype"
+    "audit": "App/Sources use private JSON/file storage, user-selected file imports, local audio and local hinge observations; no network client, advertising/analytics SDK, microphone, permissions or remote catalogue. CC0 assets are audio resources, not third-party executable SDKs. No direct listed required-reason APIs in application sources: no UserDefaults, boot-uptime/mach_absolute_time, file timestamp/disk capacity or keyboard enumeration. ContinuousClock only measures local intervals. Signed archive manifests and linkage inspected after export; results below.",
+    "required_reason_source": "https://developer.apple.com/documentation/bundleresources/app-privacy-configuration/nsprivacyaccessedapitypes/nsprivacyaccessedapitype",
+    "signed_archive_audit": {
+      "bundle_and_team_match": true,
+      "signature_verified": true,
+      "tracking": false,
+      "collected_types": [],
+      "accessed_api_categories": [],
+      "embedded_third_party_executable_sdks": 0,
+      "all_recorded_wavs_present": true
+    }
   },
   "qa": {
     "basis": "41 core tests; 13 hosted player/model tests plus full UI suite. iPhone/iPad 18/0/1 and Duo 19/0/0 on unchanged App/Sources. Recorded imports and previews validate decode, bounds, persistence, missing hinge, route/lifecycle cancellation, active-state and explicit labels. Static accessibility labels/IDs and actual UI captures inspected. No claim of physical output, human listening or full assistive-technology certification.",
@@ -29,7 +38,8 @@
     ],
     "availability_changed": false,
     "copyright": "2026 WEB3 FZCO",
-    "source_credits": "third_party/audio/sources.json"
+    "source_credits": "third_party/audio/sources.json",
+    "screenshots_uploaded_complete": 6
   },
   "source_binding": {
     "tested_implementation": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
@@ -39,5 +49,15 @@
     "passed": 25,
     "failed": 0,
     "log": "release-tests.log"
+  },
+  "runtime_sources_diff_from_tested_commit": "empty",
+  "submission": {
+    "state": "WAITING_FOR_REVIEW",
+    "submitted_date": "2026-10-19T02:02:31.193Z",
+    "build_id": "51102e4e-0cda-4300-ac5a-798b0595347a",
+    "review_reply_sent": true,
+    "receipt": "submission-final.json",
+    "version_receipt": "version-final.json",
+    "visual_receipt": "submitted-waiting-review.png"
   }
 }

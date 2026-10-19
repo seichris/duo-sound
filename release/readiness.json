@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "status": "ready_for_archive",
+  "status": "ready",
   "assessed_on": "2026-10-19",
   "validated_source_sha256": "0287c83e98774637b55506ce5d25c26415bc7fa5f78973f14c800cda3b88f45c",
   "owner": {
@@ -17,7 +17,7 @@
   "evidence": {
     "public_sdk_compiles": {
       "passed": true,
-      "reference": "release/evidence/recorded-audio-compile-2026-10-19.json"
+      "reference": "release/evidence/build5-release-2026-10-19/signed-build.json"
     },
     "physical_open_close_and_handoff": {
       "passed": false,
@@ -48,9 +48,9 @@
       "reference": "release/evidence/build5-release-2026-10-19/audit.json"
     },
     "distribution_sdk_accepted_by_apple": {
-      "passed": false,
-      "reference": null
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/apple-processed-build.json"
     }
   },
-  "notes": "Owner explicitly authorizes simulator-only release and upload/reply/submission. Physical pass remains false with source-bound authorization. All remaining pre-archive privacy/store/source checks are audited; actual Apple build acceptance is checked after upload. Runtime App/Sources unchanged from passing CI; only release guard and metadata approval changed."
+  "notes": "Submitted 1.0 (5) on 2026-10-19T02:02:31.193Z; review submission and version both WAITING_FOR_REVIEW. Rejection reply sent. Signed build processed VALID; App Privacy published Data Not Collected; six native screenshot replacements COMPLETE; API preflight zero errors/warnings. Physical proof remains false with explicit source-bound simulator-only owner authorization. See release/BUILD_5_SUBMITTED.md and submission-final.json."
 }

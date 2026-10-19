@@ -1,23 +1,15 @@
-# App Review notes — blocked launch draft
+# App Review notes — submitted with 1.0 (5)
 
-**Do not paste these notes as evidence that testing has happened.** Complete `readiness.json` and replace this heading with version/build/device/OS details from the tested candidate before submission. No review account is needed because the app has no login.
+Submitted October 19, 2026. [Final submission receipt](BUILD_5_SUBMITTED.md). The following is the actual review-notes text; existing private review contact details were preserved.
 
-Candidate under preparation: **1.0 (5)**. Rejected uploaded build: **1.0 (3)**. Current full CI, native screenshot candidates and declaration changes are in `release/BUILD_5_RESUBMISSION.md` and `docs/RECORDED_AUDIO_VALIDATION.md`; no replacement upload or physical validation is claimed.
+Build 5 fixes manual sound playback on iPad and iPhone without a hinge. No login or network is required.
 
-## Product and scope
+On iPad: choose a non-Off sound, set system/effect volume above zero, then tap Preview under Opening or Closing. Library play buttons also work without a hinge and with automatic fold sounds paused. Manual previews play in Silent Mode, mix with other audio, and follow the current output route. Simulate hinge provides labelled manual Open/Close controls.
 
-Hingy offers independently selected opening and closing sound effects through the public hinge API on supported hardware. It is a **foreground-only** experience, not an iOS system sound replacement or background fold listener. On unsupported hardware, sound previews and explicitly labelled simulation do not claim to detect a physical hinge.
+Automatic hinge effects require supported iPhone Duo hardware and Hingy visible and active; automatic effects respect Silent Mode and stop when inactive. They are not a background/system sound replacement.
 
-The distinct intended interaction is a physical fold with individually assigned original, CC0 recorded or imported effects, not a collection of web links or a reskinned soundboard. Please evaluate this description against the actual build: the default developer preview has not yet established the physical interaction and must not be submitted as the finished product. Review Guideline 4.3(b) explicitly covers generic sound-effect apps; approval is not guaranteed by adding metadata or more presets.
+Audio session/player setup runs on a serial background worker. Missing hinge data and benign route-configuration notices no longer cancel manual previews. Visible feedback confirms explicit preview requests. The offline library contains 46 choices (20 original presets and 26 CC0 recordings) with creator credits in About.
 
-## Reviewer flow for the validated hardware build
+Testing basis: owner-authorized simulator validation; no physical devices were available. Full simulator suites: iPhone iOS 26.0.1, iPadOS 18.5 and iPadOS 27.0 each 18 passed, zero failures, one intentional Duo-only skip; Duo iOS 27.1 all 19 passed with zero failures/skips, including the actual public hinge silent initial callback. Every preset decodes/starts in both selectors, with playback-clock progress regression coverage. Core tests 41 passed; release/archive-policy checks 25 passed. The exact physical iPadOS 27.2 review setup and physical audio/display handoff were not tested.
 
-On iPad or an iPhone without a hinge: tap **Preview** under Opening or Closing, or open the sound library and tap a play button. These controls do not require hinge hardware and work even in Silent Mode or with fold sounds paused. Select a non-Off sound and use nonzero system/effect volume. Audio follows the current route, including headphones or Bluetooth. **Simulate hinge** provides explicitly labelled manual Open/Close controls; these also play in Silent Mode when fold sounds are enabled.
-
-With the app visible and active on supported hardware, establish its initial hinge state; the first observation is silent. Open and close, and verify the separate selections. Confirm actual endpoint/handoff behavior against the attached validation report. Use Preview to audition effects, change the volume, select Off, and import a short audio file through Files. A suitable fixture can be generated with `scripts/generate_assets.py` for testing; the bundled recordings use CC0 sources with offline credits.
-
-Audio-session setup and teardown run on a serial background queue; controls remain on the main actor and stale requests are cancelled after inactivity. Manual Preview buttons and library play buttons work on iPhone and iPad without a hinge, even in Silent Mode or when fold sounds are disabled. Simulated folds also play in Silent Mode when fold sounds are enabled. Automatic fold effects respect Silent Mode. Both respect system/effect volume and current output routing. It intentionally suppresses pending effects when inactive, interrupted, locked, or suspended. No microphone, camera, background-audio entitlement, private API, account, ads, purchases, or analytics SDK is used. There is no remote content catalogue or user-to-user sharing service.
-
-## Attach before submitting
-
-The owner must supply the actual build number, release SDK/toolchain, device/OS results (especially close/display handoff), a real recorded demonstration if useful, valid support/contact and privacy URLs, completed privacy/age-rating responses, rights/copyright information, and truthful availability/compatibility settings. Do not add invented phone numbers, developer identities, approval statements, or treat the existing App Store record as approval. See `docs/APP_STORE_RELEASE.md`.
+Privacy: no account, advertising, analytics SDK, microphone recording, tracking or app-operated data collection. App Privacy is published as Data Not Collected. Imported files remain local. No review account is required.

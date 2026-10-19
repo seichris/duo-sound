@@ -1,4 +1,6 @@
-# Resolution Center reply draft — not sent
+# Historical Resolution Center reply draft
+
+**A revised reply was sent October 19, 2026 before resubmission.** The actual sent text is [preserved here](evidence/build5-release-2026-10-19/review-reply-sent.txt). The following earlier draft is retained for history and is not the sent message.
 
 Candidate 1.0 (5) has completed the scoped simulator checks in `docs/RECORDED_AUDIO_VALIDATION.md`. The full implementation CI matrix has also passed; see `release/BUILD_5_RESUBMISSION.md`.
 

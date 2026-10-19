@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "Build 5 native raw screenshot candidates, visually inspected; not uploaded or approved as a complete final storefront set. Build 4 originals retained as history.",
+  "note": "Six native build 5 simulator screenshots reviewed and uploaded to en-US for version 1.0, submitted October 19, 2026. Original capture provenance and hashes retained; build 4 captures are historical. No physical-hinge proof or Duo badge claimed.",
   "historical_build_4_captures": [
     {
       "path": "release/screenshots/2026-10-19/iphone-home.png",
@@ -64,8 +64,12 @@
       "original_attachment": "C2C397A9-76CB-4112-B68E-45F7E5CCF3BD.png",
       "original_attachment_manifest": "release/evidence/build5-resubmission-2026-10-19/standard-phone-attachments.json",
       "reviewed_on": "2026-10-19",
-      "review_note": "Actual running build 5 preview scheme. Home retains Demo / Simulated hinge disclosure; library shows recorded sound and preview or persisted selection. Native pixels, keyboard retained where shown; not physical-hinge evidence. Raw candidate, final store presentation remains unapproved.",
-      "uploaded": false
+      "review_note": "Actual running build 5 preview scheme. Home retains Demo / Simulated hinge disclosure; library shows recorded sound and preview or persisted selection. Native pixels, keyboard retained where shown; not physical-hinge evidence. Reviewed and uploaded for the simulator-authorized submission.",
+      "uploaded": true,
+      "asc_asset_id": "4b400019-609d-83c9-801d-accdebd3a382",
+      "asc_asset_state": "COMPLETE",
+      "asc_set_id": "30b2064f-9297-4c1b-a446-a32fe69c5908",
+      "uploaded_on": "2026-10-19"
     },
     {
       "path": "release/screenshots/build5-2026-10-19/iphone-kenney-library.png",
@@ -85,8 +89,12 @@
       "original_attachment": "C6663BF5-3C2C-4ABF-B7C0-910621D0F298.png",
       "original_attachment_manifest": "release/evidence/build5-resubmission-2026-10-19/standard-phone-attachments.json",
       "reviewed_on": "2026-10-19",
-      "review_note": "Actual running build 5 preview scheme. Home retains Demo / Simulated hinge disclosure; library shows recorded sound and preview or persisted selection. Native pixels, keyboard retained where shown; not physical-hinge evidence. Raw candidate, final store presentation remains unapproved.",
-      "uploaded": false
+      "review_note": "Actual running build 5 preview scheme. Home retains Demo / Simulated hinge disclosure; library shows recorded sound and preview or persisted selection. Native pixels, keyboard retained where shown; not physical-hinge evidence. Reviewed and uploaded for the simulator-authorized submission.",
+      "uploaded": true,
+      "asc_asset_id": "fd400019-609d-83c9-8017-ba6c6e27357e",
+      "asc_asset_state": "COMPLETE",
+      "asc_set_id": "30b2064f-9297-4c1b-a446-a32fe69c5908",
+      "uploaded_on": "2026-10-19"
     },
     {
       "path": "release/screenshots/build5-2026-10-19/iphone-fart-library.png",
@@ -106,8 +114,12 @@
       "original_attachment": "B876E29A-1C57-4A22-AEE2-6E274AEFFB1F.png",
       "original_attachment_manifest": "release/evidence/build5-resubmission-2026-10-19/standard-phone-attachments.json",
       "reviewed_on": "2026-10-19",
-      "review_note": "Actual running build 5 preview scheme. Home retains Demo / Simulated hinge disclosure; library shows recorded sound and preview or persisted selection. Native pixels, keyboard retained where shown; not physical-hinge evidence. Raw candidate, final store presentation remains unapproved.",
-      "uploaded": false
+      "review_note": "Actual running build 5 preview scheme. Home retains Demo / Simulated hinge disclosure; library shows recorded sound and preview or persisted selection. Native pixels, keyboard retained where shown; not physical-hinge evidence. Reviewed and uploaded for the simulator-authorized submission.",
+      "uploaded": true,
+      "asc_asset_id": "34800019-609d-83c9-8022-00bdf93afaa3",
+      "asc_asset_state": "COMPLETE",
+      "asc_set_id": "30b2064f-9297-4c1b-a446-a32fe69c5908",
+      "uploaded_on": "2026-10-19"
     },
     {
       "path": "release/screenshots/build5-2026-10-19/ipad-home.png",
@@ -129,8 +141,12 @@
       "original_attachment_manifest": "release/evidence/build5-resubmission-2026-10-19/ipad13-attachments.json",
       "xcresult_local": "/tmp/hingy-build5-ipad13.xcresult",
       "reviewed_on": "2026-10-19",
-      "review_note": "Visually inspected actual build 5 with No hinge available disclosure, manual previews, 46-sound text and selected recordings. Native pixels, no resizing or fabricated state. Not physical audio/handoff evidence; final store presentation unapproved.",
-      "uploaded": false
+      "review_note": "Visually inspected actual build 5 with No hinge available disclosure, manual previews, 46-sound text and selected recordings. Native pixels, no resizing or fabricated state. Not physical audio/handoff evidence; reviewed and uploaded for the simulator-authorized submission.",
+      "uploaded": true,
+      "asc_asset_id": "b9800019-609d-83c9-8035-299b9f82f60e",
+      "asc_asset_state": "COMPLETE",
+      "asc_set_id": "a90e4e05-aca8-433c-8e50-922a093f4fc4",
+      "uploaded_on": "2026-10-19"
     },
     {
       "path": "release/screenshots/build5-2026-10-19/ipad-kenney-library.png",
@@ -152,8 +168,12 @@
       "original_attachment_manifest": "release/evidence/build5-resubmission-2026-10-19/ipad13-attachments.json",
       "xcresult_local": "/tmp/hingy-build5-ipad13.xcresult",
       "reviewed_on": "2026-10-19",
-      "review_note": "Visually inspected actual build 5 with No hinge available disclosure, manual previews, 46-sound text and selected recordings. Native pixels, no resizing or fabricated state. Not physical audio/handoff evidence; final store presentation unapproved.",
-      "uploaded": false
+      "review_note": "Visually inspected actual build 5 with No hinge available disclosure, manual previews, 46-sound text and selected recordings. Native pixels, no resizing or fabricated state. Not physical audio/handoff evidence; reviewed and uploaded for the simulator-authorized submission.",
+      "uploaded": true,
+      "asc_asset_id": "6a800019-609d-83c9-8026-6abe3de8003e",
+      "asc_asset_state": "COMPLETE",
+      "asc_set_id": "a90e4e05-aca8-433c-8e50-922a093f4fc4",
+      "uploaded_on": "2026-10-19"
     },
     {
       "path": "release/screenshots/build5-2026-10-19/ipad-fart-library.png",
@@ -175,8 +195,12 @@
       "original_attachment_manifest": "release/evidence/build5-resubmission-2026-10-19/ipad13-attachments.json",
       "xcresult_local": "/tmp/hingy-build5-ipad13.xcresult",
       "reviewed_on": "2026-10-19",
-      "review_note": "Visually inspected actual build 5 with No hinge available disclosure, manual previews, 46-sound text and selected recordings. Native pixels, no resizing or fabricated state. Not physical audio/handoff evidence; final store presentation unapproved.",
-      "uploaded": false
+      "review_note": "Visually inspected actual build 5 with No hinge available disclosure, manual previews, 46-sound text and selected recordings. Native pixels, no resizing or fabricated state. Not physical audio/handoff evidence; reviewed and uploaded for the simulator-authorized submission.",
+      "uploaded": true,
+      "asc_asset_id": "26000019-609d-83c9-8012-463dffb3f92a",
+      "asc_asset_state": "COMPLETE",
+      "asc_set_id": "a90e4e05-aca8-433c-8e50-922a093f4fc4",
+      "uploaded_on": "2026-10-19"
     }
   ]
 }

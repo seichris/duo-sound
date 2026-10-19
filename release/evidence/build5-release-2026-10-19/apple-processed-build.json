@@ -1,0 +1,20 @@
+{
+  "app_id": "6812193737",
+  "version": "1.0",
+  "build_id": "51102e4e-0cda-4300-ac5a-798b0595347a",
+  "build_number": "5",
+  "processing_state": "VALID",
+  "uses_non_exempt_encryption": false,
+  "version_id": "534d131b-2621-48b8-a04b-c196b5b70ec4",
+  "attached_build_id": "51102e4e-0cda-4300-ac5a-798b0595347a",
+  "source_sha256": "0287c83e98774637b55506ce5d25c26415bc7fa5f78973f14c800cda3b88f45c",
+  "ipa_sha256": "ac30b89d5cc4da7c40db50ec0603a90e57629e84741832fad9d321706668f008",
+  "screenshots_uploaded": 6,
+  "pre_submit_api_summary": {
+    "errors": 0,
+    "warnings": 0,
+    "infos": 1,
+    "blocking": 0
+  },
+  "privacy_publication_manually_verified": true
+}

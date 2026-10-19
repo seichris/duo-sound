@@ -1,8 +1,8 @@
-# App Store release preparation
+# App Store release
 
-Status: **resubmission candidate prepared, release blocked**. Updated October 19, 2026. See the [build 5 preparation package](../release/BUILD_5_RESUBMISSION.md) for current CI, native screenshots, declaration updates and remaining archive gates.
+Status: **Hingy 1.0 (5) submitted — Waiting for Review**, October 19, 2026. The replacement build is signed, processed VALID and selected; six native screenshots uploaded, privacy publication confirmed, and the rejection reply sent. See [the submission receipt](../release/BUILD_5_SUBMITTED.md).
 
-The live October 18 read-only check found version 1.0 **REJECTED**, attached to uploaded build 3. PR #3 now prepares **1.0 (5)** (audio repair plus recorded-sound expansion) with iPad audio fixes and the typed SDK 27.1 hinge adapter. No replacement build has been uploaded or submitted. See [current validation](RESUBMISSION_VALIDATION.md), [simulator plan](SIMULATOR_RESUBMISSION_PLAN.md), and the unsent `release/REVIEW_RESPONSE_DRAFT.md`. The September 15 account snapshot below is retained as history and does not describe current review status.
+The owner explicitly authorized simulator-only validation because no physical devices were available. Physical audio/display handoff and the exact iPadOS 27.2 review environment remain untested; this limitation was disclosed to Apple. App/Sources are unchanged from the passing full iPad/Duo implementation CI; subsequent release-policy checks also passed. Earlier snapshots below are historical.
 
 ## Historical preparation snapshot — September 15
 
