@@ -97,9 +97,13 @@ final class ReleaseSmokeTests: XCTestCase {
 
         openLibrary(app, event: "closed")
         searchLibrary(app, for: "Wood Knock")
-        app.buttons["select-closed-woodKnock"].tap()
+        let woodKnock = app.buttons["select-closed-woodKnock"]
+        woodKnock.tap()
+        expectation(for: NSPredicate(format: "value == %@", "Selected"), evaluatedWith: woodKnock)
+        waitForExpectations(timeout: 5)
         dismissLibrarySearch(app)
         app.buttons["Done"].tap()
+        XCTAssertEqual(app.buttons["soundChoice-closed"].value as? String, "Wood Knock")
         app.terminate()
         app.launch()
         openLibrary(app, event: "closed")
@@ -191,6 +195,22 @@ final class ReleaseSmokeTests: XCTestCase {
             XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: focused, object: nil)], timeout: 5), .completed)
         }
         search.typeText(query)
+        // Filtering animates rows on iPad. XCTest can otherwise synthesize a
+        // tap at the row's old unfiltered position even though it exists.
+        let result = app.buttons[query]
+        XCTAssertTrue(result.waitForExistence(timeout: 5))
+        var previousFrame = CGRect.null
+        var stableSince = Date()
+        let settled = NSPredicate { _, _ in
+            let frame = result.frame
+            if frame != previousFrame {
+                previousFrame = frame
+                stableSince = Date()
+                return false
+            }
+            return result.isHittable && !frame.isEmpty && Date().timeIntervalSince(stableSince) >= 0.3
+        }
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: settled, object: nil)], timeout: 5), .completed)
     }
 
     @MainActor
