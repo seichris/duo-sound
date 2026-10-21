@@ -6,7 +6,7 @@ A native SwiftUI sound toy for opening and closing iPhone Duo, inspired by [Scru
 
 ## Included
 
-Independent opening and closing sounds; 46 choices: 20 original procedural presets and 26 bundled CC0 recordings, including six farts and eight Kenney effects; a searchable library with non-destructive per-sound previews; per-event Off; effect volume; explicit previews; imported audio up to 5 seconds / 8 MiB; visible demo slider and Open/Close controls; private atomic settings storage; an isolated public-API hinge adapter; 41 portable tests; a dependency-free Xcode project; macOS CI for the core and the default iOS simulator build.
+Independent opening and closing sounds; 43 choices: 17 original procedural presets and 26 bundled CC0 recordings, including six farts and eight Kenney effects; a searchable library with non-destructive per-sound previews; per-event Off; effect volume; explicit previews; imported audio up to 5 seconds / 8 MiB; visible demo slider and Open/Close controls; private atomic settings storage; an isolated public-API hinge adapter; portable regression tests; a dependency-free Xcode project; macOS CI for the core and the default iOS simulator build.
 
 Automatic fold sounds respect Silent Mode. Explicit previews and simulated folds play in Silent Mode; both mix with other audio and follow the current output route. Nothing records microphone input or requests camera, notification, motion, or background permissions. Settings and copied imports stay in Application Support. No accounts, analytics, network clients, or copied Scrunch assets.
 

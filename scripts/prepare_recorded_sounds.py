@@ -70,7 +70,7 @@ def main():
             'Complete actions retained; only quiet boundaries trimmed. Technical checks do not constitute listening review.',
         'assets': assets}
     (OUTPUT/'manifest.json').write_text(json.dumps(manifest, indent=2)+'\n')
-    credits = ['Hingy sound credits', '', '20 original procedural presets by the Hingy project.',
+    credits = ['Hingy sound credits', '', '17 original procedural presets by the Hingy project.',
         '26 additional recordings under CC0 1.0 Universal. Attribution is not required; creators are credited here for provenance.',
         'https://creativecommons.org/publicdomain/zero/1.0/', '',
         'Recordings are converted to mono 44.1 kHz PCM16 WAV, with quiet boundaries trimmed, gain adjusted and short boundary fades.',

@@ -31,8 +31,8 @@ final class SoundLibraryTests: XCTestCase {
 
     func testEveryBuiltInAppearsExactlyOnceInTheBrowser() {
         let catalog = SoundCategory.allCases.flatMap(SoundPreset.presets(in:))
-        XCTAssertEqual(SoundPreset.builtIns.count, 46)
-        XCTAssertEqual(catalog.count, 46)
+        XCTAssertEqual(SoundPreset.builtIns.count, 43)
+        XCTAssertEqual(catalog.count, 43)
         XCTAssertEqual(Set(catalog), Set(SoundPreset.builtIns))
         XCTAssertFalse(catalog.contains(.off))
         XCTAssertFalse(catalog.contains(.custom))
@@ -40,7 +40,7 @@ final class SoundLibraryTests: XCTestCase {
     }
 
     func testCatalogLabelsAreUniqueAndReadable() {
-        XCTAssertEqual(Set(SoundPreset.builtIns.map(\.title)).count, 46)
+        XCTAssertEqual(Set(SoundPreset.builtIns.map(\.title)).count, 43)
         XCTAssertEqual(SoundPreset.musicBox.title, "Music Box")
         XCTAssertEqual(SoundPreset.waterDrop.title, "Water Drop")
         XCTAssertEqual(SoundPreset.powerUp.title, "Power Up / Down")
@@ -48,14 +48,49 @@ final class SoundLibraryTests: XCTestCase {
     }
 
     func testLegacySavedIDsAndDefaultsStillDecode() throws {
-        for value in ["chime", "paper", "arcade", "orbit", "click", "off", "custom"] {
+        for value in ["chime", "arcade", "orbit", "click", "off", "custom"] {
             let data = Data("\"\(value)\"".utf8)
             XCTAssertEqual(try JSONDecoder().decode(SoundPreset.self, from: data).rawValue, value)
         }
         let legacy = Data(#"{"enabled":true,"volume":0.65,"opening":"chime","closing":"paper"}"#.utf8)
         XCTAssertEqual(try JSONDecoder().decode(SoundSettings.self, from: legacy).validated(), SoundSettings())
         XCTAssertEqual(SoundSettings().opening, .chime)
-        XCTAssertEqual(SoundSettings().closing, .paper)
+        XCTAssertEqual(SoundSettings().closing, .click)
+    }
+
+    func testRetiredSoundsAreUnavailableAndSavedSelectionsMigrate() throws {
+        for retired in ["paper", "zipper", "rain"] {
+            XCTAssertNil(SoundPreset(rawValue: retired))
+            let directory = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+            defer { try? FileManager.default.removeItem(at: directory) }
+            let store = SettingsStore(directory: directory)
+            try FileManager.default.createDirectory(at: directory, withIntermediateDirectories: true)
+            let imported = ImportedSound(fileName: UUID().uuidString + ".sound", displayName: "My clip")
+            var saved = SoundSettings()
+            saved.volume = 0.35
+            saved.enabled = false
+            saved.openingFile = imported
+            var json = try XCTUnwrap(JSONSerialization.jsonObject(with: JSONEncoder().encode(saved)) as? [String: Any])
+            json["opening"] = retired
+            json["closing"] = retired
+            try JSONSerialization.data(withJSONObject: json).write(to: store.settingsURL)
+
+            let loaded = try store.load()
+            XCTAssertEqual(loaded.opening, .click)
+            XCTAssertEqual(loaded.closing, .click)
+            XCTAssertEqual(loaded.volume, 0.35)
+            XCTAssertFalse(loaded.enabled)
+            XCTAssertEqual(loaded.openingFile, imported)
+            try store.save(loaded)
+            XCTAssertEqual(try store.load(), loaded)
+            let persisted = try XCTUnwrap(JSONSerialization.jsonObject(with: Data(contentsOf: store.settingsURL)) as? [String: Any])
+            XCTAssertEqual(persisted["opening"] as? String, "click")
+            XCTAssertEqual(persisted["closing"] as? String, "click")
+        }
+    }
+
+    func testUnknownSoundIDStillFailsDecoding() {
+        XCTAssertThrowsError(try JSONDecoder().decode(SoundPreset.self, from: Data(#""unknown-sound""#.utf8)))
     }
 
     func testEveryPairRoundTripsWithoutCouplingDirections() throws {
@@ -80,7 +115,7 @@ final class SoundLibraryTests: XCTestCase {
         XCTAssertEqual(settings.imported(for: .opened), sound)
         settings.select(.custom, for: .opened)
         XCTAssertEqual(try settings.validated().preset(for: .opened), .custom)
-        XCTAssertEqual(settings.preset(for: .closed), .paper)
+        XCTAssertEqual(settings.preset(for: .closed), .click)
     }
 
     func testNewPresetPersistsToDisk() throws {
@@ -94,7 +129,7 @@ final class SoundLibraryTests: XCTestCase {
         XCTAssertEqual(try store.load(), settings)
     }
 
-    func testAllFortyClipsAreDifferent() throws {
+    func testAllSynthesizedClipsAreDifferent() throws {
         var clips = Set<Data>()
         for preset in SoundPreset.synthesized {
             for event in FoldEvent.allCases {
@@ -102,7 +137,7 @@ final class SoundLibraryTests: XCTestCase {
                 XCTAssertTrue(clips.insert(clip).inserted, "Duplicate audio: \(preset) \(event)")
             }
         }
-        XCTAssertEqual(clips.count, 40)
+        XCTAssertEqual(clips.count, 34)
     }
 
     func testAllDurationsAndPCMFormatsMatchCatalog() throws {

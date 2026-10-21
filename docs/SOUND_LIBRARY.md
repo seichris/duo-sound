@@ -1,6 +1,6 @@
 # Hingy sound library
 
-Build 5 has **46 independently selectable sounds**: 20 original procedural presets and 26 bundled CC0 recordings. The original presets retain their 40 distinct opening/closing renders; recordings play the same unmodified-direction clip in either selector. There are 66 unique clips and 92 direction options. Existing saved IDs, defaults, Off and custom imports remain compatible.
+Build 6 has **43 independently selectable sounds**: 17 original procedural presets and 26 bundled CC0 recordings. The original presets provide 34 distinct opening/closing renders; recordings play the same unmodified-direction clip in either selector. There are 60 unique clips and 86 direction options. Paper, Zipper and Rain have been removed. Saved selections for these sounds migrate to Click, the new closing default; other choices, volume and custom imports are preserved.
 
 | Group | Added recordings | Source |
 | --- | --- | --- |
@@ -14,7 +14,7 @@ The first 18 are GPT Pro's recommended CC0 set; eight Kenney effects supplement 
 
 ## Playback and browsing
 
-Choose Sound under Opening or Closing; search names, descriptions or category names. A play button previews without changing selection. All 46 choices are available on either side, including farts and Kenney effects. Both new recordings and procedural audio use the same existing audio worker, output routing, volume and lifecycle rules. Recorded files are bundled in the application and Swift package; no catalogue, account, download, microphone or network service is required during playback. A missing bundled file produces an error instead of substituting another sound.
+Choose Sound under Opening or Closing; search names, descriptions or category names. A play button previews without changing selection. All 43 choices are available on either side, including farts and Kenney effects. Both new recordings and procedural audio use the same existing audio worker, output routing, volume and lifecycle rules. Recorded files are bundled in the application and Swift package; no catalogue, account, download, microphone or network service is required during playback. A missing bundled file produces an error instead of substituting another sound.
 
 ## Processing and provenance
 
@@ -32,8 +32,8 @@ These are technical checks, **not a claimed listening review**. GPT did not audi
 swift run -c release SoundPreview build/sound-library-expanded
 ```
 
-The new directory contains a local HTML player, 92 direction WAV exports, a manifest and offline credits. The tool refuses to overwrite existing output; it has no autoplay or network requests. CI exports the `offline-sound-library-92-options` artifact. Recordings intentionally appear identically in both direction exports. These samples do not establish physical hinge behavior.
+The new directory contains a local HTML player, 86 direction WAV exports, a manifest and offline credits. The tool refuses to overwrite existing output; it has no autoplay or network requests. CI exports the `offline-sound-library-86-options` artifact. Recordings intentionally appear identically in both direction exports. These samples do not establish physical hinge behavior.
 
-Core tests check all 46 entries, original 40 distinct procedural renders, 26 recording resources and credits, 2,209 independent non-custom selection combinations, legacy settings, format/duration/amplitude bounds and determinism. Hosted tests decode and start every preset in both directions, plus verify recorded-preview progress without hinge data. A UI regression searches and auditions a fart without selecting it, saves a Kenney effect across relaunch, and opens offline credits. Physical audio and Duo display handoff remain separate, unverified release gates.
+Core tests check all 43 entries, 34 distinct procedural renders, 26 recording resources and credits, 1,936 independent non-custom selection combinations, legacy settings, format/duration/amplitude bounds and determinism. Hosted tests decode and start every preset in both directions, plus verify recorded-preview progress without hinge data. A UI regression searches and auditions a fart without selecting it, saves a Kenney effect across relaunch, and opens offline credits. Physical audio and Duo display handoff remain separate, unverified release gates.
 
 Completed build 5 checks and their scope are recorded in [RECORDED_AUDIO_VALIDATION.md](RECORDED_AUDIO_VALIDATION.md).

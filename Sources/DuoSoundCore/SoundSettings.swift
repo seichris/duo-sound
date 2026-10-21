@@ -14,15 +14,28 @@ public enum SoundCategory: String, CaseIterable, Sendable {
 }
 
 public enum SoundPreset: String, Codable, CaseIterable, Sendable {
-    // Keep existing raw values and defaults stable for previously saved settings.
-    case chime, paper, arcade, orbit, click
-    case crystal, marimba, musicBox, zipper, latch, typewriter
-    case waterDrop, bird, rain, bubble, spring, cork, laser, robot, powerUp
+    // Keep the raw values of available sounds stable for saved settings.
+    case chime, arcade, orbit, click
+    case crystal, marimba, musicBox, latch, typewriter
+    case waterDrop, bird, bubble, spring, cork, laser, robot, powerUp
     case tinyFart, microFart, wetPop, lowRumble, squeaker, wetSplutter
     case canTab, corkPop, zipShut, waterPlip, catHello, creakyHinge, lockClick, pageFlick
     case rubberDucky, bubblePop, suctionPlop, jawBoing
     case buttonClick, softSwitch, confirm, softOpen, softClose, glassTap, metalTap, woodKnock
     case off, custom
+
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let value = try container.decode(String.self)
+        // Retired choices migrate without discarding other settings or imports.
+        if ["paper", "zipper", "rain"].contains(value) {
+            self = .click
+        } else if let preset = Self(rawValue: value) {
+            self = preset
+        } else {
+            throw DecodingError.dataCorruptedError(in: container, debugDescription: "Unknown sound preset: \(value)")
+        }
+    }
 
     public var title: String {
         switch self {
@@ -36,8 +49,8 @@ public enum SoundPreset: String, Codable, CaseIterable, Sendable {
     public var category: SoundCategory? {
         switch self {
         case .chime, .crystal, .marimba, .musicBox: return .musical
-        case .paper, .click, .zipper, .latch, .typewriter: return .mechanical
-        case .waterDrop, .bird, .rain: return .nature
+        case .click, .latch, .typewriter: return .mechanical
+        case .waterDrop, .bird: return .nature
         case .arcade, .bubble, .spring, .cork: return .playful
         case .orbit, .laser, .robot, .powerUp: return .scienceFiction
         case .tinyFart, .microFart, .wetPop, .lowRumble, .squeaker, .wetSplutter: return .farts
@@ -52,19 +65,16 @@ public enum SoundPreset: String, Codable, CaseIterable, Sendable {
     public var detail: String {
         switch self {
         case .chime: return "A soft three-note welcome or goodbye."
-        case .paper: return "A dry paper crinkle."
         case .arcade: return "Retro notes climbing or falling."
         case .orbit: return "An airy electronic sweep."
         case .click: return "A tiny, crisp tap."
         case .crystal: return "Bright, shimmering glass bells."
         case .marimba: return "Two warm wooden notes."
         case .musicBox: return "A delicate, sparkling melody."
-        case .zipper: return "A quick, textured zip or unzip."
         case .latch: return "A metal release and a solid catch."
         case .typewriter: return "A short flurry of mechanical keys."
         case .waterDrop: return "Rounded, rippling water drops."
         case .bird: return "Two small, clear chirps."
-        case .rain: return "A soft shower with scattered droplets."
         case .bubble: return "Playful, rising or falling bubble pops."
         case .spring: return "A wobbly, elastic boing."
         case .cork: return "A hollow pop and a snug little thump."
@@ -80,17 +90,15 @@ public enum SoundPreset: String, Codable, CaseIterable, Sendable {
     /// Every generated clip is deliberately short. Legacy durations stay intact.
     public var duration: Double? {
         switch self {
-        case .chime, .paper, .arcade, .orbit: return 0.42
+        case .chime, .arcade, .orbit: return 0.42
         case .click: return 0.13
         case .crystal: return 0.65
         case .marimba: return 0.50
         case .musicBox: return 0.72
-        case .zipper: return 0.34
         case .latch: return 0.24
         case .typewriter: return 0.26
         case .waterDrop: return 0.46
         case .bird: return 0.56
-        case .rain: return 0.60
         case .bubble: return 0.34
         case .spring: return 0.60
         case .cork: return 0.22
@@ -105,8 +113,8 @@ public enum SoundPreset: String, Codable, CaseIterable, Sendable {
     public static var builtIns: [Self] { allCases.filter { $0.category != nil } }
     public var isRecorded: Bool {
         switch self {
-        case .chime, .paper, .arcade, .orbit, .click, .crystal, .marimba, .musicBox,
-             .zipper, .latch, .typewriter, .waterDrop, .bird, .rain, .bubble, .spring,
+        case .chime, .arcade, .orbit, .click, .crystal, .marimba, .musicBox,
+             .latch, .typewriter, .waterDrop, .bird, .bubble, .spring,
              .cork, .laser, .robot, .powerUp, .off, .custom: return false
         default: return true
         }
@@ -133,7 +141,7 @@ public struct SoundSettings: Codable, Equatable, Sendable {
     public var enabled = true
     public var volume: Double = 0.65
     public var opening: SoundPreset = .chime
-    public var closing: SoundPreset = .paper
+    public var closing: SoundPreset = .click
     public var openingFile: ImportedSound?
     public var closingFile: ImportedSound?
     public init() {}

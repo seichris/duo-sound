@@ -38,9 +38,6 @@ public enum SoundSynthesizer {
                     }
                 }
                 sample = value * 0.24
-            case .paper:
-                let crinkles = pow(abs(sin(2 * .pi * (opening ? 19.0 : 27.0) * t)), 7)
-                sample = (white * 0.12 + lowPass * 0.8) * (0.25 + crinkles) * (1 - progress * 0.55)
             case .arcade:
                 let step = min(3, Int(direction * 4))
                 let frequency = [261.63, 329.63, 392.0, 523.25][step]
@@ -68,12 +65,6 @@ public enum SoundSynthesizer {
                     notes += bell(local, frequency: frequency) * 0.20
                 }
                 sample = notes
-            case .zipper:
-                let teeth = opening ? 90 + 150 * progress : 240 - 150 * progress
-                phase += 2 * .pi * teeth / Double(sampleRate)
-                let rasp = pow((1 + sin(phase)) / 2, 5)
-                sample = (white * 0.36 + lowPass * 0.45) * (0.2 + rasp * 0.8)
-                    * pow(sin(.pi * progress), 0.6)
             case .latch:
                 let release = opening ? 1_450.0 : 920.0
                 let catchPitch = opening ? 390.0 : 240.0
@@ -105,15 +96,6 @@ public enum SoundSynthesizer {
                 secondPhase += 2 * .pi * second / Double(sampleRate)
                 sample = sin(phase) * pulse(t, length: 0.15) * 0.30
                     + sin(secondPhase) * pulse(t - 0.24, length: 0.18) * 0.28
-            case .rain:
-                let shower = (white - lowPass) * 0.17 * pow(sin(.pi * progress), 0.8)
-                var drops = 0.0
-                for index in 0..<5 {
-                    let offset = 0.035 + Double(index) * (opening ? 0.103 : 0.089)
-                    let frequency = (opening ? 1_250.0 : 1_000.0) + Double(index % 3) * 310
-                    drops += tone(t - offset, frequency: frequency, decay: 110) * 0.21
-                }
-                sample = shower + drops
             case .bubble:
                 let local = max(0, t - 0.13)
                 let first = opening ? 420 + 1_500 * t : 800 - 700 * t

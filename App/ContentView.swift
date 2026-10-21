@@ -100,7 +100,7 @@ struct ContentView: View {
                                 .accessibilityIdentifier("soundCredits")
                         }
                         Section("Built for iPhone Duo") {
-                            Text("Inspired by Scrunch. Original Swift implementation, 20 original synthesized presets, and 26 CC0 recordings. No Scrunch code or sound assets are bundled.")
+                            Text("Inspired by Scrunch. Original Swift implementation, 17 original synthesized presets, and 26 CC0 recordings. No Scrunch code or sound assets are bundled.")
                             Text("Hinge integration uses Apple’s public UIHingeInteraction on iOS 27.1 and newer. Sound previews also work on iPhone and iPad without a hinge. Fold effects work only while Hingy is visible and active.")
                         }
                     }
