@@ -23,6 +23,13 @@ final class PlaybackTests: XCTestCase {
         audio = nil
     }
 
+    func testNativeHingeIsEnabledWithoutStartingSimulation() {
+        XCTAssertTrue(AppModel.hingeSDKEnabled)
+        XCTAssertFalse(model.isDemo)
+        model.receiveHardware(angle: nil)
+        XCTAssertEqual(model.status, "NO HINGE AVAILABLE")
+    }
+
     func testPreviewUsesSilentModeIndependentMixablePlayback() async throws {
         model.updateSettings { $0.enabled = false }
         model.preview(.opened, preset: .musicBox)

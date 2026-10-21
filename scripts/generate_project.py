@@ -51,14 +51,15 @@ for name, kind, files in [('sources', 'PBXSourcesBuildPhase', builds), ('framewo
 project_configs, target_configs = [], []
 for name in ['Debug', 'Release', 'Debug-Duo', 'Release-Duo', 'AppStore']:
     debug = name.startswith('Debug')
-    duo = name.endswith('-Duo') or name == 'AppStore'
+    # Native hinge support ships in every configuration. Runtime availability
+    # keeps previews usable on iOS 17+ devices without a supported hinge.
     shared = {'CLANG_ENABLE_MODULES': 'YES', 'CLANG_ENABLE_OBJC_ARC': 'YES', 'SDKROOT': 'iphoneos',
-              # Duo configurations require the iOS 27.1 SDK. Runtime availability
-              # checks preserve previews on older supported iPhones and iPads.
+              # All configurations require the iOS 27.1 SDK to compile the
+              # typed public interaction, but retain an iOS 17 deployment target.
               'IPHONEOS_DEPLOYMENT_TARGET': '17.0', 'SWIFT_VERSION': '5.0', 'ENABLE_USER_SCRIPT_SANDBOXING': 'YES',
               'SWIFT_OPTIMIZATION_LEVEL': '-Onone' if debug else '-O', 'DEBUG_INFORMATION_FORMAT': 'dwarf' if debug else 'dwarf-with-dsym',
               'ENABLE_TESTABILITY': 'YES' if debug else 'NO',
-              'SWIFT_ACTIVE_COMPILATION_CONDITIONS': ' '.join(['$(inherited)'] + (['DEBUG'] if debug else []) + (['DUO_HINGE_SDK'] if duo else []) + (['APP_STORE_RELEASE'] if name == 'AppStore' else []))}
+              'SWIFT_ACTIVE_COMPILATION_CONDITIONS': ' '.join(['$(inherited)', 'DUO_HINGE_SDK'] + (['DEBUG'] if debug else []) + (['APP_STORE_RELEASE'] if name == 'AppStore' else []))}
     project_configs.append(add('project:' + name, isa='XCBuildConfiguration', name=name, buildSettings=shared))
     target_settings = {
         'PRODUCT_NAME': 'DuoSound', 'PRODUCT_BUNDLE_IDENTIFIER': owner['bundle_id'], 'INFOPLIST_FILE': 'App/Info.plist',

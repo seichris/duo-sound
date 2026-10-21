@@ -164,7 +164,7 @@ public struct SoundSettings: Codable, Equatable, Sendable {
 }
 
 public enum SoundFailure: LocalizedError {
-    case invalidSettings, tooLarge, invalidAudio, missingSound, missingBuiltIn, playbackFailed
+    case invalidSettings, tooLarge, invalidAudio, missingSound, missingBuiltIn, playbackFailed, soundDisabled
     public var errorDescription: String? {
         switch self {
         case .invalidSettings: return "Saved settings are invalid. Your files have not been deleted."
@@ -173,6 +173,7 @@ public enum SoundFailure: LocalizedError {
         case .missingSound: return "The custom sound is missing. Import it again or choose a built-in sound."
         case .missingBuiltIn: return "This built-in sound is unavailable. Please choose another sound."
         case .playbackFailed: return "Audio could not start. Check the audio output and try the preview again."
+        case .soundDisabled: return "This sound is set to Off. Choose a sound in Hingy before using it in Shortcuts."
         }
     }
 }
@@ -182,6 +183,11 @@ public struct SettingsStore: Sendable {
     public let directory: URL
     public var settingsURL: URL { directory.appendingPathComponent("settings.json") }
     public init(directory: URL) { self.directory = directory }
+    public static func applicationSupport() throws -> Self {
+        let root = try FileManager.default.url(for: .applicationSupportDirectory,
+            in: .userDomainMask, appropriateFor: nil, create: true)
+        return Self(directory: root.appendingPathComponent("DuoSound", isDirectory: true))
+    }
     public func load() throws -> SoundSettings {
         guard FileManager.default.fileExists(atPath: settingsURL.path) else { return SoundSettings() }
         let data = try Self.readBounded(settingsURL, limit: 65_536)

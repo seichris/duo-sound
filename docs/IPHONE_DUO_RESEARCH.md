@@ -1,3 +1,5 @@
+> October 21 update: native hinge support is enabled in every build. See [current Shortcuts research and implementation](BACKGROUND_SHORTCUTS.md) for the file-returning actions and unverified stock fold-trigger status. Earlier sections below record historical findings.
+
 # iPhone Duo research
 
 ## October 18, 2026 SDK audit

@@ -11,8 +11,10 @@ concurrency:
   cancel-in-progress: true
 jobs:
   core-and-ios-build:
-    runs-on: macos-15
+    runs-on: xcode-27
     timeout-minutes: 35
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
     steps:
       - uses: actions/checkout@v4
         with:
@@ -39,7 +41,7 @@ jobs:
         run: |
           python3 -m unittest discover -s scripts/tests -v
           python3 scripts/release_check.py
-      - name: Build release-mode preview for iOS simulator
+      - name: Build native hinge app for iOS simulator
         run: >-
           xcodebuild -project DuoSound.xcodeproj -scheme DuoSound
           -configuration Release -sdk iphonesimulator

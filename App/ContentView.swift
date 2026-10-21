@@ -62,6 +62,12 @@ struct ContentView: View {
                     Text(model.isDemo ? "Simulated events only; these controls do not read your phone’s hinge." : model.hardwareAvailable == false ? "This device has no available hinge. You can preview every sound or turn on Simulate hinge to try opening and closing." : "Automatic detection needs a supported hinge. It never guesses from screen size, rotation, or lock state.")
                 }
                 Section {
+                    NavigationLink("Play sounds with Shortcuts") { SoundShortcutsHelpView() }
+                        .accessibilityIdentifier("shortcutsHelp")
+                } footer: {
+                    Text("Use Hingy’s selected audio with Shortcuts’ Play Sound action. Available automation triggers depend on your device and iOS version.")
+                }
+                Section {
                     Label("Foreground only", systemImage: "info.circle")
                     Text("Hingy must be visible and active. It does not listen while another app is open, the phone is locked, or this app is suspended. Closing during a display handoff still needs device testing.")
                         .font(.footnote).foregroundStyle(.secondary)
@@ -101,7 +107,7 @@ struct ContentView: View {
                         }
                         Section("Built for iPhone Duo") {
                             Text("Inspired by Scrunch. Original Swift implementation, 17 original synthesized presets, and 26 CC0 recordings. No Scrunch code or sound assets are bundled.")
-                            Text("Hinge integration uses Apple’s public UIHingeInteraction on iOS 27.1 and newer. Sound previews also work on iPhone and iPad without a hinge. Fold effects work only while Hingy is visible and active.")
+                            Text("Hinge integration uses Apple’s public UIHingeInteraction on supported devices with iOS 27.1 and newer. Sound previews also work on iPhone and iPad without a hinge. Automatic fold effects work while Hingy is visible and active.")
                         }
                     }
                     .navigationTitle("About Hingy")

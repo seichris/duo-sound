@@ -1,10 +1,12 @@
 # Hingy privacy policy — WEB3 FZCO
 
-Last prepared: September 15, 2026. Publisher: **WEB3 FZCO**. Public support: **jensen@web3.consulting**. This policy describes the current Hingy implementation; the publisher must still audit the final distribution archive and any jurisdiction-specific obligations before release.
+Last prepared: October 21, 2026. Publisher: **WEB3 FZCO**. Public support: **jensen@web3.consulting**. This policy describes the current Hingy implementation; the publisher must still audit the final distribution archive and any jurisdiction-specific obligations before release.
 
 The app does not create accounts, record microphone input, contain analytics or advertising SDKs, or automatically transmit sounds, settings, or hinge activity to an app-operated server. It has no remotely hosted sound catalogue and does not automatically attach data to support requests.
 
 Selected settings and copies of imported audio are stored in the app's private Application Support directory. The activity label is transient, not a saved fold-history log. The Files importer accesses the file selected by the user. Device/cloud backups may include local app data according to the user's iOS/backup settings; the project does not operate its own cloud synchronization.
+
+When you invoke Get Opening Sound or Get Closing Sound through Apple's Shortcuts system, Hingy gives Shortcuts a copy of the currently selected audio, including a custom import. Your configured workflow can play, save or share that copy. The action reads app-owned data without changing file protection; some data may be unavailable while locked. It does not start a background hinge listener or transmit audio to an app-operated server. Copies saved or shared by your shortcut are governed by those destinations and are not removed by deleting Hingy.
 
 Deleting the app removes its active local data. Offloading can retain documents and data, and backup removal is separate. There is no project account to delete. The app cannot delete the user's original source file or copies held by a backup provider.
 

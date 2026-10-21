@@ -16,8 +16,8 @@ Open the default DuoSound scheme. Verify demo labelling, Open/Close and slider s
 
 ## SDK activation — mandatory
 
-1. Use Xcode 27.1 or newer for Duo configurations. The runtime bridge has been replaced by typed public `UIHingeInteraction` calls. The default preview configuration still supports SDK 26.
-2. Build **DuoSound-DuoSDK** for both device and simulator SDKs. A default-scheme green check does not cover the hinge adapter.
+1. Use Xcode 27.1 or newer for Duo configurations. The runtime bridge has been replaced by typed public `UIHingeInteraction` calls. Every configuration now requires SDK 27.1; runtime availability checks retain iOS 17 device support.
+2. Build the default **DuoSound** scheme for both device and simulator SDKs. It now includes the typed hinge adapter; **DuoSound-DuoSDK** remains an equivalent compatibility scheme.
 3. Apple documents initial delivery and a new current-state update when `isEnabled` returns to true. Confirm silent first observation and foreground-return rebaselining in the simulator and on a physical Duo.
 4. Confirm the app's 0–180-degree convention, 8/22-degree thresholds and 80 ms dwell on hardware. Angle updates have no guaranteed frequency/precision. Missing hinge data must cancel pending fold work without cancelling manual sound previews.
 5. Run hosted **DuoSoundAppTests** and UI **DuoSoundUITests** on iPad as well as iPhone. Hosted tests check actual AVAudioPlayer progress, all 40 built-in auditions, imported audio, no-hinge updates, configuration notifications, route removal, inactive/interrupted playback and Silent Mode category policy. The 12 hosted tests also hold slow audio-session activation blocked on the serial worker, verify main-actor responsiveness and cancel before playback can start. Simulator progress does not prove audible physical output.

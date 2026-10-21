@@ -5,6 +5,9 @@ The app does not create accounts, record microphone audio, include advertising o
 Settings and imported audio
 Your selected settings and copies of audio clips you import are stored in the app's private storage. The current activity label is kept in memory, not saved as a history. Importing a file gives the app access to the file you selected; it does not grant general access to your file library.
 
+Shortcuts
+Invoking Get Opening Sound or Get Closing Sound gives Apple's Shortcuts system a copy of the currently selected audio, including an imported clip. Shortcuts can play, save or share that copy according to the workflow you configure. These actions do not start a background hinge listener or upload audio to an app-operated server. Protected files may remain unavailable while the device is locked.
+
 Device backups and deletion
 Depending on your iOS settings, app data may be included in device or cloud backups. Deleting the app removes its active local data; offloading the app can retain documents and data. Removing a backup is a separate action controlled through the backup service. Hingy does not operate its own cloud-sync service.
 

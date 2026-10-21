@@ -29,9 +29,9 @@ final class AppModel: ObservableObject {
     init(directory: URL? = nil, audio: SoundPlayer? = nil) {
         self.audio = audio ?? SoundPlayer()
         do {
-            let directory = try directory ?? FileManager.default.url(for: .applicationSupportDirectory,
-                in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("DuoSound", isDirectory: true)
-            let storage = SettingsStore(directory: directory)
+            let storage: SettingsStore
+            if let directory { storage = SettingsStore(directory: directory) }
+            else { storage = try SettingsStore.applicationSupport() }
             store = storage
             settings = try storage.load()
         } catch { errorMessage = "Could not load settings: \(error.localizedDescription)" }
