@@ -1,0 +1,180 @@
+{
+  "source_commit": "e8effc8",
+  "version": "1.1",
+  "build": "8",
+  "bundle_id": "com.seichris.duosound",
+  "configuration": "Debug",
+  "binary_sha256": "283255f92ba7232709b6b81fb69de8a7f86746404b149e4f8f278336a4033b9d",
+  "signed_build_log": "/tmp/hingy-1.1-final-device-build8.log",
+  "installed_device": {
+    "name": "Ultra",
+    "model": "iPhone 16 Pro Max",
+    "os": "27.0.1",
+    "install_result": "success",
+    "installed_version_query": "1.1 (8)",
+    "launch_result": "Launched application with com.seichris.duosound bundle identifier."
+  },
+  "visual_check": "Actual physical screenshot /tmp/hingy-1.1-ultra.png shows 43 sounds and native NO HINGE AVAILABLE, with no simulated events. Bottom removal is additionally verified in source and simulator captures.",
+  "audible_output_verified_this_build": false,
+  "physical_hinge_verified": false,
+  "app_intents_metadata": {
+    "actions": {
+      "GetClosingSoundIntent": {
+        "assistantDefinedSchemaTraits": [],
+        "assistantDefinedSchemas": [],
+        "authenticationPolicy": 0,
+        "availabilityAnnotations": {
+          "LNPlatformNameWildcard": {
+            "introducedVersion": "*"
+          }
+        },
+        "descriptionMetadata": {
+          "descriptionText": {
+            "alternatives": [],
+            "key": "Get the selected closing audio file. Add Shortcuts\u2019 Play Sound action next to play it without opening Hingy. Playback uses the shortcut\u2019s volume."
+          },
+          "searchKeywords": []
+        },
+        "effectiveBundleIdentifiers": [],
+        "fullyQualifiedTypeName": "DuoSound.GetClosingSoundIntent",
+        "identifier": "GetClosingSoundIntent",
+        "isAuthPolExplicit": true,
+        "isDiscoverable": true,
+        "mangledTypeName": "8DuoSound010GetClosingB6IntentV",
+        "mangledTypeNameByBundleIdentifier": {},
+        "mangledTypeNameByBundleIdentifierV2": {},
+        "mangledTypeNameV2": "8DuoSound010GetClosingB6IntentV",
+        "openAppWhenRun": false,
+        "outputFlags": 0,
+        "outputType": {
+          "intents": {
+            "wrapper": {
+              "typeIdentifier": 12
+            }
+          }
+        },
+        "parameters": [],
+        "presentationStyle": 0,
+        "requiredCapabilities": [],
+        "supportedModes": 1,
+        "systemProtocolMetadata": [],
+        "systemProtocolMetadataV2": [],
+        "systemProtocols": [],
+        "title": {
+          "alternatives": [],
+          "key": "Get Closing Sound"
+        },
+        "typeSpecificMetadata": [],
+        "visibilityMetadata": {
+          "assistantOnly": false,
+          "isDiscoverable": true
+        }
+      },
+      "GetOpeningSoundIntent": {
+        "assistantDefinedSchemaTraits": [],
+        "assistantDefinedSchemas": [],
+        "authenticationPolicy": 0,
+        "availabilityAnnotations": {
+          "LNPlatformNameWildcard": {
+            "introducedVersion": "*"
+          }
+        },
+        "descriptionMetadata": {
+          "descriptionText": {
+            "alternatives": [],
+            "key": "Get the selected opening audio file. Add Shortcuts\u2019 Play Sound action next to play it without opening Hingy. Playback uses the shortcut\u2019s volume."
+          },
+          "searchKeywords": []
+        },
+        "effectiveBundleIdentifiers": [],
+        "fullyQualifiedTypeName": "DuoSound.GetOpeningSoundIntent",
+        "identifier": "GetOpeningSoundIntent",
+        "isAuthPolExplicit": true,
+        "isDiscoverable": true,
+        "mangledTypeName": "8DuoSound010GetOpeningB6IntentV",
+        "mangledTypeNameByBundleIdentifier": {},
+        "mangledTypeNameByBundleIdentifierV2": {},
+        "mangledTypeNameV2": "8DuoSound010GetOpeningB6IntentV",
+        "openAppWhenRun": false,
+        "outputFlags": 0,
+        "outputType": {
+          "intents": {
+            "wrapper": {
+              "typeIdentifier": 12
+            }
+          }
+        },
+        "parameters": [],
+        "presentationStyle": 0,
+        "requiredCapabilities": [],
+        "supportedModes": 1,
+        "systemProtocolMetadata": [],
+        "systemProtocolMetadataV2": [],
+        "systemProtocols": [],
+        "title": {
+          "alternatives": [],
+          "key": "Get Opening Sound"
+        },
+        "typeSpecificMetadata": [],
+        "visibilityMetadata": {
+          "assistantOnly": false,
+          "isDiscoverable": true
+        }
+      }
+    },
+    "assistantEntities": [],
+    "assistantIntentNegativePhrases": [],
+    "assistantIntents": [],
+    "autoShortcutProviderMangledName": "8DuoSound14HingyShortcutsV",
+    "autoShortcuts": [
+      {
+        "actionIdentifier": "GetOpeningSoundIntent",
+        "availabilityAnnotations": {
+          "LNPlatformNameWildcard": {
+            "introducedVersion": "*"
+          }
+        },
+        "phraseTemplates": [
+          {
+            "alternatives": [],
+            "key": "Get the opening sound from ${applicationName}"
+          }
+        ],
+        "shortTitle": {
+          "alternatives": [],
+          "key": "Opening Sound"
+        },
+        "systemImageName": "waveform"
+      },
+      {
+        "actionIdentifier": "GetClosingSoundIntent",
+        "availabilityAnnotations": {
+          "LNPlatformNameWildcard": {
+            "introducedVersion": "*"
+          }
+        },
+        "phraseTemplates": [
+          {
+            "alternatives": [],
+            "key": "Get the closing sound from ${applicationName}"
+          }
+        ],
+        "shortTitle": {
+          "alternatives": [],
+          "key": "Closing Sound"
+        },
+        "systemImageName": "waveform"
+      }
+    ],
+    "entities": {},
+    "enums": [],
+    "generator": {
+      "name": "xcode-tools",
+      "version": "27A9275"
+    },
+    "negativePhrases": [],
+    "queries": {},
+    "shortcutTileColor": 14,
+    "version": 1
+  }
+}

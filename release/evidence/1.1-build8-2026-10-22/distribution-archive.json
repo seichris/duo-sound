@@ -1,0 +1,13 @@
+{
+  "CFBundleIdentifier": "com.seichris.duosound",
+  "CFBundleShortVersionString": "1.1",
+  "CFBundleVersion": "8",
+  "DTXcodeBuild": "27A9275",
+  "DTSDKName": "iphoneos27.1",
+  "DTSDKBuild": "24A94232",
+  "ipa_sha256": "a1616eb29161c2fa631dee6207e0c3d9652f71761c9a0d807b591224ebba9326",
+  "binary_sha256": "d4f1fa8978fbe5f9892523a5c259fa9f85a8ad5199d29a1ea5f19ddbbce419f4",
+  "source_sha256": "8bed71d5277505034c82bdce2e7ba6d07c281c62ec65a0b68aef25c800e7ea5c",
+  "scheme": "DuoSound-AppStore",
+  "configuration": "AppStore"
+}

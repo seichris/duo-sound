@@ -1,15 +1,13 @@
-# App Review notes — submitted with 1.0 (5)
+# App Review notes for Hingy 1.1 (8)
 
-Submitted October 19, 2026. [Final submission receipt](BUILD_5_SUBMITTED.md). The following is the actual review-notes text; existing private review contact details were preserved.
+Hingy 1.1 (8) adds public native hinge detection on supported iPhone Duo hardware with iOS 27.1+, two audio-file actions for Shortcuts, and a simpler main screen. Paper, Zipper and Rain are removed; old selections migrate to Click. The offline library has 43 sounds (17 original procedural presets and 26 CC0 recordings), with credits in About. No login is required.
 
-Build 5 fixes manual sound playback on iPad and iPhone without a hinge. No login or network is required.
+On any iPhone or iPad: select a non-Off sound, raise system/effect volume, then tap Preview for opening or closing. Library play buttons also preview without changing the saved selection. Previews work in Silent Mode and with automatic fold sounds disabled. Simulation controls have been removed.
 
-On iPad: choose a non-Off sound, set system/effect volume above zero, then tap Preview under Opening or Closing. Library play buttons also work without a hinge and with automatic fold sounds paused. Manual previews play in Silent Mode, mix with other audio, and follow the current output route. Simulate hinge provides labelled manual Open/Close controls.
+On supported iPhone Duo: enable fold sounds and open/close while Hingy is visible and active. The first native reading silently establishes a baseline. Automatic hinge effects respect Silent Mode; app switching/locking ends observation. Hingy does not monitor a hinge or run an audio service while suspended.
 
-Automatic hinge effects require supported iPhone Duo hardware and Hingy visible and active; automatic effects respect Silent Mode and stop when inactive. They are not a background/system sound replacement.
+Shortcuts: create a shortcut with Hingy's Get Opening Sound (or Get Closing Sound), followed by Apple's Play Sound using the returned file. Hingy's action returns an IntentFile and does not open the UI or play audio itself. Shortcuts owns playback. Use Shortcuts/system volume; Hingy's effect-volume slider applies only inside Hingy. Available system automation triggers, locked execution and timing depend on the installed OS and workflow. No claim is made that a stock fold automation trigger is available on every OS. A selection of Off or unavailable import returns a clear error. Running the action explicitly passes a copy of the chosen audio to Shortcuts.
 
-Audio session/player setup runs on a serial background worker. Missing hinge data and benign route-configuration notices no longer cancel manual previews. Visible feedback confirms explicit preview requests. The offline library contains 46 choices (20 original presets and 26 CC0 recordings) with creator credits in About.
+Validation includes simulator playback, native public hinge callback and actual UI checks, plus installation and launch on an iPhone 16 Pro Max with iOS 27.0.1. Physical iPhone Duo folding, display handoff and locked Shortcuts automation were not tested. No camera, microphone, notification, motion or background entitlement is used.
 
-Testing basis: owner-authorized simulator validation; no physical devices were available. Full simulator suites: iPhone iOS 26.0.1, iPadOS 18.5 and iPadOS 27.0 each 18 passed, zero failures, one intentional Duo-only skip; Duo iOS 27.1 all 19 passed with zero failures/skips, including the actual public hinge silent initial callback. Every preset decodes/starts in both selectors, with playback-clock progress regression coverage. Core tests 41 passed; release/archive-policy checks 25 passed. The exact physical iPadOS 27.2 review setup and physical audio/display handoff were not tested.
-
-Privacy: no account, advertising, analytics SDK, microphone recording, tracking or app-operated data collection. App Privacy is published as Data Not Collected. Imported files remain local. No review account is required.
+Privacy: no accounts, ads, analytics SDK, tracking, microphone recording or app-operated data collection. Imports/settings remain local; user-invoked Shortcuts actions hand over only the selected audio. Published App Privacy is Data Not Collected. Existing review contact details remain valid.

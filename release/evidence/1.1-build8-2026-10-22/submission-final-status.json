@@ -1,0 +1,48 @@
+{
+  "app": {
+    "id": "6812193737",
+    "bundleId": "com.seichris.duosound",
+    "name": "Hingy"
+  },
+  "summary": {
+    "health": "yellow",
+    "nextAction": "Wait for App Store review outcome.",
+    "blockers": []
+  },
+  "builds": {
+    "latest": {
+      "id": "fda3f261-a909-4a21-a2eb-6f37f112885a",
+      "version": "1.1",
+      "buildNumber": "8",
+      "processingState": "VALID",
+      "uploadedDate": "2026-10-21T15:35:44-07:00",
+      "platform": "IOS"
+    }
+  },
+  "testflight": {},
+  "appstore": {
+    "versionId": "ec6b3b38-419a-470a-8c60-6fa9ccfecbfb",
+    "version": "1.1",
+    "state": "WAITING_FOR_REVIEW",
+    "platform": "IOS",
+    "createdDate": "2026-10-21T15:12:31-07:00"
+  },
+  "submission": {
+    "inFlight": true,
+    "blockingIssues": []
+  },
+  "review": {
+    "latestSubmissionId": "4137d441-30a4-426d-88c6-ab5d5f475c42",
+    "state": "WAITING_FOR_REVIEW",
+    "submittedDate": "2026-10-21T22:53:27.24Z",
+    "platform": "IOS"
+  },
+  "phasedRelease": {
+    "configured": true
+  },
+  "links": {
+    "appStoreConnect": "https://appstoreconnect.apple.com/apps/6812193737",
+    "testFlight": "https://appstoreconnect.apple.com/apps/6812193737/testflight/ios",
+    "review": "https://appstoreconnect.apple.com/apps/6812193737/appstore/review"
+  }
+}
