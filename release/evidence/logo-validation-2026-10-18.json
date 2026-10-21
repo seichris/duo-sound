@@ -1,0 +1,28 @@
+{
+  "assessed_on": "2026-10-18",
+  "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+  "original": "branding/hingy-logo-original.png",
+  "exports": {
+    "App/Assets.xcassets/AppIcon.appiconset/AppIcon.png": "a9b5d2e85edf8c9f0f33297f3a7698a8b66fbccc86ae831583d973f1f4514ba1",
+    "App/Assets.xcassets/HingyLogo.imageset/HingyLogo.png": "a9b5d2e85edf8c9f0f33297f3a7698a8b66fbccc86ae831583d973f1f4514ba1",
+    "marketing/app-store-screenshots/public/app-icon.png": "a9b5d2e85edf8c9f0f33297f3a7698a8b66fbccc86ae831583d973f1f4514ba1"
+  },
+  "export_dimensions": [
+    1024,
+    1024
+  ],
+  "format": "opaque 8-bit RGB PNG",
+  "local_ui_check": {
+    "test": "testPreviewLaunchAndPrivacy",
+    "device": "iPad Air 11-inch (M3)",
+    "os": "27.0",
+    "scheme": "DuoSound-DuoSDK",
+    "configuration": "Release-Duo",
+    "passed": 1,
+    "failed": 0,
+    "skipped": 0,
+    "result_bundle": "/tmp/hingy-logo-about.xcresult",
+    "scope": "About opens and privacy navigation succeeds; does not validate physical playback or display handoff"
+  },
+  "historical_store_assets": "Previously exported/uploaded screenshots predate this logo and need regeneration/review."
+}

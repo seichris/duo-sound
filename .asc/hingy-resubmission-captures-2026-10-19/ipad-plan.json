@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "app": {
+    "bundle_id": "com.seichris.duosound",
+    "udid": "869A3555-BD8D-497D-8773-2994E82AC589",
+    "output_dir": "build/resubmission-captures-2026-10-19/ipad"
+  },
+  "steps": [
+    {
+      "action": "launch"
+    },
+    {
+      "action": "wait",
+      "duration_ms": 1500
+    },
+    {
+      "action": "screenshot",
+      "name": "ipad-home"
+    }
+  ]
+}

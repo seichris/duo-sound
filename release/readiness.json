@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
-  "status": "blocked",
-  "assessed_on": "2026-09-15",
-  "validated_source_sha256": null,
+  "status": "ready",
+  "assessed_on": "2026-10-19",
+  "validated_source_sha256": "0287c83e98774637b55506ce5d25c26415bc7fa5f78973f14c800cda3b88f45c",
   "owner": {
     "legal_name": "WEB3 FZCO",
     "support_email": "jensen@web3.consulting",
@@ -15,14 +15,42 @@
     "marketing_url": "https://github.com/seichris/duo-sound"
   },
   "evidence": {
-    "public_sdk_compiles": {"passed": false, "reference": null},
-    "physical_open_close_and_handoff": {"passed": false, "reference": null},
-    "audio_import_lifecycle_accessibility": {"passed": false, "reference": null},
-    "privacy_manifest_and_policy_audited": {"passed": false, "reference": null},
-    "real_store_screenshots_reviewed": {"passed": false, "reference": null},
-    "public_urls_and_contact_verified": {"passed": false, "reference": null},
-    "seller_age_rating_rights_and_availability": {"passed": false, "reference": null},
-    "distribution_sdk_accepted_by_apple": {"passed": false, "reference": null}
+    "public_sdk_compiles": {
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/signed-build.json"
+    },
+    "physical_open_close_and_handoff": {
+      "passed": false,
+      "reference": null,
+      "waiver": {
+        "basis": "owner_authorized_simulator_only",
+        "reference": "release/evidence/build5-release-2026-10-19/simulator-release-authorization.json"
+      }
+    },
+    "audio_import_lifecycle_accessibility": {
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
+    },
+    "privacy_manifest_and_policy_audited": {
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
+    },
+    "real_store_screenshots_reviewed": {
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
+    },
+    "public_urls_and_contact_verified": {
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
+    },
+    "seller_age_rating_rights_and_availability": {
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/audit.json"
+    },
+    "distribution_sdk_accepted_by_apple": {
+      "passed": true,
+      "reference": "release/evidence/build5-release-2026-10-19/apple-processed-build.json"
+    }
   },
-  "notes": "App Store Connect currently shows record 6812193737 (Hingy), version 1.0 in PREPARE_FOR_SUBMISSION, under team 4H5PK8686H; version metadata, category, content rights, age rating, copyright and privacy URL are configured, while no build or availability is configured. The owner supplied WEB3 FZCO, jensen@web3.consulting, 2026 WEB3 FZCO and GitHub-backed public URLs on 2026-09-15. User authorization to continue the release attempt is recorded in the task; do not mark evidence passed without a dated test/report for the fingerprinted source. Default CI is not physical Duo validation."
+  "notes": "Submitted 1.0 (5) on 2026-10-19T02:02:31.193Z; review submission and version both WAITING_FOR_REVIEW. Rejection reply sent. Signed build processed VALID; App Privacy published Data Not Collected; six native screenshot replacements COMPLETE; API preflight zero errors/warnings. Physical proof remains false with explicit source-bound simulator-only owner authorization. See release/BUILD_5_SUBMITTED.md and submission-final.json."
 }

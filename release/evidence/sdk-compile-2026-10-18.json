@@ -1,0 +1,40 @@
+{
+  "date": "2026-10-18",
+  "source_sha256": "5686d5f2400d00447f3b4c7ed1d07e2513dd0e640828df8a3c009ad9e7858096",
+  "toolchain_installation": "Xcode-27.1-RC.app",
+  "scope": "Unsigned compilation only; no physical playback, handoff or upload acceptance established",
+  "builds": [
+    {
+      "platform": "device",
+      "configuration": "Release-Duo",
+      "code_signing": false,
+      "result": "BUILD SUCCEEDED",
+      "bundle_id": "com.seichris.duosound",
+      "version": "1.0",
+      "build": "4",
+      "sdk": "iphoneos27.1",
+      "xcode_build": "27A9275",
+      "device_families": [
+        1,
+        2
+      ],
+      "binary_sha256": "957f8631743259ab64dfb3d68070536dd4d808e569c7b7e44fe252073c781425"
+    },
+    {
+      "platform": "simulator",
+      "configuration": "Release-Duo",
+      "code_signing": false,
+      "result": "BUILD SUCCEEDED",
+      "bundle_id": "com.seichris.duosound",
+      "version": "1.0",
+      "build": "4",
+      "sdk": "iphonesimulator27.1",
+      "xcode_build": "27A9275",
+      "device_families": [
+        1,
+        2
+      ],
+      "binary_sha256": "e91e0275c96addd74ec1400853ae44a7f199f5f06031fb3680b983988cddf7b0"
+    }
+  ]
+}

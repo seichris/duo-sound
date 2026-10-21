@@ -1,0 +1,12 @@
+Validated App/Assets.xcassets/AppIcon.appiconset/AppIcon.png (1024x1024 opaque RGB) and generated the original test fixture.
+Generated DuoSound.xcodeproj (preview, Duo SDK, and guarded App Store schemes).
+BLOCKED: Launch listing is still a draft
+BLOCKED: Release status is blocked
+BLOCKED: Unverified: audio_import_lifecycle_accessibility
+BLOCKED: Unverified: distribution_sdk_accepted_by_apple
+BLOCKED: Unverified: physical_open_close_and_handoff
+BLOCKED: Unverified: privacy_manifest_and_policy_audited
+BLOCKED: Unverified: public_urls_and_contact_verified
+BLOCKED: Unverified: real_store_screenshots_reviewed
+BLOCKED: Unverified: seller_age_rating_rights_and_availability
+BLOCKED: Actual reviewed iPhone and iPad screenshots are required for the current universal target

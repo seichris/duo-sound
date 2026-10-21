@@ -10,6 +10,7 @@ from pathlib import Path
 import plistlib
 import re
 import struct
+from check_recorded_sounds import validate as validate_recorded_sounds
 from urllib.parse import urlparse
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -105,9 +106,25 @@ def https_url(value):
     url = urlparse(value)
     return url.scheme == 'https' and bool(url.hostname) and not url.username and not url.password
 
-def submission_errors(root, readiness):
+def simulator_release_authorized(root, item):
+    """Keep absent physical proof false; accept only a recorded owner exception."""
+    waiver = item.get('waiver', {})
+    if item.get('passed') is not False or waiver.get('basis') != 'owner_authorized_simulator_only':
+        return False
+    try:
+        record = load(safe_path(root, waiver.get('reference')))
+        return (record.get('physical_testing_waived') is True
+                and record.get('authorization_source') == 'explicit_user_request'
+                and bool(record.get('request'))
+                and record.get('build_number') == load(root/'release/listing.json')['build_number']
+                and record.get('source_sha256') == source_fingerprint(root))
+    except (OSError, ValueError, KeyError, TypeError):
+        return False
+
+def submission_errors(root, readiness, *, archive=False):
     errors = []
-    if readiness.get('status') != 'ready': errors.append('Release status is blocked')
+    allowed_statuses = {'ready', 'ready_for_archive'} if archive else {'ready'}
+    if readiness.get('status') not in allowed_statuses: errors.append('Release status is blocked')
     if readiness.get('validated_source_sha256') != source_fingerprint(root):
         errors.append('Source fingerprint is missing/stale: device evidence must match this candidate')
     evidence = readiness.get('evidence',{})
@@ -115,6 +132,12 @@ def submission_errors(root, readiness):
         errors.append('Required evidence entries were removed or changed')
     for key in sorted(REQUIRED_EVIDENCE):
         item = evidence.get(key,{})
+        # Apple can accept a distribution SDK only after the first archive/upload.
+        # Submission still requires the actual processed-build evidence.
+        if archive and key == 'distribution_sdk_accepted_by_apple':
+            continue
+        if key == 'physical_open_close_and_handoff' and simulator_release_authorized(root, item):
+            continue
         reference = item.get('reference')
         if item.get('passed') is not True or not isinstance(reference,str) or not reference.strip():
             errors.append(f'Unverified: {key}')
@@ -161,10 +184,14 @@ def submission_errors(root, readiness):
         errors.append('Actual reviewed iPhone and iPad screenshots are required for the current universal target')
     return errors
 
-def check(root, submission=False):
+def check(root, submission=False, archive=False):
     listing = load(root/'release/listing.json')
     readiness = load(root/'release/readiness.json')
     errors = listing_errors(listing)
+    try:
+        validate_recorded_sounds(root)
+    except (AssertionError, OSError, ValueError, KeyError) as error:
+        errors.append(f'Recorded audio integrity: {error}')
     if listing.get('schema_version') != 1 or readiness.get('schema_version') != 1:
         errors.append('Unknown release schema')
     if set(readiness.get('evidence',{})) != REQUIRED_EVIDENCE:
@@ -176,25 +203,27 @@ def check(root, submission=False):
     privacy = plistlib.loads((root/'App/PrivacyInfo.xcprivacy').read_bytes())
     if privacy.get('NSPrivacyTracking') is not False or privacy.get('NSPrivacyCollectedDataTypes'):
         errors.append('Privacy manifest disagrees with local-only listing; audit required')
-    if submission:
+    if submission or archive:
         if listing.get('status') != 'approved_launch_copy': errors.append('Launch listing is still a draft')
-        errors += submission_errors(root,readiness)
+        errors += submission_errors(root,readiness,archive=archive)
     return errors
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--submission',action='store_true')
+    phase = parser.add_mutually_exclusive_group()
+    phase.add_argument('--submission',action='store_true')
+    phase.add_argument('--archive',action='store_true',help='Require pre-upload evidence; Apple processing is checked before submission')
     parser.add_argument('--fingerprint',action='store_true')
     args = parser.parse_args()
     try:
         if args.fingerprint:
             print(source_fingerprint(ROOT)); return 0
-        errors = check(ROOT,args.submission)
+        errors = check(ROOT,args.submission,args.archive)
         if errors:
             for error in errors: print('BLOCKED:',error)
             return 1
-        print('Preparation checks passed.' if not args.submission else 'Evidence and package checks passed; no upload performed.')
-        if not args.submission: print('This is not submission approval. Run --submission to see unresolved release gates.')
+        print('Evidence and package checks passed; no upload performed.' if args.submission or args.archive else 'Preparation checks passed.')
+        if not args.submission and not args.archive: print('This is not submission approval. Run --submission to see unresolved release gates.')
         return 0
     except (OSError,ValueError,KeyError,TypeError,AttributeError,struct.error,plistlib.InvalidFileException) as error:
         print('BLOCKED: invalid or missing preparation file:',error)

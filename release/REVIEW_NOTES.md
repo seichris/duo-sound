@@ -1,19 +1,15 @@
-# App Review notes — blocked launch draft
+# App Review notes — submitted with 1.0 (5)
 
-**Do not paste these notes as evidence that testing has happened.** Complete `readiness.json` and replace this heading with version/build/device/OS details from the tested candidate before submission. No review account is needed because the app has no login.
+Submitted October 19, 2026. [Final submission receipt](BUILD_5_SUBMITTED.md). The following is the actual review-notes text; existing private review contact details were preserved.
 
-## Product and scope
+Build 5 fixes manual sound playback on iPad and iPhone without a hinge. No login or network is required.
 
-Hingy offers independently selected opening and closing sound effects through the public hinge API on supported hardware. It is a **foreground-only** experience, not an iOS system sound replacement or background fold listener. On unsupported hardware, sound previews and explicitly labelled simulation do not claim to detect a physical hinge.
+On iPad: choose a non-Off sound, set system/effect volume above zero, then tap Preview under Opening or Closing. Library play buttons also work without a hinge and with automatic fold sounds paused. Manual previews play in Silent Mode, mix with other audio, and follow the current output route. Simulate hinge provides labelled manual Open/Close controls.
 
-The distinct intended interaction is a physical fold with individually assigned original/imported effects, not a collection of web links or a reskinned soundboard. Please evaluate this description against the actual build: the default developer preview has not yet established the physical interaction and must not be submitted as the finished product. Review Guideline 4.3(b) explicitly covers generic sound-effect apps; approval is not guaranteed by adding metadata or more presets.
+Automatic hinge effects require supported iPhone Duo hardware and Hingy visible and active; automatic effects respect Silent Mode and stop when inactive. They are not a background/system sound replacement.
 
-## Reviewer flow for the validated hardware build
+Audio session/player setup runs on a serial background worker. Missing hinge data and benign route-configuration notices no longer cancel manual previews. Visible feedback confirms explicit preview requests. The offline library contains 46 choices (20 original presets and 26 CC0 recordings) with creator credits in About.
 
-With the app visible and active on supported hardware, establish its initial hinge state; the first observation is silent. Open and close, and verify the separate selections. Confirm actual endpoint/handoff behavior against the attached validation report. Use Preview to audition effects, change the volume, select Off, and import a short audio file through Files. A suitable fixture can be generated with `scripts/generate_assets.py` for testing; no protected third-party audio is bundled.
+Testing basis: owner-authorized simulator validation; no physical devices were available. Full simulator suites: iPhone iOS 26.0.1, iPadOS 18.5 and iPadOS 27.0 each 18 passed, zero failures, one intentional Duo-only skip; Duo iOS 27.1 all 19 passed with zero failures/skips, including the actual public hinge silent initial callback. Every preset decodes/starts in both selectors, with playback-clock progress regression coverage. Core tests 41 passed; release/archive-policy checks 25 passed. The exact physical iPadOS 27.2 review setup and physical audio/display handoff were not tested.
 
-The app respects Silent Mode and current output routing. It intentionally suppresses pending effects when inactive, interrupted, locked, or suspended. No microphone, camera, background-audio entitlement, private API, account, ads, purchases, or analytics SDK is used. There is no remote content catalogue or user-to-user sharing service.
-
-## Attach before submitting
-
-The owner must supply the actual build number, release SDK/toolchain, device/OS results (especially close/display handoff), a real recorded demonstration if useful, valid support/contact and privacy URLs, completed privacy/age-rating responses, rights/copyright information, and truthful availability/compatibility settings. Do not add invented phone numbers, developer identities, approval statements, or treat the existing App Store record as approval. See `docs/APP_STORE_RELEASE.md`.
+Privacy: no account, advertising, analytics SDK, microphone recording, tracking or app-operated data collection. App Privacy is published as Data Not Collected. Imported files remain local. No review account is required.

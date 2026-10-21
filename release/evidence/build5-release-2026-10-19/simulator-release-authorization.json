@@ -1,0 +1,9 @@
+{
+  "authorization_source": "explicit_user_request",
+  "request": "Use simulator validation since we have no physical devices, finish the remaining privacy and store checks, then sign and upload build 5 to App Store Connect. Reply their message and then submit",
+  "physical_testing_waived": true,
+  "physical_testing_performed": false,
+  "build_number": "5",
+  "source_sha256": "0287c83e98774637b55506ce5d25c26415bc7fa5f78973f14c800cda3b88f45c",
+  "scope": "Owner accepts simulator-only validation, including absence of physical audible output/display-handoff and subjective device listening proof. Actual simulator, source/privacy/store and processing checks still required."
+}

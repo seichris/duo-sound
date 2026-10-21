@@ -1,0 +1,49 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "DDDB4B2E-6B41-4952-8000-6690E3C50249",
+        "deviceName" : "Hingy review iPad",
+        "modelName" : "iPad Air 11-inch (M3)",
+        "osBuildNumber" : "24A434",
+        "osVersion" : "27.0",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 16,
+      "skippedTests" : 1,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "DuoSound-DuoSDK · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792341034.546,
+  "passedTests" : 16,
+  "result" : "Passed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 1,
+  "startTime" : 1792340684.094,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - DuoSound-DuoSDK",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "53% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 1.52s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 17
+}

@@ -1,0 +1,420 @@
+{
+  "observed_at_utc": "2026-10-19T01:16:37.435564+00:00",
+  "candidate": "1.0 (5)",
+  "implementation_commit": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+  "checkout_commit": "f1ee09ab5dd54ae076f53ae214007fd9fb5d0ad9",
+  "product_source_sha256": "3679a10f0e9fc3c9d2323f39b5b5588265e0948e742838221361d21a728a4442",
+  "all_workflows_passed": true,
+  "failure_fixes": "No failures in the build 5 implementation workflows; no code changes required. Earlier build 4 failed attempts remain historical.",
+  "runs": {
+    "standard": {
+      "conclusion": "success",
+      "createdAt": "2026-10-19T00:47:38Z",
+      "databaseId": 39182370871,
+      "headSha": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+      "jobs": [
+        {
+          "completedAt": "2026-10-19T01:06:50Z",
+          "conclusion": "success",
+          "databaseId": 117837645799,
+          "name": "core-and-ios-build",
+          "startedAt": "2026-10-19T00:47:47Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-19T00:47:48Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-19T00:47:47Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:50Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-19T00:47:48Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:52Z",
+              "conclusion": "success",
+              "name": "Toolchain",
+              "number": 3,
+              "startedAt": "2026-10-19T00:47:50Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:48:28Z",
+              "conclusion": "success",
+              "name": "Core unit tests",
+              "number": 4,
+              "startedAt": "2026-10-19T00:47:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:48:37Z",
+              "conclusion": "success",
+              "name": "Render all sound pairs for review",
+              "number": 5,
+              "startedAt": "2026-10-19T00:48:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:48:40Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 6,
+              "startedAt": "2026-10-19T00:48:37Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:48:40Z",
+              "conclusion": "success",
+              "name": "Generate icon and verify project",
+              "number": 7,
+              "startedAt": "2026-10-19T00:48:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:48:41Z",
+              "conclusion": "success",
+              "name": "Release preparation unit tests",
+              "number": 8,
+              "startedAt": "2026-10-19T00:48:40Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:49:23Z",
+              "conclusion": "success",
+              "name": "Build release-mode preview for iOS simulator",
+              "number": 9,
+              "startedAt": "2026-10-19T00:48:41Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:49:28Z",
+              "conclusion": "success",
+              "name": "Select available iPhone and iPad simulators",
+              "number": 10,
+              "startedAt": "2026-10-19T00:49:23Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:57:56Z",
+              "conclusion": "success",
+              "name": "UI smoke tests and actual preview screenshots",
+              "number": 11,
+              "startedAt": "2026-10-19T00:49:28Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:58:04Z",
+              "conclusion": "success",
+              "name": "Export screenshot attachments",
+              "number": 12,
+              "startedAt": "2026-10-19T00:57:56Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:06:10Z",
+              "conclusion": "success",
+              "name": "iPad audio regression and UI tests",
+              "number": 13,
+              "startedAt": "2026-10-19T00:58:04Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:06:16Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 14,
+              "startedAt": "2026-10-19T01:06:10Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:06:18Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 28,
+              "startedAt": "2026-10-19T01:06:16Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:06:47Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 29,
+              "startedAt": "2026-10-19T01:06:18Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/seichris/duo-sound/actions/runs/39182370871/job/117837645799"
+        }
+      ],
+      "status": "completed",
+      "updatedAt": "2026-10-19T01:06:50Z",
+      "url": "https://github.com/seichris/duo-sound/actions/runs/39182370871"
+    },
+    "sdk": {
+      "conclusion": "success",
+      "createdAt": "2026-10-19T00:47:38Z",
+      "databaseId": 39182370955,
+      "headSha": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+      "jobs": [
+        {
+          "completedAt": "2026-10-19T01:14:55Z",
+          "conclusion": "success",
+          "databaseId": 117837645960,
+          "name": "sdk-ipad-and-duo",
+          "startedAt": "2026-10-19T00:47:48Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-19T00:47:50Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-19T00:47:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:53Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-19T00:47:50Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:59Z",
+              "conclusion": "success",
+              "name": "Verify SDK and bind source identity",
+              "number": 3,
+              "startedAt": "2026-10-19T00:47:53Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:48:49Z",
+              "conclusion": "success",
+              "name": "Compile optimized device and simulator products",
+              "number": 4,
+              "startedAt": "2026-10-19T00:47:59Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:01:14Z",
+              "conclusion": "success",
+              "name": "Test optimized typed scheme on iPadOS 27.0",
+              "number": 5,
+              "startedAt": "2026-10-19T00:48:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:04:00Z",
+              "conclusion": "success",
+              "name": "Install the Duo simulator runtime",
+              "number": 6,
+              "startedAt": "2026-10-19T01:01:14Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:14:49Z",
+              "conclusion": "success",
+              "name": "Test audio, UI and actual public hinge callback on Duo",
+              "number": 7,
+              "startedAt": "2026-10-19T01:04:00Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:14:50Z",
+              "conclusion": "success",
+              "name": "Export actual results and screen captures",
+              "number": 8,
+              "startedAt": "2026-10-19T01:14:49Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:14:52Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 9,
+              "startedAt": "2026-10-19T01:14:50Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:14:52Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 18,
+              "startedAt": "2026-10-19T01:14:52Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T01:14:53Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 19,
+              "startedAt": "2026-10-19T01:14:52Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/seichris/duo-sound/actions/runs/39182370955/job/117837645960"
+        }
+      ],
+      "status": "completed",
+      "updatedAt": "2026-10-19T01:14:56Z",
+      "url": "https://github.com/seichris/duo-sound/actions/runs/39182370955"
+    },
+    "preparation": {
+      "conclusion": "success",
+      "createdAt": "2026-10-19T00:47:38Z",
+      "databaseId": 39182370809,
+      "headSha": "d9b74e2e6ceb617a7792a3b73254fc7cefda0ab7",
+      "jobs": [
+        {
+          "completedAt": "2026-10-19T00:47:48Z",
+          "conclusion": "success",
+          "databaseId": 117837645529,
+          "name": "package-preview",
+          "startedAt": "2026-10-19T00:47:41Z",
+          "status": "completed",
+          "steps": [
+            {
+              "completedAt": "2026-10-19T00:47:42Z",
+              "conclusion": "success",
+              "name": "Set up job",
+              "number": 1,
+              "startedAt": "2026-10-19T00:47:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:44Z",
+              "conclusion": "success",
+              "name": "Run actions/checkout@v4",
+              "number": 2,
+              "startedAt": "2026-10-19T00:47:42Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:44Z",
+              "conclusion": "success",
+              "name": "Generate original icon and audio fixture",
+              "number": 3,
+              "startedAt": "2026-10-19T00:47:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:44Z",
+              "conclusion": "success",
+              "name": "Validate and export draft preparation",
+              "number": 4,
+              "startedAt": "2026-10-19T00:47:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:45Z",
+              "conclusion": "success",
+              "name": "Package preparation assets (not a signed release)",
+              "number": 5,
+              "startedAt": "2026-10-19T00:47:44Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:46Z",
+              "conclusion": "success",
+              "name": "Run actions/upload-artifact@v4",
+              "number": 6,
+              "startedAt": "2026-10-19T00:47:45Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:46Z",
+              "conclusion": "success",
+              "name": "Post Run actions/checkout@v4",
+              "number": 12,
+              "startedAt": "2026-10-19T00:47:46Z",
+              "status": "completed"
+            },
+            {
+              "completedAt": "2026-10-19T00:47:46Z",
+              "conclusion": "success",
+              "name": "Complete job",
+              "number": 13,
+              "startedAt": "2026-10-19T00:47:46Z",
+              "status": "completed"
+            }
+          ],
+          "url": "https://github.com/seichris/duo-sound/actions/runs/39182370809/job/117837645529"
+        }
+      ],
+      "status": "completed",
+      "updatedAt": "2026-10-19T00:47:49Z",
+      "url": "https://github.com/seichris/duo-sound/actions/runs/39182370809"
+    }
+  },
+  "test_results": {
+    "standard_phone": {
+      "passed": 18,
+      "failed": 0,
+      "skipped": 1,
+      "summary": "release/evidence/build5-resubmission-2026-10-19/standard-phone-summary.json",
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "B46D1662-1674-4DA8-9118-F7FF5EBA5D09",
+        "deviceName": "Hingy iPhone QA",
+        "modelName": "iPhone 17 Pro Max",
+        "osBuildNumber": "23A8464",
+        "osVersion": "26.0.1",
+        "platform": "iOS Simulator"
+      }
+    },
+    "standard_ipad": {
+      "passed": 18,
+      "failed": 0,
+      "skipped": 1,
+      "summary": "release/evidence/build5-resubmission-2026-10-19/standard-ipad-summary.json",
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "E5FC9B29-34A7-4BD9-99EE-40914C82F4AC",
+        "deviceName": "Hingy iPad QA",
+        "modelName": "iPad Air 11-inch (M3)",
+        "osBuildNumber": "22F77",
+        "osVersion": "18.5",
+        "platform": "iOS Simulator"
+      }
+    },
+    "sdk_ipad": {
+      "passed": 18,
+      "failed": 0,
+      "skipped": 1,
+      "summary": "release/evidence/build5-resubmission-2026-10-19/sdk-ipad-summary.json",
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "5544EB26-793B-433C-B9FD-602BFC30B7CC",
+        "deviceName": "Hingy review iPad",
+        "modelName": "iPad Air 11-inch (M3)",
+        "osBuildNumber": "24A434",
+        "osVersion": "27.0",
+        "platform": "iOS Simulator"
+      }
+    },
+    "sdk_duo": {
+      "passed": 19,
+      "failed": 0,
+      "skipped": 0,
+      "summary": "release/evidence/build5-resubmission-2026-10-19/sdk-duo-summary.json",
+      "device": {
+        "architecture": "arm64",
+        "deviceId": "8530D1AB-85DB-4548-9A2C-AEE16B046787",
+        "deviceName": "Hingy review Duo",
+        "modelName": "iPhone",
+        "osBuildNumber": "24A94425",
+        "osVersion": "27.1",
+        "platform": "iOS Simulator"
+      }
+    }
+  },
+  "scope": "CI simulator/model/UI coverage and unsigned SDK compilation. Does not prove physical audio/display handoff, subjective listening or Apple acceptance of a signed archive."
+}

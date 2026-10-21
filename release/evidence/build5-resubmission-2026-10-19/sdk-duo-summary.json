@@ -1,0 +1,49 @@
+{
+  "devicesAndConfigurations" : [
+    {
+      "device" : {
+        "architecture" : "arm64",
+        "deviceId" : "8530D1AB-85DB-4548-9A2C-AEE16B046787",
+        "deviceName" : "Hingy review Duo",
+        "modelName" : "iPhone",
+        "osBuildNumber" : "24A94425",
+        "osVersion" : "27.1",
+        "platform" : "iOS Simulator"
+      },
+      "expectedFailures" : 0,
+      "failedTests" : 0,
+      "passedTests" : 19,
+      "skippedTests" : 0,
+      "testPlanConfiguration" : {
+        "configurationId" : "1",
+        "configurationName" : "Test Scheme Action"
+      }
+    }
+  ],
+  "environmentDescription" : "DuoSound-DuoSDK · Built with macOS 27.0.1",
+  "expectedFailures" : 0,
+  "failedTests" : 0,
+  "finishTime" : 1792372481.945,
+  "passedTests" : 19,
+  "result" : "Passed",
+  "runtimeWarnings" : [
+
+  ],
+  "skippedTests" : 0,
+  "startTime" : 1792372064.918,
+  "statistics" : [
+
+  ],
+  "testFailures" : [
+
+  ],
+  "title" : "Test - DuoSound-DuoSDK",
+  "topInsights" : [
+    {
+      "category" : "Longest Test Runs",
+      "impact" : "61% of duration",
+      "text" : "1 longest test run with outlier durations exceeding 2.17s (three standard deviations)"
+    }
+  ],
+  "totalTestCount" : 19
+}

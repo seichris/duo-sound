@@ -1,4 +1,4 @@
-// The dedicated AppStore configuration must never compile the simulation-only adapter.
+// The dedicated AppStore configuration requires the public hinge SDK.
 // SDK compilation alone does not establish hardware validation; the build phase
 // also runs the evidence-based submission checker for this configuration.
 #if APP_STORE_RELEASE && !DUO_HINGE_SDK

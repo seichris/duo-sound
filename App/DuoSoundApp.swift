@@ -11,13 +11,13 @@ struct DuoSoundApp: App {
             ContentView(model: model)
                 .modifier(HingeObservation(model: model))
                 .onChange(of: scenePhase, initial: true) { _, phase in model.setActive(phase == .active) }
-                .onReceive(NotificationCenter.default.publisher(for: AVAudioSession.interruptionNotification)) { _ in model.interruptAudio() }
-                .onReceive(NotificationCenter.default.publisher(for: AVAudioSession.mediaServicesWereResetNotification)) { _ in model.interruptAudio() }
-                .onReceive(NotificationCenter.default.publisher(for: AVAudioSession.routeChangeNotification)) { note in
-                    // Category changes caused by our own activation aren't an interruption.
-                    let reason = (note.userInfo?[AVAudioSessionRouteChangeReasonKey] as? NSNumber)?.uintValue
-                    if reason != AVAudioSession.RouteChangeReason.categoryChange.rawValue { model.interruptAudio() }
-                }
+                .onReceive(NotificationCenter.default.publisher(for: AVAudioSession.interruptionNotification)
+                    .receive(on: DispatchQueue.main)) { _ in model.interruptAudio() }
+                .onReceive(NotificationCenter.default.publisher(for: AVAudioSession.mediaServicesWereResetNotification)
+                    .receive(on: DispatchQueue.main)) { _ in model.interruptAudio() }
+                .onReceive(NotificationCenter.default.publisher(for: AVAudioSession.routeChangeNotification)
+                    .receive(on: DispatchQueue.main),
+                           perform: model.audioRouteChanged)
         }
     }
 }

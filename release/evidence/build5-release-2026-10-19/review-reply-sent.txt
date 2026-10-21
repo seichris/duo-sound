@@ -1,0 +1,9 @@
+Thank you for reporting the iPad sound playback issue. We have uploaded and selected replacement version 1.0, build 5.
+
+We moved audio-session activation, player setup and teardown to a serial background worker so slow audio-system calls do not block the UI. Missing hinge data on iPad and benign audio-route configuration notifications no longer cancel manual previews. Explicit Preview taps use a mixable playback session that works in Silent Mode, and visible feedback confirms the requested sound.
+
+On the review iPad, please choose a non-Off sound, set system and effect volume above zero, and tap Preview under Opening or Closing. The library play buttons work without a hinge and even with automatic fold sounds paused. No account or network service is required. Audio follows the current output route, including headphones. Simulate hinge provides clearly labelled manual Open/Close controls.
+
+Validation was simulator-based because no physical devices were available. Full suites passed 18 tests with zero failures on iPhone iOS 26.0.1, iPadOS 18.5 and iPadOS 27.0 (one intentional Duo-only skip per device). Duo iOS 27.1 passed all 19 tests with zero failures or skips. Tests decode and start every built-in sound in both selectors and verify playback-clock progress after a missing-hinge update. We have not reproduced the exact physical iPadOS 27.2 review environment or tested physical audio/display handoff.
+
+Automatic fold effects require supported hardware with Hingy visible and active; manual sound previews work on iPhone and iPad without a hinge. Please review replacement build 5. Thank you.

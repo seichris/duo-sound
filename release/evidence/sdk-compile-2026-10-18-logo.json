@@ -1,0 +1,48 @@
+{
+  "date": "2026-10-18",
+  "source_sha256": "1c273e38705f601855c6b3afcdf645989e2bdf95b2da4adf7085a0e4aa80e5fb",
+  "toolchain_installation": "Xcode-27.1-RC.app",
+  "scope": "Unsigned optimized compilation of the audio-queue candidate with the supplied Hingy logo; no physical playback or upload acceptance established",
+  "logo": {
+    "original_sha256": "ebbac8235f28ebe7b1d619b8d2aa6a7b011320dc20a2445a3a31a23d8f1c7eab",
+    "app_icon_sha256": "a9b5d2e85edf8c9f0f33297f3a7698a8b66fbccc86ae831583d973f1f4514ba1"
+  },
+  "builds": [
+    {
+      "platform": "device",
+      "configuration": "Release-Duo",
+      "code_signing": false,
+      "testability": false,
+      "result": "BUILD SUCCEEDED",
+      "bundle_id": "com.seichris.duosound",
+      "version": "1.0",
+      "build": "4",
+      "sdk": "iphoneos27.1",
+      "xcode_build": "27A9275",
+      "device_families": [
+        1,
+        2
+      ],
+      "binary_sha256": "46ec89b9e2961cf5902f35c4f73a29b13897a8f4f1e0532c8be16e72a5b7399d",
+      "asset_catalog_sha256": "5210253c17634276af0ed2ba4e68741e013e7bbb2a80d6a60a039e16a1cab755"
+    },
+    {
+      "platform": "simulator",
+      "configuration": "Release-Duo",
+      "code_signing": false,
+      "testability": false,
+      "result": "BUILD SUCCEEDED",
+      "bundle_id": "com.seichris.duosound",
+      "version": "1.0",
+      "build": "4",
+      "sdk": "iphonesimulator27.1",
+      "xcode_build": "27A9275",
+      "device_families": [
+        1,
+        2
+      ],
+      "binary_sha256": "eb4ee63ca77b40fdbf70951037cd05c64f6ade058efede55467c94676ee37013",
+      "asset_catalog_sha256": "5210253c17634276af0ed2ba4e68741e013e7bbb2a80d6a60a039e16a1cab755"
+    }
+  ]
+}

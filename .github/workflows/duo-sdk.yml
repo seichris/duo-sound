@@ -1,0 +1,104 @@
+name: Duo SDK validation
+on:
+  workflow_dispatch:
+  pull_request:
+    paths:
+      - 'App/**'
+      - 'AppTests/**'
+      - 'UITests/**'
+      - 'Sources/**'
+      - 'scripts/**'
+      - 'DuoSound.xcodeproj/**'
+      - '.github/workflows/duo-sdk.yml'
+  push:
+    branches: [main]
+permissions:
+  contents: read
+concurrency:
+  group: duo-sdk-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  sdk-ipad-and-duo:
+    runs-on: xcode-27
+    timeout-minutes: 45
+    env:
+      DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Verify SDK and bind source identity
+        run: |
+          mkdir -p TestResults
+          xcodebuild -version | tee TestResults/toolchain.txt
+          test "$(xcrun --sdk iphoneos --show-sdk-version)" = '27.1'
+          test "$(xcrun --sdk iphonesimulator --show-sdk-version)" = '27.1'
+          python3 scripts/release_check.py --fingerprint > TestResults/source-sha256.txt
+          git rev-parse HEAD > TestResults/commit.txt
+      - name: Compile optimized device and simulator products
+        id: compile
+        timeout-minutes: 10
+        run: |
+          xcodebuild -project DuoSound.xcodeproj -scheme DuoSound-DuoSDK -configuration Release-Duo \
+            -destination 'generic/platform=iOS' -derivedDataPath SDKBuild -jobs 2 \
+            CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO build > TestResults/device-build.log 2>&1
+          xcodebuild -project DuoSound.xcodeproj -scheme DuoSound-DuoSDK -configuration Release-Duo \
+            -destination 'generic/platform=iOS Simulator' -derivedDataPath SDKBuild -jobs 2 \
+            ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO \
+            build > TestResults/simulator-build.log 2>&1
+          shasum -a 256 SDKBuild/Build/Products/Release-Duo-iphoneos/DuoSound.app/DuoSound \
+            SDKBuild/Build/Products/Release-Duo-iphonesimulator/DuoSound.app/DuoSound > TestResults/binary-sha256.txt
+      - name: Test optimized typed scheme on iPadOS 27.0
+        timeout-minutes: 15
+        run: |
+          udid=$(xcrun simctl create 'Hingy review iPad' com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M3 com.apple.CoreSimulator.SimRuntime.iOS-27-0)
+          xcrun simctl bootstatus "$udid" -b
+          xcodebuild -project DuoSound.xcodeproj -scheme DuoSound-DuoSDK -configuration Release-Duo \
+            -destination "platform=iOS Simulator,id=$udid" -derivedDataPath SimulatorTests \
+            -resultBundlePath TestResults/iPad.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never \
+            -test-timeouts-enabled YES -maximum-test-execution-time-allowance 300 -jobs 2 \
+            ONLY_ACTIVE_ARCH=YES ENABLE_TESTABILITY=YES CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO \
+            test > TestResults/ipad-tests.log 2>&1
+          xcrun simctl shutdown "$udid"
+      - name: Install the Duo simulator runtime
+        id: runtime
+        if: ${{ !cancelled() && steps.compile.outcome == 'success' }}
+        timeout-minutes: 12
+        run: xcodebuild -downloadPlatform iOS -buildVersion 27.1 -architectureVariant arm64
+      - name: Test audio, UI and actual public hinge callback on Duo
+        if: ${{ !cancelled() && steps.compile.outcome == 'success' && steps.runtime.outcome == 'success' }}
+        timeout-minutes: 15
+        env:
+          TEST_RUNNER_HINGY_DUO_INTEGRATION: '1'
+        run: |
+          udid=$(xcrun simctl create 'Hingy review Duo' com.apple.CoreSimulator.SimDeviceType.iPhone-Duo com.apple.CoreSimulator.SimRuntime.iOS-27-1)
+          xcrun simctl bootstatus "$udid" -b
+          xcodebuild -project DuoSound.xcodeproj -scheme DuoSound-DuoSDK -configuration Release-Duo \
+            -destination "platform=iOS Simulator,id=$udid" -derivedDataPath SimulatorTests \
+            -resultBundlePath TestResults/Duo.xcresult -parallel-testing-enabled NO -collect-test-diagnostics never \
+            -test-timeouts-enabled YES -maximum-test-execution-time-allowance 300 -jobs 2 \
+            ONLY_ACTIVE_ARCH=YES ENABLE_TESTABILITY=YES CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO \
+            test > TestResults/duo-tests.log 2>&1
+          xcrun xcresulttool get test-results summary --path TestResults/Duo.xcresult > TestResults/Duo-summary.json
+          python3 - <<'PY'
+          import json
+          result = json.load(open('TestResults/Duo-summary.json'))
+          assert result['result'] == 'Passed' and result['failedTests'] == 0
+          assert result['skippedTests'] == 0 and result['passedTests'] >= 18, result
+          PY
+          xcrun simctl shutdown "$udid"
+      - name: Export actual results and screen captures
+        if: always()
+        run: |
+          for name in iPad Duo; do
+            if [ -d "TestResults/$name.xcresult" ]; then
+              xcrun xcresulttool get test-results summary --path "TestResults/$name.xcresult" > "TestResults/$name-summary.json"
+              xcrun xcresulttool export attachments --path "TestResults/$name.xcresult" --output-path "TestResults/$name-attachments"
+            fi
+          done
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: sdk27-ipad-duo-validation
+          path: TestResults/
+          retention-days: 14

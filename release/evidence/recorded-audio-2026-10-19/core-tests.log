@@ -1,0 +1,111 @@
+Building for debugging...
+[2 / 14] DuoSoundCore_DuoSoundCore
+[6 / 17] DuoSoundCoreTests-product
+[8 / 19] DuoSoundCoreTests-product
+[11 / 17] DuoSoundCoreTests-product
+[13 / 17] DuoSoundCoreTests-product
+Build complete! (1.58 sec)
+Test Suite 'All tests' started at 2026-10-19 08:39:24.137.
+Test Suite 'DuoSoundCoreTests.xctest' started at 2026-10-19 08:39:24.138.
+Test Suite 'FoldDetectorTests' started at 2026-10-19 08:39:24.138.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testBackwardsTimeCancelsPending]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testBackwardsTimeCancelsPending]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testCloseUsesTimer]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testCloseUsesTimer]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testDeadbandCancelsPendingTransition]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testDeadbandCancelsPendingTransition]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testDuplicateSamplesDoNotReplay]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testDuplicateSamplesDoNotReplay]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testEndpointOnlyOpenUsesTimer]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testEndpointOnlyOpenUsesTimer]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInitialClosedIsSilent]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInitialClosedIsSilent]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInitialDeadbandRemainsUnknown]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInitialDeadbandRemainsUnknown]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInitialOpenIsSilent]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInitialOpenIsSilent]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInvalidAnglesCancelPending]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInvalidAnglesCancelPending]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInvalidTimeCancelsPending]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testInvalidTimeCancelsPending]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testJitterInDeadbandKeepsState]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testJitterInDeadbandKeepsState]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testPartiallyToFullyOpenDoesNotReplay]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testPartiallyToFullyOpenDoesNotReplay]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testRapidCompleteFoldsAreNotRateLimited]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testRapidCompleteFoldsAreNotRateLimited]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testResetDropsPendingAndSilentlyRebaselines]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testResetDropsPendingAndSilentlyRebaselines]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testShortSpikeDoesNotTrigger]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testShortSpikeDoesNotTrigger]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testThresholdBoundariesAreInclusive]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testThresholdBoundariesAreInclusive]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testZeroDwellEmitsImmediately]' started.
+Test Case '-[DuoSoundCoreTests.FoldDetectorTests testZeroDwellEmitsImmediately]' passed (0.000 seconds).
+Test Suite 'FoldDetectorTests' passed at 2026-10-19 08:39:24.141.
+	 Executed 17 tests, with 0 failures (0 unexpected) in 0.003 (0.004) seconds
+Test Suite 'SettingsStoreTests' started at 2026-10-19 08:39:24.141.
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testAtomicRoundTrip]' started.
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testAtomicRoundTrip]' passed (0.002 seconds).
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testBoundedReaderAtAndOverLimit]' started.
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testBoundedReaderAtAndOverLimit]' passed (0.001 seconds).
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testCorruptSettingsFailWithoutOverwritingFile]' started.
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testCorruptSettingsFailWithoutOverwritingFile]' passed (0.001 seconds).
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testCustomSelectionRequiresFile]' started.
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testCustomSelectionRequiresFile]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testInvalidVolumeIsRejected]' started.
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testInvalidVolumeIsRejected]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testMissingSettingsUseDefaults]' started.
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testMissingSettingsUseDefaults]' passed (0.001 seconds).
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testPathTraversalIsRejected]' started.
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testPathTraversalIsRejected]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testWriteFailureDoesNotPretendSuccess]' started.
+Test Case '-[DuoSoundCoreTests.SettingsStoreTests testWriteFailureDoesNotPretendSuccess]' passed (0.000 seconds).
+Test Suite 'SettingsStoreTests' passed at 2026-10-19 08:39:24.147.
+	 Executed 8 tests, with 0 failures (0 unexpected) in 0.005 (0.006) seconds
+Test Suite 'SoundLibraryTests' started at 2026-10-19 08:39:24.147.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testAllDurationsAndPCMFormatsMatchCatalog]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testAllDurationsAndPCMFormatsMatchCatalog]' passed (0.373 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testAllFortyClipsAreDifferent]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testAllFortyClipsAreDifferent]' passed (0.374 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testBothDirectionsRemainDeterministic]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testBothDirectionsRemainDeterministic]' passed (0.743 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testCatalogLabelsAreUniqueAndReadable]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testCatalogLabelsAreUniqueAndReadable]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testChoosingBuiltInKeepsImportedFileAvailable]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testChoosingBuiltInKeepsImportedFileAvailable]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testClipsAreAudibleBoundedAndStartAndEndAtZero]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testClipsAreAudibleBoundedAndStartAndEndAtZero]' passed (0.920 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testEveryBuiltInAppearsExactlyOnceInTheBrowser]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testEveryBuiltInAppearsExactlyOnceInTheBrowser]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testEveryPairRoundTripsWithoutCouplingDirections]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testEveryPairRoundTripsWithoutCouplingDirections]' passed (0.014 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testFartsAndKenneyEffectsCanPersistInEitherSelector]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testFartsAndKenneyEffectsCanPersistInEitherSelector]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testLegacySavedIDsAndDefaultsStillDecode]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testLegacySavedIDsAndDefaultsStillDecode]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testNewPresetPersistsToDisk]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testNewPresetPersistsToDisk]' passed (0.001 seconds).
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testRecordedResourcesAndCreditsAreAvailableOffline]' started.
+Test Case '-[DuoSoundCoreTests.SoundLibraryTests testRecordedResourcesAndCreditsAreAvailableOffline]' passed (0.004 seconds).
+Test Suite 'SoundLibraryTests' passed at 2026-10-19 08:39:26.579.
+	 Executed 12 tests, with 0 failures (0 unexpected) in 2.430 (2.431) seconds
+Test Suite 'SoundSynthesizerTests' started at 2026-10-19 08:39:26.579.
+Test Case '-[DuoSoundCoreTests.SoundSynthesizerTests testAllPresetsProduceValidBoundedPCM]' started.
+Test Case '-[DuoSoundCoreTests.SoundSynthesizerTests testAllPresetsProduceValidBoundedPCM]' passed (0.530 seconds).
+Test Case '-[DuoSoundCoreTests.SoundSynthesizerTests testNoSyntheticCustomOrOffSound]' started.
+Test Case '-[DuoSoundCoreTests.SoundSynthesizerTests testNoSyntheticCustomOrOffSound]' passed (0.000 seconds).
+Test Case '-[DuoSoundCoreTests.SoundSynthesizerTests testOpeningAndClosingDiffer]' started.
+Test Case '-[DuoSoundCoreTests.SoundSynthesizerTests testOpeningAndClosingDiffer]' passed (0.367 seconds).
+Test Case '-[DuoSoundCoreTests.SoundSynthesizerTests testSynthesisIsDeterministic]' started.
+Test Case '-[DuoSoundCoreTests.SoundSynthesizerTests testSynthesisIsDeterministic]' passed (0.369 seconds).
+Test Suite 'SoundSynthesizerTests' passed at 2026-10-19 08:39:27.846.
+	 Executed 4 tests, with 0 failures (0 unexpected) in 1.267 (1.268) seconds
+Test Suite 'DuoSoundCoreTests.xctest' passed at 2026-10-19 08:39:27.846.
+	 Executed 41 tests, with 0 failures (0 unexpected) in 3.706 (3.709) seconds
+Test Suite 'All tests' passed at 2026-10-19 08:39:27.847.
+	 Executed 41 tests, with 0 failures (0 unexpected) in 3.706 (3.710) seconds
+◇ Test run started.
+↳ Testing Library Version: 2084
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

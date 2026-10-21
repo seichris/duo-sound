@@ -1,0 +1,9 @@
+{
+  "checked_at_utc": "2026-10-19T01:08:32.010259+00:00",
+  "app_id": "6812193737",
+  "before": "DOES_NOT_USE_THIRD_PARTY_CONTENT",
+  "after": "USES_THIRD_PARTY_CONTENT",
+  "reason": "Build 5 bundles 26 third-party CC0 recordings; source declarations and original notices are preserved",
+  "verification_note": "Immediate read after edit returned the old value; subsequent read confirmed the new declaration. No repeated mutation.",
+  "scope": "Content-rights declaration only; no build attachment/upload or review submission"
+}

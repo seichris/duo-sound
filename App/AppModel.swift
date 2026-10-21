@@ -1,4 +1,5 @@
 import SwiftUI
+import AVFoundation
 
 @MainActor
 final class AppModel: ObservableObject {
@@ -7,9 +8,7 @@ final class AppModel: ObservableObject {
     @Published private(set) var hardwareAvailable: Bool?
     @Published private(set) var lastEvent = "No sound triggered yet"
     @Published var errorMessage: String?
-    @Published private(set) var demoAngle = 0.0
     @Published private(set) var isActive = false
-    @Published private(set) var isDemo = !AppModel.hingeSDKEnabled
 
     static var hingeSDKEnabled: Bool {
         #if DUO_HINGE_SDK
@@ -19,24 +18,24 @@ final class AppModel: ObservableObject {
         #endif
     }
     private var store: SettingsStore?
-    private let audio = SoundPlayer()
+    private let audio: SoundPlayer
     private var detector = FoldDetector()
     private var pending: Task<Void, Never>?
     private let epoch = ContinuousClock.now
     private var generated: [String: Data] = [:]
 
-    init() {
+    init(directory: URL? = nil, audio: SoundPlayer? = nil) {
+        self.audio = audio ?? SoundPlayer()
         do {
-            let directory = try FileManager.default.url(for: .applicationSupportDirectory,
-                in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("DuoSound", isDirectory: true)
-            let storage = SettingsStore(directory: directory)
+            let storage: SettingsStore
+            if let directory { storage = SettingsStore(directory: directory) }
+            else { storage = try SettingsStore.applicationSupport() }
             store = storage
             settings = try storage.load()
         } catch { errorMessage = "Could not load settings: \(error.localizedDescription)" }
     }
 
     var status: String {
-        if isDemo { return "DEMO · SIMULATED HINGE" }
         if !Self.hingeSDKEnabled { return "HINGE SDK NOT ENABLED" }
         if hardwareAvailable == false { return "NO HINGE AVAILABLE" }
         if hardwareAvailable == nil { return "AWAITING HINGE DATA" }
@@ -58,28 +57,30 @@ final class AppModel: ObservableObject {
         isActive = value
         resetObservation()
     }
-    func setDemo(_ value: Bool) {
-        guard isDemo != value else { return }
-        isDemo = value
-        resetObservation()
-    }
-    func setDemoAngle(_ value: Double) {
-        guard value.isFinite else { return }
-        demoAngle = min(180, max(0, value))
-        guard isDemo else { return }
-        receive(demoAngle)
-    }
     func receiveHardware(angle value: Double?) {
         hardwareAvailable = value != nil
-        guard !isDemo else { return }
         guard let value else {
-            resetObservation(); return
+            // Missing hinge data is normal on iPad and during hierarchy changes.
+            // Cancel physical fold work without cutting off manual previews.
+            resetObservation(stopPreview: false); return
         }
         receive(value)
     }
     func interruptAudio() {
         // Never resume an old effect after a call, route change, or media reset.
         resetObservation()
+    }
+    func audioRouteChanged(_ notification: Notification) {
+        guard let raw = (notification.userInfo?[AVAudioSessionRouteChangeReasonKey] as? NSNumber)?.uintValue,
+              let reason = AVAudioSession.RouteChangeReason(rawValue: raw) else { return }
+        switch reason {
+        case .oldDeviceUnavailable, .newDeviceAvailable, .override, .noSuitableRouteForCategory:
+            interruptAudio()
+        default:
+            // Our session activation/configuration can post category and route
+            // configuration changes. These must not cancel the sound just started.
+            break
+        }
     }
     func updateSettings(_ edit: (inout SoundSettings) -> Void) {
         var next = settings
@@ -96,7 +97,7 @@ final class AppModel: ObservableObject {
     }
     func preview(_ event: FoldEvent, preset: SoundPreset? = nil) {
         guard isActive else { return }
-        play(event, label: "Preview", preset: preset)
+        play(event, label: "Preview", preset: preset, purpose: .preview)
     }
     func importSound(from url: URL, event: FoldEvent) {
         let scoped = url.startAccessingSecurityScopedResource()
@@ -125,12 +126,11 @@ final class AppModel: ObservableObject {
         } catch { errorMessage = "Could not import audio: \(error.localizedDescription)" }
     }
 
-    private func resetObservation() {
+    private func resetObservation(stopPreview: Bool = true) {
         pending?.cancel(); pending = nil
         detector.reset()
-        audio.stop()
-        angle = isDemo ? demoAngle : nil
-        if isActive && isDemo { _ = detector.ingest(angle: demoAngle, at: now) }
+        if stopPreview { audio.stop() } else { audio.stopFoldSound() }
+        angle = nil
     }
     private func receive(_ value: Double) {
         guard isActive else { return }
@@ -151,9 +151,10 @@ final class AppModel: ObservableObject {
     }
     private func trigger(_ event: FoldEvent) {
         guard isActive, settings.enabled else { return }
-        play(event, label: isDemo ? "Demo fold" : "Hinge")
+        play(event, label: "Hinge", purpose: .fold)
     }
-    private func play(_ event: FoldEvent, label: String, preset override: SoundPreset? = nil) {
+    private func play(_ event: FoldEvent, label: String, preset override: SoundPreset? = nil,
+                      purpose: SoundPlayer.Purpose) {
         let preset = override ?? settings.preset(for: event)
         guard preset != .off else {
             audio.stop(); lastEvent = "\(label) · \(event.title) sound is off"; return
@@ -164,17 +165,22 @@ final class AppModel: ObservableObject {
                 guard let record = settings.imported(for: event), let store else { throw SoundFailure.missingSound }
                 data = try SettingsStore.readBounded(store.soundURL(for: record), limit: 8 * 1_024 * 1_024)
             } else {
-                let key = preset.rawValue + event.rawValue
+                let key = preset.rawValue + (preset.isRecorded ? "" : event.rawValue)
                 if let cached = generated[key] { data = cached }
                 else {
-                    guard let rendered = SoundSynthesizer.wav(preset: preset, event: event) else {
-                        throw SoundFailure.missingSound
+                    guard let rendered = SoundLibrary.wav(preset: preset, event: event) else {
+                        throw SoundFailure.missingBuiltIn
                     }
                     generated[key] = rendered; data = rendered
                 }
             }
-            try audio.play(data, volume: settings.volume)
-            lastEvent = "\(label) · \(event.title) · \(preset.title)"
+            audio.play(data, volume: settings.volume, purpose: purpose) { [weak self] result in
+                guard let self, self.isActive else { return }
+                switch result {
+                case .success: self.lastEvent = "\(label) · \(event.title) · \(preset.title)"
+                case .failure(let error): self.errorMessage = error.localizedDescription
+                }
+            }
         } catch { errorMessage = error.localizedDescription }
     }
 }

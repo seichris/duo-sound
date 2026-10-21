@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "app": {
+    "bundle_id": "com.seichris.duosound",
+    "project": "DuoSound.xcodeproj",
+    "scheme": "DuoSound-DuoSDK",
+    "simulator_udid": "BEC6CD9B-B52E-40C1-9E53-E4451871DADB"
+  },
+  "paths": {
+    "plan": ".asc/hingy-resubmission-captures-2026-10-19/iphone-plan.json",
+    "raw_dir": "build/resubmission-captures-2026-10-19/iphone",
+    "framed_dir": "build/resubmission-captures-2026-10-19/iphone/framed"
+  },
+  "pipeline": {
+    "frame_enabled": false,
+    "upload_enabled": false
+  },
+  "upload": {
+    "version_localization_id": "",
+    "device_type": "APP_IPHONE_67",
+    "source_dir": "build/resubmission-captures-2026-10-19/iphone"
+  }
+}

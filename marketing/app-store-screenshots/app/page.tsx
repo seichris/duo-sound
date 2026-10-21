@@ -87,9 +87,9 @@ export default function Page() {
       <Slide
         id="03-library"
         theme="dark"
-        eyebrow="20 ORIGINAL EFFECTS"
+        eyebrow="46 BUILT-IN SOUNDS"
         headline={<>Find the sound<br />that fits.</>}
-        subhead="Search, preview, and choose from a hand-built library of small sounds."
+        subhead="Search and preview original presets, everyday recordings, farts, and Kenney effects."
         image={source.library}
         footer="Crystal selected · preview library"
         accent="orange"

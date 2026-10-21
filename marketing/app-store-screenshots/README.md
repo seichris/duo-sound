@@ -4,6 +4,8 @@ This is a local, reproducible App Store screenshot renderer built for Hingy usin
 
 The page uses the reviewed simulator captures in `public/screenshots/` and the tracked 1024px app icon. It exports the 6.9-inch iPhone master size, `1320x2868`, through the bundled Playwright exporter and validates dimensions and PNG opacity.
 
+The source copy now reflects build 5. Existing raw captures and exported PNGs predate its 46-sound catalog; replace them with reviewed current-build captures before regenerating or uploading marketing images.
+
 ## Export
 
 From this directory:

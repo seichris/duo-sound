@@ -50,11 +50,44 @@ class ReleaseCheckTests(unittest.TestCase):
     def test_empty_locale_set_fails(self):
         with self.assertRaises(ValueError): rc.resolved_locales({'locales':{}})
 
-    def test_current_submission_is_explicitly_blocked(self):
-        errors=rc.check(ROOT,submission=True)
+    def test_unapproved_submission_is_explicitly_blocked(self):
+        self.readiness['status']='blocked'
+        self.readiness['evidence']['physical_open_close_and_handoff']={'passed':False,'reference':None}
+        errors=rc.submission_errors(ROOT,self.readiness)
         self.assertIn('Release status is blocked',errors)
-        self.assertIn('Launch listing is still a draft',errors)
         self.assertTrue(any('physical_open_close' in e for e in errors))
+
+    def test_archive_does_not_require_future_apple_processing(self):
+        self.readiness['status']='ready_for_archive'
+        self.readiness['evidence']['distribution_sdk_accepted_by_apple']={'passed':False,'reference':None}
+        archive=rc.submission_errors(ROOT,self.readiness,archive=True)
+        submit=rc.submission_errors(ROOT,self.readiness)
+        self.assertNotIn('Unverified: distribution_sdk_accepted_by_apple',archive)
+        self.assertIn('Unverified: distribution_sdk_accepted_by_apple',submit)
+        self.assertIn('Release status is blocked',submit)
+
+    def test_physical_waiver_requires_a_real_current_authorization_record(self):
+        item={'passed':False,'waiver':{'basis':'owner_authorized_simulator_only','reference':'../outside.json'}}
+        self.assertFalse(rc.simulator_release_authorized(ROOT,item))
+        item['waiver']['reference']='release/evidence/missing-authorization.json'
+        self.assertFalse(rc.simulator_release_authorized(ROOT,item))
+
+    def test_physical_waiver_never_claims_a_physical_pass(self):
+        with tempfile.TemporaryDirectory() as directory:
+            root=Path(directory)
+            (root/'release').mkdir()
+            (root/'release/listing.json').write_text('{"build_number":"5"}')
+            (root/'release/readiness.json').write_text('{"owner":{}}')
+            record={'physical_testing_waived':True,'authorization_source':'explicit_user_request','request':'Use simulator validation','build_number':'5','source_sha256':rc.source_fingerprint(root)}
+            (root/'authorization.json').write_text(__import__('json').dumps(record))
+            item={'passed':False,'waiver':{'basis':'owner_authorized_simulator_only','reference':'authorization.json'}}
+            self.assertTrue(rc.simulator_release_authorized(root,item))
+            item['passed']=True
+            self.assertFalse(rc.simulator_release_authorized(root,item))
+            item['passed']=False
+            record['source_sha256']='0'*64
+            (root/'authorization.json').write_text(__import__('json').dumps(record))
+            self.assertFalse(rc.simulator_release_authorized(root,item))
 
     def test_deleting_evidence_cannot_bypass_gate(self):
         self.readiness['evidence']={}
@@ -66,8 +99,10 @@ class ReleaseCheckTests(unittest.TestCase):
 
     def test_setting_ready_alone_does_not_approve_release(self):
         self.readiness['status']='ready'
+        self.readiness['evidence']['physical_open_close_and_handoff']={'passed':False,'reference':None}
         errors=rc.submission_errors(ROOT,self.readiness)
-        self.assertGreater(len(errors),8)
+        self.assertIn('Unverified: physical_open_close_and_handoff',errors)
+        self.assertNotIn('Release status is blocked',errors)
 
     def test_no_fake_contact_from_example_values(self):
         self.readiness['owner']['legal_name']='EXAMPLE Publisher'

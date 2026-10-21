@@ -16,8 +16,8 @@ struct ContentView: View {
                     VStack(alignment: .leading, spacing: 18) {
                         Text("A little sound.\nEvery fold.")
                             .font(.largeTitle.bold()).fixedSize(horizontal: false, vertical: true)
-                        Label(model.status, systemImage: model.isDemo ? "play.circle" : "waveform")
-                            .font(.caption.weight(.semibold)).foregroundStyle(model.isDemo ? Color.orange : Color.indigo)
+                        Label(model.status, systemImage: "waveform")
+                            .font(.caption.weight(.semibold)).foregroundStyle(Color.indigo)
                             .accessibilityIdentifier("monitoringStatus")
                         HingeIllustration(angle: model.angle ?? 90)
                             .frame(height: 100).frame(maxWidth: .infinity).accessibilityHidden(true)
@@ -41,35 +41,17 @@ struct ContentView: View {
                             .accessibilityLabel("Effect volume")
                     }
                 } footer: {
-                    Text("Respects Silent Mode and system volume. Audio follows your current output, including headphones. Preview buttons work even when fold sounds are paused.")
+                    Text("Automatic fold sounds respect Silent Mode. Previews play even in Silent Mode. Preview also works when fold sounds are paused. All sounds use system and effect volume and your selected audio output, including headphones.")
                 }
                 soundSection(.opened)
                 soundSection(.closed)
                 Section {
-                    Toggle("Simulate hinge", isOn: Binding(get: { model.isDemo }, set: model.setDemo))
-                    if model.isDemo {
-                        Slider(value: Binding(get: { model.demoAngle }, set: model.setDemoAngle), in: 0...180, step: 1)
-                            .accessibilityLabel("Simulated hinge angle").accessibilityIdentifier("demoAngle")
-                        HStack {
-                            Button { model.setDemoAngle(180) } label: { Label("Open", systemImage: "arrow.up.left.and.arrow.down.right") }
-                                .accessibilityIdentifier("demoOpen")
-                            Spacer()
-                            Button { model.setDemoAngle(0) } label: { Label("Close", systemImage: "arrow.down.right.and.arrow.up.left") }
-                                .accessibilityIdentifier("demoClose")
-                        }.buttonStyle(.bordered)
-                    }
-                } header: { Text("Try a fold") } footer: {
-                    Text(model.isDemo ? "Simulated events only; these controls do not read your phone’s hinge." : "Automatic detection needs a build with the Duo hinge SDK and a supported device. This build never guesses from screen size, rotation, or lock state.")
+                    NavigationLink("Play sounds with Shortcuts") { SoundShortcutsHelpView() }
+                        .accessibilityIdentifier("shortcutsHelp")
+                } footer: {
+                    Text("Use Hingy’s selected audio with Shortcuts’ Play Sound action. Available automation triggers depend on your device and iOS version.")
                 }
-                Section {
-                    Label("Foreground only", systemImage: "info.circle")
-                    Text("Hingy must be visible and active. It does not listen while another app is open, the phone is locked, or this app is suspended. Closing during a display handoff still needs device testing.")
-                        .font(.footnote).foregroundStyle(.secondary)
-                    if !AppModel.hingeSDKEnabled {
-                        Text("Preview build: Apple’s announced hinge API is not compiled in. All fold events here are simulated. See the repository’s SDK activation guide.")
-                            .font(.footnote).foregroundStyle(.orange)
-                    }
-                }
+
             }
             .navigationTitle("Hingy")
             .toolbar {
@@ -80,16 +62,28 @@ struct ContentView: View {
             .sheet(isPresented: $showAbout) {
                 NavigationStack {
                     Form {
+                        Section {
+                            HStack {
+                                Spacer()
+                                Image("HingyLogo")
+                                    .resizable().scaledToFit().frame(width: 112, height: 112)
+                                    .clipShape(RoundedRectangle(cornerRadius: 24))
+                                    .accessibilityLabel("Hingy logo")
+                                Spacer()
+                            }.padding(.vertical, 8)
+                        }
                         Section("Sound, not surveillance") {
                             Text("No account, analytics SDK, microphone recording, or app-operated network service. Device backups and external support services are separate.")
                             NavigationLink("Privacy & data") { PrivacyView() }
                                 .accessibilityIdentifier("privacyPolicy")
                             NavigationLink("Help with sounds") { SoundHelpView() }
                                 .accessibilityIdentifier("soundHelp")
+                            NavigationLink("Sound credits") { SoundCreditsView() }
+                                .accessibilityIdentifier("soundCredits")
                         }
                         Section("Built for iPhone Duo") {
-                            Text("Inspired by Scrunch. Original Swift implementation and original synthesized sounds; no Scrunch code or sound assets are bundled.")
-                            Text("Hinge integration uses Apple’s public UIHingeInteraction on iOS 27.1 and newer. The default build remains a demo; Duo builds use the same runtime bridge and the app stays foreground only.")
+                            Text("Inspired by Scrunch. Original Swift implementation, 17 original synthesized presets, and 26 CC0 recordings. No Scrunch code or sound assets are bundled.")
+                            Text("Hinge integration uses Apple’s public UIHingeInteraction on supported devices with iOS 27.1 and newer. Sound previews also work on iPhone and iPad without a hinge. Automatic fold effects work while Hingy is visible and active.")
                         }
                     }
                     .navigationTitle("About Hingy")
@@ -133,12 +127,13 @@ struct ContentView: View {
             HStack {
                 Button { model.preview(event) } label: { Label("Preview", systemImage: "play.fill") }
                     .accessibilityLabel("Preview \(event.title.lowercased()) sound")
+                    .accessibilityIdentifier("preview-selected-\(event.rawValue)")
                 Spacer()
                 Button { importEvent = event; showImporter = true } label: { Label("Import", systemImage: "square.and.arrow.down") }
                     .accessibilityLabel("Import \(event.title.lowercased()) sound")
             }.buttonStyle(.bordered)
         } header: { Text("When \(event.title.lowercased())") }
-          footer: { Text("\(SoundPreset.builtIns.count) original presets, or your own audio clip up to 5 seconds and 8 MiB.") }
+          footer: { Text("\(SoundPreset.builtIns.count) sounds, including original presets and CC0 recordings, or your own clip up to 5 seconds and 8 MiB.") }
     }
 }
 
@@ -154,6 +149,13 @@ struct SoundLibraryView: View {
     var body: some View {
         NavigationStack {
             List {
+                Section {
+                    Text(model.lastEvent)
+                        .font(.footnote).foregroundStyle(.secondary)
+                        .accessibilityIdentifier("libraryPreviewStatus")
+                } footer: {
+                    Text("Preview plays in Silent Mode. Check system and effect volume and your audio output if you cannot hear it.")
+                }
                 if search.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
                     Section {
                         row(.off)

@@ -1,10 +1,14 @@
-# App Store release preparation
+# App Store release
 
-Status: **metadata configured, blocked for submission**. Updated September 15, 2026.
+Status: **Hingy 1.0 (5) submitted — Waiting for Review**, October 19, 2026. The replacement build is signed, processed VALID and selected; six native screenshots uploaded, privacy publication confirmed, and the rejection reply sent. See [the submission receipt](../release/BUILD_5_SUBMITTED.md).
+
+The owner explicitly authorized simulator-only validation because no physical devices were available. Physical audio/display handoff and the exact iPadOS 27.2 review environment remain untested; this limitation was disclosed to Apple. App/Sources are unchanged from the passing full iPad/Duo implementation CI; subsequent release-policy checks also passed. Earlier snapshots below are historical.
+
+## Historical preparation snapshot — September 15
 
 The marketing name candidate is **Hingy**. Research and rejected keyword intents are in [ASO_SEO_RESEARCH.md](ASO_SEO_RESEARCH.md); the machine-readable listing is `release/listing.json`. A matching App Store Connect record is now visible under **WEB3 FZCO**; no exact-name reservation, signing, TestFlight upload, review submission, live site deployment, or agreement acceptance has been performed. The owner has authorized the release attempt and supplied the support contact; Apple upload remains gated by the verified SDK, build, screenshots, availability, and review-contact requirements below.
 
-## Live identity check
+## Historical identity check — September 15
 
 Read-only reconciliation against the authenticated App Store Connect account on September 15, 2026:
 
@@ -34,7 +38,7 @@ python3 scripts/build_site.py
 
 `build/listing-draft/` contains editable text fields with a DO NOT SUBMIT marker. `build/site-preview/` contains portable static HTML, support/privacy pages, CSS, and the original icon. Open locally, or serve with `python3 -m http.server --directory build/site-preview`. It is not deployed. The preview includes noindex and no store download/price/rating claims; no fake canonical domain is generated. Configure actual public URLs before a release-site build. The site copy itself must receive a final hardware/launch-status review before publication; automated metadata checks cannot approve marketing claims.
 
-Open the **DuoSound** Xcode scheme to run the preview. **DuoSound-DuoSDK** enables the public runtime hinge bridge. The dedicated **DuoSound-AppStore** configuration enables `APP_STORE_RELEASE` and `DUO_HINGE_SDK`, targets iOS 17, and runs `release_check.py --submission` before compilation. Shared schemes' Archive actions use that guarded configuration. Ordinary preview builds are not distribution evidence.
+Open the **DuoSound** Xcode scheme to run the preview. **DuoSound-DuoSDK** enables the typed public hinge integration (requires the iOS 27.1 SDK). The dedicated **DuoSound-AppStore** configuration enables `APP_STORE_RELEASE` and `DUO_HINGE_SDK`, targets iOS 17, and runs `release_check.py --submission` before compilation. Shared schemes' Archive actions use that guarded configuration. Ordinary preview builds are not distribution evidence.
 
 The supplied logo is validated in the asset catalogue by a repository-owned Python build phase; the PNG and test WAV are also downloadable in the Release preparation workflow artifact. Keep the icon tracked so clean checkouts use the same reviewed bitmap. The build phase has user-script sandboxing disabled to run the repository's local generator/checker; it contains no network calls or signing credentials.
 
@@ -48,7 +52,7 @@ The supplied logo is validated in the asset catalogue by a repository-owned Pyth
 
 **Screenshots and review materials.** Use the actual running candidate and Apple's accepted slots in `release/SCREENSHOTS.md`. The universal target requires iPad assets too. CI attachments retain visible simulation labels and are QA evidence, not physical-Duo marketing images. Populate `release/screenshots.json` with real files, dimensions, SHA-256, family, locale and provenance; preserve originals and record manual review. Complete `release/REVIEW_NOTES.md` using actual test/build/device details. There is no login/demo account to invent.
 
-**Distribution eligibility.** Apple's current upload baseline is Xcode/iOS SDK 26 or newer. The release bridge is built with stable Xcode 26.6 and loads the public hinge interaction only when the iOS 27.1 Duo runtime provides it; older devices continue to report no hinge. Recheck Apple's current requirements before each upload. Generic sound-effects and unfinished demos face specific review risks; do not market a simulated utility as a completed physical-fold app.
+**Distribution eligibility.** Apple's current upload baseline is Xcode/iOS SDK 26 or newer. Duo configurations require the iOS 27.1 SDK and use typed public hinge declarations, guarded at runtime so older devices still support manual previews. The locally selected toolchain is Xcode 27.1 build 27A9275 from an RC-named installation; local compilation does not prove App Store upload acceptance. Recheck Apple's current requirements before each upload. Generic sound-effects and unfinished demos face specific review risks; do not market a simulated utility as a completed physical-fold app.
 
 ## Evidence and local archive
 
@@ -57,7 +61,7 @@ After validating the candidate, run `python3 scripts/release_check.py --fingerpr
 ```sh
 python3 scripts/release_check.py --submission
 python3 scripts/export_listing.py
-BUILD_NUMBER=1 bash scripts/archive_app.sh  # choose a unique real build number
+BUILD_NUMBER=5 bash scripts/archive_app.sh  # recheck that build 5 remains unused before upload
 ```
 
 The archive helper requires local Xcode/signing setup and the evidence gate. It archives/exports only; it never uploads or submits. Inspect its ExportOptions against the installed Xcode's `xcodebuild -help` when the release SDK ships. Use Xcode Organizer/App Store Connect deliberately to upload the approved build, review processing/privacy warnings, assign screenshots/metadata, and request review. Keep certificates, API keys, passwords, review contact details and account agreements out of the public repository.
