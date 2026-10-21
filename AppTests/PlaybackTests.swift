@@ -23,9 +23,8 @@ final class PlaybackTests: XCTestCase {
         audio = nil
     }
 
-    func testNativeHingeIsEnabledWithoutStartingSimulation() {
+    func testNativeHingeIsEnabled() {
         XCTAssertTrue(AppModel.hingeSDKEnabled)
-        XCTAssertFalse(model.isDemo)
         model.receiveHardware(angle: nil)
         XCTAssertEqual(model.status, "NO HINGE AVAILABLE")
     }
@@ -51,7 +50,6 @@ final class PlaybackTests: XCTestCase {
     }
 
     func testRecordedFartProgressSurvivesMissingHinge() async throws {
-        model.setDemo(false)
         model.receiveHardware(angle: nil)
         model.preview(.closed, preset: .tinyFart)
         model.receiveHardware(angle: nil)
@@ -61,7 +59,6 @@ final class PlaybackTests: XCTestCase {
     }
 
     func testMissingHingeDoesNotCancelIPadPreview() async throws {
-        model.setDemo(false)
         model.receiveHardware(angle: nil)
         model.preview(.opened, preset: .musicBox)
         model.receiveHardware(angle: nil)
@@ -71,7 +68,6 @@ final class PlaybackTests: XCTestCase {
     }
 
     func testHingeHierarchyLossCancelsFoldButPreservesManualPreview() async throws {
-        model.setDemo(false)
         model.receiveHardware(angle: 180)
         model.preview(.closed, preset: .musicBox)
         model.receiveHardware(angle: nil)
@@ -104,7 +100,6 @@ final class PlaybackTests: XCTestCase {
     }
 
     func testFoldSoundsStillRespectSilentModeAndMissingHingeCancelsDwell() async throws {
-        model.setDemo(false)
         model.receiveHardware(angle: 0)
         model.receiveHardware(angle: 180)
         try await Task.sleep(for: .milliseconds(110))
@@ -117,15 +112,6 @@ final class PlaybackTests: XCTestCase {
         model.receiveHardware(angle: nil)
         try await Task.sleep(for: .milliseconds(110))
         await assertStopped()
-    }
-
-    func testManualSimulationUsesSilentModeIndependentPlayback() async throws {
-        model.setDemo(true)
-        model.setDemoAngle(180)
-        try await Task.sleep(for: .milliseconds(110))
-        await assertEventContains("Demo fold · Opening")
-        XCTAssertEqual(AVAudioSession.sharedInstance().category, .playback)
-        await assertPlaying()
     }
 
     func testInactiveAndInterruptedAppStopsPreviewWithoutResuming() async throws {

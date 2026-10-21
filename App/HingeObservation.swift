@@ -47,11 +47,11 @@ private struct HingeInteractionBridge: UIViewRepresentable {
     func updateUIView(_ view: UIView, context: Context) {
         if #available(iOS 27.1, *),
            let interaction = view.interactions.compactMap({ $0 as? UIHingeInteraction }).first {
-            let enabled = model.isActive && !model.isDemo
+            let enabled = model.isActive
             guard interaction.isEnabled != enabled else { return }
             context.coordinator.invalidate()
             // Re-enabling delivers the current sample, silently rebaselining
-            // after foreground return or leaving simulation.
+            // after foreground return.
             interaction.isEnabled = enabled
         }
     }
@@ -74,7 +74,7 @@ private struct HingeInteractionBridge: UIViewRepresentable {
             // after that render pass, discarding callbacks from old lifecycles.
             Task { @MainActor [weak self] in
                 guard let self, self.generation == expected, let model = self.model,
-                      model.isActive, !model.isDemo else { return }
+                      model.isActive else { return }
                 model.receiveHardware(angle: angle)
             }
         }

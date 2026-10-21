@@ -8,9 +8,7 @@ final class AppModel: ObservableObject {
     @Published private(set) var hardwareAvailable: Bool?
     @Published private(set) var lastEvent = "No sound triggered yet"
     @Published var errorMessage: String?
-    @Published private(set) var demoAngle = 0.0
     @Published private(set) var isActive = false
-    @Published private(set) var isDemo = !AppModel.hingeSDKEnabled
 
     static var hingeSDKEnabled: Bool {
         #if DUO_HINGE_SDK
@@ -38,7 +36,6 @@ final class AppModel: ObservableObject {
     }
 
     var status: String {
-        if isDemo { return "DEMO · SIMULATED HINGE" }
         if !Self.hingeSDKEnabled { return "HINGE SDK NOT ENABLED" }
         if hardwareAvailable == false { return "NO HINGE AVAILABLE" }
         if hardwareAvailable == nil { return "AWAITING HINGE DATA" }
@@ -60,20 +57,8 @@ final class AppModel: ObservableObject {
         isActive = value
         resetObservation()
     }
-    func setDemo(_ value: Bool) {
-        guard isDemo != value else { return }
-        isDemo = value
-        resetObservation()
-    }
-    func setDemoAngle(_ value: Double) {
-        guard value.isFinite else { return }
-        demoAngle = min(180, max(0, value))
-        guard isDemo else { return }
-        receive(demoAngle)
-    }
     func receiveHardware(angle value: Double?) {
         hardwareAvailable = value != nil
-        guard !isDemo else { return }
         guard let value else {
             // Missing hinge data is normal on iPad and during hierarchy changes.
             // Cancel physical fold work without cutting off manual previews.
@@ -145,8 +130,7 @@ final class AppModel: ObservableObject {
         pending?.cancel(); pending = nil
         detector.reset()
         if stopPreview { audio.stop() } else { audio.stopFoldSound() }
-        angle = isDemo ? demoAngle : nil
-        if isActive && isDemo { _ = detector.ingest(angle: demoAngle, at: now) }
+        angle = nil
     }
     private func receive(_ value: Double) {
         guard isActive else { return }
@@ -167,7 +151,7 @@ final class AppModel: ObservableObject {
     }
     private func trigger(_ event: FoldEvent) {
         guard isActive, settings.enabled else { return }
-        play(event, label: isDemo ? "Demo fold" : "Hinge", purpose: isDemo ? .preview : .fold)
+        play(event, label: "Hinge", purpose: .fold)
     }
     private func play(_ event: FoldEvent, label: String, preset override: SoundPreset? = nil,
                       purpose: SoundPlayer.Purpose) {

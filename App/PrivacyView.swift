@@ -49,10 +49,10 @@ struct SoundHelpView: View {
     var body: some View {
         Form {
             Section("No sound?") {
-                Text("Select a sound other than Off, then tap Preview. Previews and simulated folds play even in Silent Mode. Check system and effect volume and whether audio is routed to headphones or Bluetooth. Automatic fold sounds respect Silent Mode.")
+                Text("Select a sound other than Off, then tap Preview. Previews play even in Silent Mode. Check system and effect volume and whether audio is routed to headphones or Bluetooth. Automatic fold sounds respect Silent Mode.")
             }
             Section("When fold effects work") {
-                Text("On supported iPhone Duo hardware with iOS 27.1 or newer, Hingy observes the native hinge while visible and active. Other devices can preview sounds or turn on Simulate hinge. Locking or switching apps stops observation and cancels pending automatic effects.")
+                Text("On supported iPhone Duo hardware with iOS 27.1 or newer, Hingy observes the native hinge while visible and active. Other devices can preview sounds. Locking or switching apps stops observation and cancels pending automatic effects.")
             }
             Section("Importing audio") {
                 Text("Choose Import for opening or closing, then select an unprotected audio file in Files. Use a playable clip up to 5 seconds and 8 MiB (8,388,608 bytes). Failed imports leave the previous selection unchanged. Use only audio you have permission to use.")
@@ -89,7 +89,7 @@ struct SoundShortcutsHelpView: View {
                 Text("Allow the shortcut to run automatically and enable Allow Running When Locked if your iOS version offers it. Other actions or protected files may still require unlocking. Test your complete automation on the intended phone.")
             }
             Section("Playback outside Hingy") {
-                Text("Shortcuts owns playback, so Hingy does not need to stay visible or keep listening in the background. Fold-trigger availability, locked playback and timing must be tested on your device; native hinge observation inside Hingy remains foreground only.")
+                Text("Shortcuts owns playback, so Hingy does not need to stay visible or keep listening in the background. Fold-trigger availability, locked playback and timing must be tested on your device; native hinge observation runs while Hingy is visible and active.")
                 Text("Use system volume or a volume action in Shortcuts. Hingy exports the original audio; its effect-volume slider applies only inside Hingy. A direction set to Off returns an explanation instead of playing another sound.")
             }
             Section("Audio access") {
