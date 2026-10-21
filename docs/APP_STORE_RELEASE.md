@@ -1,12 +1,12 @@
 # App Store release
 
-Status: **Hingy 1.0 (5) submitted — Waiting for Review**, October 19, 2026. The replacement build is signed, processed VALID and selected; six native screenshots uploaded, privacy publication confirmed, and the rejection reply sent. See [the submission receipt](../release/BUILD_5_SUBMITTED.md).
+Status: **Hingy 1.1 (8) submitted for App Review**, October 22, 2026. Apple processed the signed build VALID; four current native screenshots are COMPLETE and final strict validation has zero errors/warnings. Automatic release after approval is configured. See [the build 8 receipt](../release/BUILD_8_SUBMITTED.md). Version 1.0 (5) was already Ready for Distribution.
 
 The owner explicitly authorized simulator-only validation because no physical devices were available. Physical audio/display handoff and the exact iPadOS 27.2 review environment remain untested; this limitation was disclosed to Apple. App/Sources are unchanged from the passing full iPad/Duo implementation CI; subsequent release-policy checks also passed. Earlier snapshots below are historical.
 
 ## Historical preparation snapshot — September 15
 
-The marketing name candidate is **Hingy**. Research and rejected keyword intents are in [ASO_SEO_RESEARCH.md](ASO_SEO_RESEARCH.md); the machine-readable listing is `release/listing.json`. A matching App Store Connect record is now visible under **WEB3 FZCO**; no exact-name reservation, signing, TestFlight upload, review submission, live site deployment, or agreement acceptance has been performed. The owner has authorized the release attempt and supplied the support contact; Apple upload remains gated by the verified SDK, build, screenshots, availability, and review-contact requirements below.
+The App Store product is **Hingy**, published by **WEB3 FZCO** under app ID `6812193737`. Version 1.0 (5) is already distributed; version 1.1 (8) is Waiting for Review with automatic release after approval. The current source-bound evidence and disclosed hardware-testing exception are recorded in the build 8 receipt. The preparation guidance below remains a checklist for future releases.
 
 ## Historical identity check — September 15
 

@@ -1,0 +1,171 @@
+{
+  "date": "2026-10-22",
+  "current_user_request": "push to iphone and publish to app store",
+  "additional_request": "in the app, remove the foreground only and remove the try a fold and any simulation stuff",
+  "version": "1.1",
+  "build_number": "8",
+  "test_limitations": [
+    "No physical iPhone Duo is connected. Ultra is iPhone 16 Pro Max with iOS 27.0.1.",
+    "Physical hinge open/close and display handoff are not proven.",
+    "Stock Shortcuts fold trigger and locked playback are not proven."
+  ],
+  "privacy_publication": {
+    "source": "https://apps.apple.com/us/app/hingy/id6812193737",
+    "http_status": 200,
+    "published_text": "Data Not Collected \u2014 The developer does not collect any data from this app.",
+    "checked_current_turn": true
+  },
+  "urls": [
+    {
+      "url": "https://github.com/seichris/duo-sound/issues",
+      "http_status": 200
+    },
+    {
+      "url": "https://github.com/seichris/duo-sound/blob/main/docs/PRIVACY.md",
+      "http_status": 200
+    },
+    {
+      "url": "https://github.com/seichris/duo-sound",
+      "http_status": 200
+    }
+  ],
+  "toolchain": {
+    "xcode": "27.1",
+    "build": "27A9275",
+    "apple_release_url": "https://developer.apple.com/news/releases/?id=10152026a"
+  },
+  "source_privacy_audit": {
+    "app_has_network_clients": false,
+    "microphone_recording": false,
+    "background_modes": [],
+    "shortcuts_handoff": "Only the user-invoked action transfers selected audio to Shortcuts; published policy updated with this explicit handoff.",
+    "rights": "17 original procedural presets; 26 unchanged CC0 recordings with bundled credits/license evidence. Paper, Zipper, Rain removed.",
+    "inspection": "Searched App and SelectedSoundFile for network clients/entitlements; only external support/privacy links present."
+  },
+  "store_validation_before_upload": {
+    "appId": "6812193737",
+    "versionId": "ec6b3b38-419a-470a-8c60-6fa9ccfecbfb",
+    "versionString": "1.1",
+    "platform": "IOS",
+    "summary": {
+      "errors": 1,
+      "warnings": 0,
+      "infos": 1,
+      "blocking": 1
+    },
+    "remediation": {
+      "totalActionable": 2,
+      "steps": [
+        {
+          "order": 1,
+          "blocking": true,
+          "severity": "error",
+          "checkId": "build.required.missing",
+          "message": "no build attached to app store version",
+          "remediation": "Select a build for this version in App Store Connect",
+          "resourceType": "build"
+        },
+        {
+          "order": 2,
+          "blocking": false,
+          "severity": "info",
+          "checkId": "privacy.publish_state.unverified",
+          "message": "App Privacy publish state is not verifiable via the public App Store Connect API and may still block submission",
+          "remediation": "Confirm App Privacy is published in App Store Connect before submitting: https://appstoreconnect.apple.com/apps/6812193737/appPrivacy",
+          "resourceType": "appPrivacy",
+          "resourceId": "6812193737"
+        }
+      ]
+    },
+    "checks": [
+      {
+        "id": "build.required.missing",
+        "severity": "error",
+        "message": "no build attached to app store version",
+        "remediation": "Select a build for this version in App Store Connect",
+        "resourceType": "build"
+      },
+      {
+        "id": "privacy.publish_state.unverified",
+        "severity": "info",
+        "message": "App Privacy publish state is not verifiable via the public App Store Connect API and may still block submission",
+        "remediation": "Confirm App Privacy is published in App Store Connect before submitting: https://appstoreconnect.apple.com/apps/6812193737/appPrivacy",
+        "resourceType": "appPrivacy",
+        "resourceId": "6812193737"
+      }
+    ]
+  },
+  "store_validation_before_upload_note": "One expected missing-build error; no metadata, review contact, rights, age rating, pricing or screenshot warnings. Build attach and final validation remain required.",
+  "source_sha256": "8bed71d5277505034c82bdce2e7ba6d07c281c62ec65a0b68aef25c800e7ea5c",
+  "local_test_results": {
+    "core": {
+      "passed": 46,
+      "failed": 0,
+      "log": "core-tests.log"
+    },
+    "release_policy": {
+      "passed": 25,
+      "failed": 0,
+      "log": "release-tests.log"
+    },
+    "optimized_iphone_app_tests": {
+      "passed": 13,
+      "failed": 0,
+      "log_local": "/tmp/hingy-1.1-phone-final-tests.log"
+    },
+    "ui_retry_reason": "First run used 90-second cap; recorded-library test completed successfully in 129.895 seconds with the project CI 300-second cap. This was a harness timeout, not evidence of an app assertion failure.",
+    "current_ui_and_tablet_results": {
+      "optimized_iphone_app": {
+        "passed": 13,
+        "failed": 0
+      },
+      "iphone_ui_retry": {
+        "passed": 3,
+        "failed": 0,
+        "result": "Passed"
+      },
+      "iphone_home_privacy": {
+        "passed": 1,
+        "failed": 0
+      },
+      "ipad_initial_full_suite": {
+        "passed": 16,
+        "failed": 1,
+        "skipped": 1,
+        "note": "The failed selection test tapped the prior unfiltered row position; diagnostic confirmed selection never occurred before persistence."
+      },
+      "ipad_selection_after_driver_fix": {
+        "passed": 1,
+        "failed": 0,
+        "result": "Passed",
+        "assertions": "Selection immediately updates and persists across app restart."
+      },
+      "duo_public_callback": {
+        "passed": 1,
+        "failed": 0,
+        "skipped": 0,
+        "result": "Passed"
+      }
+    }
+  },
+  "screenshots": "Four current native captures are COMPLETE in App Store Connect, with home first in both device families. A redundant iPhone closing-library image was omitted after Apple processing timed out; its source image is retained as not uploaded.",
+  "current_git_head": "45bb033a8914114c3bb85ff4d5c7e51b4b3fa434",
+  "product_commit": "e8effc87a641a0c4fdb7dc77881d9f0a6b2e16f2",
+  "test_driver_change": "45bb033 waits for filtered row frames to settle and asserts selection before restart. App/source fingerprint remains unchanged.",
+  "apple_build": {
+    "id": "fda3f261-a909-4a21-a2eb-6f37f112885a",
+    "version": "1.1",
+    "build": "8",
+    "state": "VALID",
+    "attached_version_id": "ec6b3b38-419a-470a-8c60-6fa9ccfecbfb"
+  },
+  "network": "Owner handled their network change; Apple asset endpoint became reachable after repeated TLS handshake timeouts. No network settings were changed by the agent.",
+  "published_privacy_policy": {
+    "url": "https://github.com/seichris/duo-sound/blob/main/docs/PRIVACY.md",
+    "http_status": 200,
+    "shortcuts_handoff_text_verified": true,
+    "merge_commit": "67a4325470a0b5227554bf21e94104d4b62c0293"
+  },
+  "submission_id": "4137d441-30a4-426d-88c6-ab5d5f475c42",
+  "cloud_ci": "Release preparation passed. Optimized typed iPad and standard iPhone steps passed; full cloud suites remain in progress as of this receipt. Local native Duo callback passed without skips."
+}
