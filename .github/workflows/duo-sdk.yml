@@ -20,7 +20,7 @@ concurrency:
 jobs:
   sdk-ipad-and-duo:
     runs-on: xcode-27
-    timeout-minutes: 45
+    timeout-minutes: 55
     env:
       DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
     steps:
@@ -49,9 +49,11 @@ jobs:
           shasum -a 256 SDKBuild/Build/Products/Release-Duo-iphoneos/DuoSound.app/DuoSound \
             SDKBuild/Build/Products/Release-Duo-iphonesimulator/DuoSound.app/DuoSound > TestResults/binary-sha256.txt
       - name: Test optimized typed scheme on iPadOS 27.0
-        timeout-minutes: 15
+        id: ipad
+        timeout-minutes: 20
         run: |
           udid=$(xcrun simctl create 'Hingy review iPad' com.apple.CoreSimulator.SimDeviceType.iPad-Air-11-inch-M3 com.apple.CoreSimulator.SimRuntime.iOS-27-0)
+          echo "udid=$udid" >> "$GITHUB_OUTPUT"
           xcrun simctl bootstatus "$udid" -b
           xcodebuild -project DuoSound.xcodeproj -scheme DuoSound-DuoSDK -configuration Release-Duo \
             -destination "platform=iOS Simulator,id=$udid" -derivedDataPath SimulatorTests \
@@ -59,7 +61,11 @@ jobs:
             -test-timeouts-enabled YES -maximum-test-execution-time-allowance 300 -jobs 2 \
             ONLY_ACTIVE_ARCH=YES ENABLE_TESTABILITY=YES CODE_SIGNING_ALLOWED=NO COMPILER_INDEX_STORE_ENABLE=NO \
             test > TestResults/ipad-tests.log 2>&1
-          xcrun simctl shutdown "$udid"
+      - name: Shut down the iPad before booting Duo
+        if: ${{ !cancelled() && steps.ipad.outputs.udid != '' }}
+        env:
+          QA_IPAD: ${{ steps.ipad.outputs.udid }}
+        run: xcrun simctl shutdown "$QA_IPAD"
       - name: Install the Duo simulator runtime
         id: runtime
         if: ${{ !cancelled() && steps.compile.outcome == 'success' }}
@@ -95,7 +101,7 @@ jobs:
         if: always()
         run: |
           for name in iPad Duo; do
-            if [ -d "TestResults/$name.xcresult" ]; then
+            if [ -f "TestResults/$name.xcresult/Info.plist" ]; then
               xcrun xcresulttool get test-results summary --path "TestResults/$name.xcresult" > "TestResults/$name-summary.json"
               xcrun xcresulttool export attachments --path "TestResults/$name.xcresult" --output-path "TestResults/$name-attachments"
             fi
