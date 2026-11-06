@@ -1,0 +1,27 @@
+name: Sign fold shortcuts
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - scripts/generate_fold_shortcuts.py
+      - .github/workflows/sign-fold-shortcuts.yml
+permissions:
+  contents: read
+jobs:
+  sign:
+    runs-on: xcode-27
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Sign and verify both automation files
+        run: |
+          sw_vers -productVersion
+          /usr/bin/python3 scripts/generate_fold_shortcuts.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: hingy-fold-shortcuts
+          path: App/FoldShortcuts/*.shortcut
+          if-no-files-found: error
+          retention-days: 7
