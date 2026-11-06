@@ -67,7 +67,7 @@ jobs:
         run: xcodebuild -downloadPlatform iOS -buildVersion 27.1 -architectureVariant arm64
       - name: Test audio, UI and actual public hinge callback on Duo
         if: ${{ !cancelled() && steps.compile.outcome == 'success' && steps.runtime.outcome == 'success' }}
-        timeout-minutes: 15
+        timeout-minutes: 20
         env:
           TEST_RUNNER_HINGY_DUO_INTEGRATION: '1'
         run: |

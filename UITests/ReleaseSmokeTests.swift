@@ -167,24 +167,29 @@ final class ReleaseSmokeTests: XCTestCase {
     @MainActor
     private func openLibrary(_ app: XCUIApplication, event: String) {
         let choice = app.buttons["soundChoice-\(event)"]
+        reveal(choice, in: app)
+        choice.tap()
+        let title = event == "opened" ? "Opening sounds" : "Closing sounds"
+        XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 5))
+    }
+
+    @MainActor
+    private func reveal(_ row: XCUIElement, in app: XCUIApplication) {
         // On Duo's outer display, isHittable can be true while a row is
         // partially behind the navigation bar. Reveal the entire row first;
         // a full-page swipe can overshoot from below the screen to the header.
         let safeTop = app.frame.minY + 100
         let safeBottom = app.frame.maxY - 70
         for _ in 0..<12 {
-            if choice.isHittable && choice.frame.minY >= safeTop && choice.frame.maxY <= safeBottom { break }
-            let aboveHeader = choice.exists && choice.frame.minY < safeTop
+            if row.isHittable && row.frame.minY >= safeTop && row.frame.maxY <= safeBottom { break }
+            let aboveHeader = row.exists && row.frame.minY < safeTop
             let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.4 : 0.7))
             let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.65 : 0.45))
             start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
         }
-        XCTAssertTrue(choice.isHittable)
-        XCTAssertGreaterThanOrEqual(choice.frame.minY, safeTop)
-        XCTAssertLessThanOrEqual(choice.frame.maxY, safeBottom)
-        choice.tap()
-        let title = event == "opened" ? "Opening sounds" : "Closing sounds"
-        XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 5))
+        XCTAssertTrue(row.isHittable)
+        XCTAssertGreaterThanOrEqual(row.frame.minY, safeTop)
+        XCTAssertLessThanOrEqual(row.frame.maxY, safeBottom)
     }
 
     @MainActor
@@ -245,18 +250,20 @@ final class ReleaseSmokeTests: XCTestCase {
 
     @MainActor
     private func setSwitch(_ toggle: XCUIElement, to enabled: Bool, in app: XCUIApplication) {
-        // A partially visible Form row can be hittable while its actual switch
-        // is behind the home indicator. Bring the whole row into the safe area.
-        for _ in 0..<6 {
-            if toggle.isHittable && toggle.frame.maxY < app.frame.maxY - 60 { break }
-            app.swipeUp()
-        }
-        XCTAssertTrue(toggle.isHittable)
+        reveal(toggle, in: app)
         let value = enabled ? "1" : "0"
+        guard toggle.value as? String != value else { return }
+        let changed = NSPredicate(format: "value == %@", value)
+        toggle.tap()
+        if XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: changed, object: toggle)],
+                          timeout: 2) == .completed { return }
+        // SwiftUI can expose the whole Form row as the switch. Target the
+        // center of the trailing control if tapping the row didn't toggle it.
         if toggle.value as? String != value {
-            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap()
+            let trailing = toggle.coordinate(withNormalizedOffset: CGVector(dx: 1, dy: 0.5))
+            trailing.withOffset(CGVector(dx: -min(48, toggle.frame.width / 2), dy: 0)).tap()
         }
-        expectation(for: NSPredicate(format: "value == %@", value), evaluatedWith: toggle)
+        expectation(for: changed, evaluatedWith: toggle)
         waitForExpectations(timeout: 5)
     }
 
