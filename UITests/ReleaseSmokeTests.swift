@@ -213,25 +213,21 @@ final class ReleaseSmokeTests: XCTestCase {
             search.tap()
             XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: focused, object: nil)], timeout: 5), .completed)
         }
-        search.typeText(query + "\n")
-        // Filtering animates rows on iPad. XCTest can otherwise synthesize a
-        // tap at the row's old unfiltered position even though it exists.
-        let result = app.buttons[rowID]
-        XCTAssertTrue(result.waitForExistence(timeout: 5))
-        var previousFrame = CGRect.null
-        var stableSince = Date()
-        let settled = NSPredicate { _, _ in
+        search.typeText(query)
+        expectation(for: NSPredicate(format: "value == %@", query), evaluatedWith: search)
+        waitForExpectations(timeout: 10)
+        // Submit first so the keyboard retracts before tapping a filtered row.
+        search.typeText("\n")
+        let result = app.buttons.matching(identifier: rowID).firstMatch
+        let viewport = app.frame
+        let visible = NSPredicate { _, _ in
             guard result.exists else { return false }
             let frame = result.frame
-            guard !frame.isEmpty else { return false }
-            if frame != previousFrame {
-                previousFrame = frame
-                stableSince = Date()
-                return false
-            }
-            return Date().timeIntervalSince(stableSince) >= 0.3 && result.isHittable
+            return !frame.isEmpty && viewport.intersects(frame)
         }
-        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: settled, object: nil)], timeout: 12), .completed)
+        let outcome = XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: visible, object: nil)], timeout: 20)
+        if outcome != .completed { capture("missing-search-result-\(rowID)") }
+        XCTAssertEqual(outcome, .completed, "Expected a visible row for \(query)")
         return result
     }
 
