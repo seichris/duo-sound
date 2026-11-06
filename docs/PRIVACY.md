@@ -1,4 +1,4 @@
-# Hingy privacy policy — WEB3 FZCO
+# Privacy policy for Hingy - Hinge Sounds — WEB3 FZCO
 
 Last prepared: October 21, 2026. Publisher: **WEB3 FZCO**. Public support: **jensen@web3.consulting**. This policy describes the current Hingy implementation; the publisher must still audit the final distribution archive and any jurisdiction-specific obligations before release.
 

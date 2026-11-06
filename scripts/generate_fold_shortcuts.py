@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 import plistlib
+import re
 import struct
 import subprocess
 import tempfile
@@ -77,15 +78,29 @@ def verify_signed(asset, expected, scratch):
                     "-include-path", "Shortcut.wflow"], check=True)
     signed = plistlib.loads((scratch / "Shortcut.wflow").read_bytes())
     for field in ("WFWorkflowTriggers", "WFWorkflowActions"):
-        if signed.get(field) != expected[field]:
+        if signed.get(field, []) != expected.get(field, []):
             raise ValueError(f"{asset.name}: {field} changed during signing. Use an OS 27 signer.")
+    # Apple's Anyone signer uses the iCloud share record ID as the leaf certificate's CN.
+    subject = subprocess.check_output(["/usr/bin/openssl", "x509", "-inform", "DER", "-subject",
+                                       "-nameopt", "RFC2253", "-noout"], input=certificate).decode()
+    record = re.search(r"\bCN=([0-9a-f]{32})\b", subject)
+    if not record:
+        raise ValueError(f"{asset.name}: could not identify the iCloud share record")
+    return f"https://www.icloud.com/shortcuts/{record[1]}"
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--verify", action="store_true", help="Verify the bundled files without signing")
+    options = parser.add_mutually_exclusive_group()
+    options.add_argument("--verify", action="store_true", help="Verify the bundled files without signing")
+    options.add_argument("--playback-only", action="store_true",
+                         help="Prepare playback shortcuts that require the user to attach the two triggers")
     args = parser.parse_args()
     owner = json.loads((ROOT / "release/readiness.json").read_text())["owner"]
+    manifest_path = DESTINATION / "Install.json"
+    manifest = json.loads(manifest_path.read_text()) if args.verify else None
+    with_triggers = manifest["includesFoldTriggers"] if args.verify else not args.playback_only
+    links = {"includesFoldTriggers": with_triggers}
     with tempfile.TemporaryDirectory() as tmp:
         signed = []
         for direction, mode in (("Opening", "ModeA"), ("Closing", "ModeB")):
@@ -93,20 +108,26 @@ def main():
             scratch = Path(tmp) / direction
             scratch.mkdir()
             spec = workflow(direction, mode, owner["bundle_id"], owner["team_id"])
+            if not with_triggers:
+                del spec["WFWorkflowTriggers"]
             if args.verify:
-                verify_signed(DESTINATION / name, spec, scratch)
+                links[direction.lower()] = verify_signed(DESTINATION / name, spec, scratch)
                 continue
             source = scratch / name
             result = Path(tmp) / name
             source.write_bytes(plistlib.dumps(spec, fmt=plistlib.FMT_BINARY))
             subprocess.run(["/usr/bin/shortcuts", "sign", "--mode", "anyone",
                             "--input", source, "--output", result], check=True)
-            verify_signed(result, spec, scratch)
+            links[direction.lower()] = verify_signed(result, spec, scratch)
             signed.append(result)
-        if signed:
-            DESTINATION.mkdir(exist_ok=True)
+        if args.verify:
+            if manifest != links:
+                raise ValueError("Install.json does not match the two signed shortcuts")
+            return
+        DESTINATION.mkdir(exist_ok=True)
         for result in signed:
             (DESTINATION / result.name).write_bytes(result.read_bytes())
+        manifest_path.write_text(json.dumps(links, indent=2) + "\n")
 
 
 if __name__ == "__main__":

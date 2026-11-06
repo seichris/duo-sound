@@ -41,6 +41,7 @@ jobs:
         run: |
           python3 -m unittest discover -s scripts/tests -v
           python3 scripts/release_check.py
+          python3 scripts/generate_fold_shortcuts.py --verify
       - name: Build native hinge app for iOS simulator
         run: >-
           xcodebuild -project DuoSound.xcodeproj -scheme DuoSound

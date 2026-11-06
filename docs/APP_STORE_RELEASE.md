@@ -1,5 +1,11 @@
 # App Store release
 
+## November 6, 2026
+
+Version 1.1.2 is in Prepare for Submission. Its US and UK English listings use **Hingy - Hinge Sounds**. The distributed version is 1.1.1 (9), listed as **Hingy**. [App Store Connect](https://appstoreconnect.apple.com/apps/6812193737/distribution)
+
+## Previous submissions
+
 Status: **Hingy 1.1 (8) submitted for App Review**, October 22, 2026. Apple processed the signed build VALID; four current native screenshots are COMPLETE and final strict validation has zero errors/warnings. Automatic release after approval is configured. See [the build 8 receipt](../release/BUILD_8_SUBMITTED.md). Version 1.0 (5) was already Ready for Distribution.
 
 The owner explicitly authorized simulator-only validation because no physical devices were available. Physical audio/display handoff and the exact iPadOS 27.2 review environment remain untested; this limitation was disclosed to Apple. App/Sources are unchanged from the passing full iPad/Duo implementation CI; subsequent release-policy checks also passed. Earlier snapshots below are historical.

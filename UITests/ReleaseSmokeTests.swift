@@ -20,9 +20,28 @@ final class ReleaseSmokeTests: XCTestCase {
     }
 
     @MainActor
+    func testSetupOffersBothSoundShortcuts() throws {
+        let app = XCUIApplication()
+        app.launch()
+        let setup = app.buttons["shortcutsHelp"]
+        for _ in 0..<5 where !setup.isHittable { app.swipeUp() }
+        XCTAssertTrue(setup.isHittable)
+        setup.tap()
+
+        XCTAssertTrue(app.navigationBars["Sounds in other apps"].waitForExistence(timeout: 10))
+        for identifier in ["addOpeningShortcut", "addClosingShortcut"] {
+            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: identifier).firstMatch.exists)
+        }
+        let save = app.buttons["saveBothShortcuts"]
+        for _ in 0..<4 where !save.isHittable { app.swipeUp() }
+        XCTAssertTrue(save.isHittable)
+    }
+
+    @MainActor
     func testPreviewLaunchAndPrivacy() throws {
         let app = XCUIApplication()
         app.launch()
+        XCTAssertTrue(app.navigationBars["Hingy - Hinge Sounds"].waitForExistence(timeout: 10))
         let status = app.staticTexts["monitoringStatus"]
         XCTAssertTrue(status.waitForExistence(timeout: 10))
         XCTAssertFalse(status.label.isEmpty)
@@ -139,7 +158,7 @@ final class ReleaseSmokeTests: XCTestCase {
             let lastEvent = app.staticTexts["lastEvent"]
             for _ in 0..<6 where !lastEvent.isHittable { app.swipeDown() }
             XCTAssertTrue(lastEvent.label.contains("Preview · \(event == "opened" ? "Opening" : "Closing")"))
-            XCTAssertFalse(app.alerts["Hingy"].exists)
+            XCTAssertFalse(app.alerts.firstMatch.exists)
         }
         setSwitch(enabled, to: true, in: app)
         capture("06-manual-previews-with-fold-sounds-paused")

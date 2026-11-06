@@ -1,8 +1,18 @@
-# Native hinge and background Shortcuts — October 21, 2026
+# Native hinge and background Shortcuts
+
+## Setting up an iPhone Duo
+
+Apple added the **When my iPhone is opened or closed** Shortcuts trigger in iOS 27.2. On the Hingy home screen, **Set up sounds in other apps** opens the setup guide. Each Add button opens an Apple-hosted shortcut with the matching **Get Opening Sound** or **Get Closing Sound** action connected to **Play Sound**. Users can also save both signed files to Files and open them there. The files contain action definitions. Shortcuts receives the selected audio, including a custom import, only when the shortcut runs. [Apple’s Shortcuts release notes](https://support.apple.com/en-us/149045)
+
+The setup screen reads the bundled `FoldShortcuts/Install.json`. For a pair that includes triggers, it asks the user to enable each imported automation. For a playback-only pair, it gives the steps to attach **Opened** and **Closed** in Shortcuts. Adding a shortcut and enabling its automation are separate user actions.
+
+To regenerate the complete pair, run `python3 scripts/generate_fold_shortcuts.py` on a Mac running macOS 27 or later and signed in to iCloud. The script uses Apple’s Anyone signer and checks the trigger, direction, sound action and playback input in each signed output before replacing the packaged pair. `--verify` checks the committed pair offline. `--playback-only` explicitly creates the version that requires manual trigger setup. The published iCloud links identify the corresponding signed files. [Apple’s signing guide](https://support.apple.com/guide/shortcuts-mac/run-shortcuts-from-the-command-line-apd455c82f02/mac)
+
+## October 21, 2026 investigation
 
 Every configuration now includes the typed public iOS 27.1 hinge adapter. Runtime availability checks preserve previews on older devices. Native observation remains active-scene-only; it does not register a suspended-app wake subscription.
 
-## Research findings
+### Research findings
 
 Apple documents [UIHingeInteraction](https://developer.apple.com/documentation/uikit/uihingeinteraction) and view-associated angle/status updates. The installed SDK confirms iOS 27.1 availability, nullable hinge, initial/current-state callbacks and discarded updates while disabled.
 
@@ -12,7 +22,7 @@ The local iOS 27.1 Duo simulator did not expose com.apple.shortcuts through the 
 
 The owner requested [ChatGPT Pro research in Brave](https://chatgpt.com/c/6ad88d5c-7df0-83ee-a8a5-abae35684ccf) and supplied its completed answer as an attachment. It recommends enabling native support and evaluating file-returning intents before app-owned background playback. This is advisory analysis, not device proof; its release-version statements are not independently asserted here.
 
-## Implemented route
+### Implemented route
 
 Create two shortcuts: **Get Opening Sound → Play Sound** and **Get Closing Sound → Play Sound**. Explicitly use the getter's returned audio as Play Sound's input. Run each while unlocked to resolve access prompts. Avoid interactive pickers and Ask Each Time in an unattended workflow.
 
@@ -24,7 +34,7 @@ The current selected sound, including a custom import, is copied to Shortcuts. W
 
 Disable **Enable fold sounds** in Hingy when using a device-fold automation to avoid both native and Shortcuts paths sounding while the app is visible. Explicit previews and file-returning actions still work.
 
-## Required acceptance
+### Required acceptance
 
 Record the actual Duo model, OS/build, Shortcuts version, trigger screenshot and execution settings. Test the handoff independently, then test the whole fold automation. Cover warm/cold/force-quit execution, locked after first unlock versus reboot-before-first-unlock, bundled/synthesized/imported files, Silent Mode, zero/nonzero volume, audio routes, rapid folds, missed/overlapping effects, foreground duplication and display handoff. Measure audible onset separately from a successful playback request.
 
@@ -32,7 +42,7 @@ Compilation, intent metadata and simulator callbacks are not physical audio evid
 
 Direct [AudioPlaybackIntent](https://developer.apple.com/documentation/appintents/audioplaybackintent) actions are deferred. Their conformance does not itself replace documented [background audio configuration](https://developer.apple.com/documentation/avfoundation/configuring-your-app-for-media-playback). App-owned playback would need an awaited, cancellation-safe service independent of scene inactivity, with explicit audio-session ownership. The file handoff avoids that additional lifecycle.
 
-## Local validation for build 7
+### Local validation for build 7
 
 - Core tests: **46 passed**, including current-selection file handoff, safe filenames, missing audio and Off behavior.
 - Release preparation tests: **25 passed**.

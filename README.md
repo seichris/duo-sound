@@ -1,4 +1,4 @@
-# Hingy
+# Hingy - Hinge Sounds
 
 A native SwiftUI sound toy for opening and closing iPhone Duo, inspired by [Scrunch](https://github.com/DenyTheFlowerpot/Scrunch).
 
@@ -40,7 +40,7 @@ DEVELOPER_DIR=/Applications/Xcode.app/Contents/Developer xcodebuild -project Duo
 
 ## Shortcuts and background limits
 
-Native hinge sounds require the app to be visible and active. Leaving it, locking, interruption or suspension cancels pending in-app effects and resets observation. Get Opening Sound and Get Closing Sound return the selected audio to Shortcuts without opening Hingy; add Play Sound to each workflow. See [setup, sources and acceptance boundaries](docs/BACKGROUND_SHORTCUTS.md). A close event may coincide with a display handoff/inactive state; whether it arrives in time for playback is a **release-blocking device test**, not a guaranteed feature. No silent audio loop, private APIs, fake background entitlement, or invented Shortcuts fold trigger is used. See the research document before promising Scrunch parity.
+Native hinge sounds require Hingy to be visible and active. On an iPhone Duo with iOS 27.2 or later, tap **Set up sounds in other apps** to add the two prepared playback shortcuts. Each reads the current selection from Hingy and passes the audio to Apple's Play Sound action. Follow the setup screen to enable the opening and closing automations on your device. [Setup and device validation](docs/BACKGROUND_SHORTCUTS.md)
 
 ## Attribution
 
@@ -48,7 +48,7 @@ Scrunch by DenyTheFlowerpot is the inspiration. Its repository identifies EUPL 1
 
 ## App Store preparation
 
-See [the sourced SEO/ASO research](docs/ASO_SEO_RESEARCH.md) and [the release guide](docs/APP_STORE_RELEASE.md). Proposed listing: **Hingy** / **Custom Open & Close Audio**. Preparation includes English US/UK copy, the supplied app icon, in-app privacy/help, a static noindex preview site, screenshot capture tooling, UI smoke tests and guarded native archive/export. Verified team, bundle and App Store record identities are documented separately; no credentials, search metrics or hardware validation are invented.
+See [the sourced SEO/ASO research](docs/ASO_SEO_RESEARCH.md) and [the release guide](docs/APP_STORE_RELEASE.md). The draft App Store listing pairs **Hingy - Hinge Sounds** with the subtitle **Custom Open & Close Audio**. Preparation includes English US/UK copy, the supplied app icon, in-app privacy/help, a static noindex preview site, screenshot capture tooling, UI smoke tests and guarded native archive/export. Verified team, bundle and App Store record identities are documented separately; no credentials, search metrics or hardware validation are invented.
 
 ```sh
 python3 scripts/generate_assets.py
