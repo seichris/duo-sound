@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+import platform
 import plistlib
 import re
 import struct
@@ -96,6 +97,11 @@ def main():
     options.add_argument("--playback-only", action="store_true",
                          help="Prepare playback shortcuts that require the user to attach the two triggers")
     args = parser.parse_args()
+    if not (args.verify or args.playback_only):
+        version = platform.mac_ver()[0]
+        if not version or int(version.split(".", 1)[0]) < 27:
+            parser.exit(1, "Signing fold triggers requires a Mac signed in to iCloud running macOS 27 or later. "
+                           f"This system reports {version or platform.system()}.\n")
     owner = json.loads((ROOT / "release/readiness.json").read_text())["owner"]
     manifest_path = DESTINATION / "Install.json"
     manifest = json.loads(manifest_path.read_text()) if args.verify else None
