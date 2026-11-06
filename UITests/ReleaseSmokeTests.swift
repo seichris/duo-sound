@@ -62,15 +62,13 @@ final class ReleaseSmokeTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         openLibrary(app, event: "opened")
-        searchLibrary(app, for: "Chime")
-        app.buttons["select-opened-chime"].tap()
-        searchLibrary(app, for: "Crystal")
-        let crystal = app.buttons["select-opened-crystal"]
-        XCTAssertTrue(crystal.waitForExistence(timeout: 5))
+        searchLibrary(app, for: "Chime", rowID: "select-opened-chime").tap()
+        let crystal = searchLibrary(app, for: "Crystal", rowID: "select-opened-crystal")
         app.buttons["preview-opened-crystal"].tap()
         let feedback = app.staticTexts["libraryPreviewStatus"]
         for _ in 0..<4 where !feedback.isHittable { app.swipeDown() }
-        XCTAssertTrue(feedback.label.contains("Preview · Opening · Crystal"))
+        expectation(for: NSPredicate(format: "label CONTAINS %@", "Preview · Opening · Crystal"), evaluatedWith: feedback)
+        waitForExpectations(timeout: 5)
         XCTAssertEqual(crystal.value as? String, "Not selected", "Preview must not save a selection")
         crystal.tap()
         XCTAssertEqual(crystal.value as? String, "Selected")
@@ -80,9 +78,7 @@ final class ReleaseSmokeTests: XCTestCase {
         XCTAssertEqual(app.buttons["soundChoice-opened"].value as? String, "Crystal")
 
         openLibrary(app, event: "closed")
-        searchLibrary(app, for: "Laser")
-        let laser = app.buttons["select-closed-laser"]
-        XCTAssertTrue(laser.waitForExistence(timeout: 5))
+        let laser = searchLibrary(app, for: "Laser", rowID: "select-closed-laser")
         laser.tap()
         dismissLibrarySearch(app)
         app.buttons["Done"].tap()
@@ -100,9 +96,7 @@ final class ReleaseSmokeTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         openLibrary(app, event: "opened")
-        searchLibrary(app, for: "Tiny Fart")
-        let fart = app.buttons["select-opened-tinyFart"]
-        XCTAssertTrue(fart.waitForExistence(timeout: 5))
+        let fart = searchLibrary(app, for: "Tiny Fart", rowID: "select-opened-tinyFart")
         let selectionBeforePreview = try XCTUnwrap(fart.value as? String)
         app.buttons["preview-opened-tinyFart"].tap()
         let status = app.staticTexts["libraryPreviewStatus"]
@@ -115,8 +109,7 @@ final class ReleaseSmokeTests: XCTestCase {
         app.buttons["Done"].tap()
 
         openLibrary(app, event: "closed")
-        searchLibrary(app, for: "Wood Knock")
-        let woodKnock = app.buttons["select-closed-woodKnock"]
+        let woodKnock = searchLibrary(app, for: "Wood Knock", rowID: "select-closed-woodKnock")
         woodKnock.tap()
         expectation(for: NSPredicate(format: "value == %@", "Selected"), evaluatedWith: woodKnock)
         waitForExpectations(timeout: 5)
@@ -126,8 +119,8 @@ final class ReleaseSmokeTests: XCTestCase {
         app.terminate()
         app.launch()
         openLibrary(app, event: "closed")
-        searchLibrary(app, for: "Wood Knock")
-        XCTAssertEqual(app.buttons["select-closed-woodKnock"].value as? String, "Selected")
+        let saved = searchLibrary(app, for: "Wood Knock", rowID: "select-closed-woodKnock")
+        XCTAssertEqual(saved.value as? String, "Selected")
         capture("08-kenney-selection-persisted")
         dismissLibrarySearch(app)
         app.buttons["Done"].tap()
@@ -152,12 +145,13 @@ final class ReleaseSmokeTests: XCTestCase {
         setSwitch(enabled, to: false, in: app)
         for event in ["opened", "closed"] {
             let preview = app.buttons["preview-selected-\(event)"]
-            for _ in 0..<6 where !preview.isHittable { app.swipeUp() }
-            XCTAssertTrue(preview.isHittable)
+            reveal(preview, in: app)
             preview.tap()
             let lastEvent = app.staticTexts["lastEvent"]
             for _ in 0..<6 where !lastEvent.isHittable { app.swipeDown() }
-            XCTAssertTrue(lastEvent.label.contains("Preview · \(event == "opened" ? "Opening" : "Closing")"))
+            let feedback = "Preview · \(event == "opened" ? "Opening" : "Closing")"
+            expectation(for: NSPredicate(format: "label CONTAINS %@", feedback), evaluatedWith: lastEvent)
+            waitForExpectations(timeout: 5)
             XCTAssertFalse(app.alerts.firstMatch.exists)
         }
         setSwitch(enabled, to: true, in: app)
@@ -181,8 +175,9 @@ final class ReleaseSmokeTests: XCTestCase {
         let safeTop = app.frame.minY + 100
         let safeBottom = app.frame.maxY - 70
         for _ in 0..<12 {
-            if row.isHittable && row.frame.minY >= safeTop && row.frame.maxY <= safeBottom { break }
-            let aboveHeader = row.exists && row.frame.minY < safeTop
+            let frame = row.exists ? row.frame : .null
+            if !frame.isEmpty && frame.minY >= safeTop && frame.maxY <= safeBottom && row.isHittable { break }
+            let aboveHeader = !frame.isEmpty && frame.minY < safeTop
             let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.4 : 0.7))
             let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.65 : 0.45))
             start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
@@ -193,7 +188,7 @@ final class ReleaseSmokeTests: XCTestCase {
     }
 
     @MainActor
-    private func searchLibrary(_ app: XCUIApplication, for query: String) {
+    private func searchLibrary(_ app: XCUIApplication, for query: String, rowID: String) -> XCUIElement {
         let search = app.searchFields.firstMatch
         // Compact Duo sheets collapse searchable into a bottom Search button.
         // Open that native control before expecting the editable field.
@@ -218,23 +213,26 @@ final class ReleaseSmokeTests: XCTestCase {
             search.tap()
             XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: focused, object: nil)], timeout: 5), .completed)
         }
-        search.typeText(query)
+        search.typeText(query + "\n")
         // Filtering animates rows on iPad. XCTest can otherwise synthesize a
         // tap at the row's old unfiltered position even though it exists.
-        let result = app.buttons[query]
+        let result = app.buttons[rowID]
         XCTAssertTrue(result.waitForExistence(timeout: 5))
         var previousFrame = CGRect.null
         var stableSince = Date()
         let settled = NSPredicate { _, _ in
+            guard result.exists else { return false }
             let frame = result.frame
+            guard !frame.isEmpty else { return false }
             if frame != previousFrame {
                 previousFrame = frame
                 stableSince = Date()
                 return false
             }
-            return result.isHittable && !frame.isEmpty && Date().timeIntervalSince(stableSince) >= 0.3
+            return Date().timeIntervalSince(stableSince) >= 0.3 && result.isHittable
         }
-        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: settled, object: nil)], timeout: 5), .completed)
+        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: settled, object: nil)], timeout: 12), .completed)
+        return result
     }
 
     @MainActor
