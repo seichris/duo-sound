@@ -64,7 +64,11 @@ jobs:
         id: runtime
         if: ${{ !cancelled() && steps.compile.outcome == 'success' }}
         timeout-minutes: 12
-        run: xcodebuild -downloadPlatform iOS -buildVersion 27.1 -architectureVariant arm64
+        run: |
+          if ! xcrun simctl list runtimes -j | jq -e \
+            'any(.runtimes[]; .identifier == "com.apple.CoreSimulator.SimRuntime.iOS-27-1" and .isAvailable)' > /dev/null; then
+            xcodebuild -downloadPlatform iOS -buildVersion 27.1 -architectureVariant arm64
+          fi
       - name: Test audio, UI and actual public hinge callback on Duo
         if: ${{ !cancelled() && steps.compile.outcome == 'success' && steps.runtime.outcome == 'success' }}
         timeout-minutes: 20

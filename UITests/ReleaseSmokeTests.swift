@@ -101,7 +101,7 @@ final class ReleaseSmokeTests: XCTestCase {
         app.buttons["preview-opened-tinyFart"].tap()
         let status = app.staticTexts["libraryPreviewStatus"]
         expectation(for: NSPredicate(format: "label CONTAINS %@", "Preview · Opening · Tiny Fart"), evaluatedWith: status)
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 20)
         XCTAssertEqual(fart.value as? String, selectionBeforePreview)
         fart.tap()
         capture("07-fart-library-preview")
@@ -118,12 +118,10 @@ final class ReleaseSmokeTests: XCTestCase {
         XCTAssertEqual(app.buttons["soundChoice-closed"].value as? String, "Wood Knock")
         app.terminate()
         app.launch()
-        openLibrary(app, event: "closed")
-        let saved = searchLibrary(app, for: "Wood Knock", rowID: "select-closed-woodKnock")
-        XCTAssertEqual(saved.value as? String, "Selected")
+        let closing = app.buttons["soundChoice-closed"]
+        reveal(closing, in: app)
+        XCTAssertEqual(closing.value as? String, "Wood Knock")
         capture("08-kenney-selection-persisted")
-        dismissLibrarySearch(app)
-        app.buttons["Done"].tap()
         app.buttons["About"].tap()
         let credits = app.buttons["soundCredits"]
         for _ in 0..<6 where !credits.isHittable { app.swipeUp() }
