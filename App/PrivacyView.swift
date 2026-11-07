@@ -70,33 +70,3 @@ struct SoundHelpView: View {
         .navigationTitle("Sound help")
     }
 }
-
-@MainActor
-struct SoundShortcutsHelpView: View {
-    var body: some View {
-        Form {
-            Section("Create an opening shortcut") {
-                Text("1. In Shortcuts, create a shortcut and add Hingy’s Get Opening Sound action.")
-                Text("2. Add Play Sound next, using the audio file returned by Hingy as its input.")
-                Text("3. Run it once to grant any requested access and check the volume and audio output.")
-            }
-            Section("Create a closing shortcut") {
-                Text("Create a second shortcut using Get Closing Sound followed by Play Sound. Each run reads your current selection in Hingy, including an imported clip.")
-            }
-            Section("Choose an automation") {
-                Text("If your Duo’s Shortcuts app offers an Opened or Closed device trigger, connect each event to the matching shortcut. If that trigger is absent, use an available trigger to test playback; Hingy cannot add a missing system trigger.")
-                Text("To avoid duplicate sounds when Hingy is visible, turn off Enable fold sounds in Hingy while using a fold automation. The explicit Get Sound actions still work.")
-                Text("Allow the shortcut to run automatically and enable Allow Running When Locked if your iOS version offers it. Other actions or protected files may still require unlocking. Test your complete automation on the intended phone.")
-            }
-            Section("Playback outside Hingy") {
-                Text("Shortcuts owns playback, so Hingy does not need to stay visible or keep listening in the background. Fold-trigger availability, locked playback and timing must be tested on your device; native hinge observation runs while Hingy is visible and active.")
-                Text("Use system volume or a volume action in Shortcuts. Hingy exports the original audio; its effect-volume slider applies only inside Hingy. A direction set to Off returns an explanation instead of playing another sound.")
-            }
-            Section("Audio access") {
-                Text("Running these actions gives Shortcuts a copy of the selected sound, including a custom import. Your workflow controls whether that file is played, saved or shared. Hingy does not upload it or change file protection to bypass a locked device.")
-            }
-        }
-        .navigationTitle("Sounds in Shortcuts")
-        .navigationBarTitleDisplayMode(.inline)
-    }
-}

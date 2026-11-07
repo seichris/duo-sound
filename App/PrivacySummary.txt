@@ -1,4 +1,4 @@
-Hingy privacy summary
+Privacy summary for Hingy - Hinge Sounds
 
 The app does not create accounts, record microphone audio, include advertising or analytics SDKs, or automatically transmit your sounds, settings, or hinge activity to a server.
 

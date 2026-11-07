@@ -4,6 +4,8 @@ import AVFoundation
 @MainActor
 @main
 struct DuoSoundApp: App {
+    static let displayName = Bundle.main.object(forInfoDictionaryKey: "CFBundleDisplayName") as? String ?? "Hingy"
+
     @StateObject private var model = AppModel()
     @Environment(\.scenePhase) private var scenePhase
     var body: some Scene {

@@ -43,17 +43,16 @@ struct ContentView: View {
                 } footer: {
                     Text("Automatic fold sounds respect Silent Mode. Previews play even in Silent Mode. Preview also works when fold sounds are paused. All sounds use system and effect volume and your selected audio output, including headphones.")
                 }
-                soundSection(.opened)
-                soundSection(.closed)
                 Section {
-                    NavigationLink("Play sounds with Shortcuts") { SoundShortcutsHelpView() }
+                    NavigationLink("Set up sounds in other apps") { FoldAutomationSetupView() }
                         .accessibilityIdentifier("shortcutsHelp")
                 } footer: {
-                    Text("Use Hingy’s selected audio with Shortcuts’ Play Sound action. Available automation triggers depend on your device and iOS version.")
+                    Text("Use Shortcuts to play your sounds when you open or close an iPhone Duo running iOS 27.2 or later.")
                 }
-
+                soundSection(.opened)
+                soundSection(.closed)
             }
-            .navigationTitle("Hingy")
+            .navigationTitle(DuoSoundApp.displayName)
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
                     Button("About", systemImage: "info.circle") { showAbout = true }
@@ -99,7 +98,7 @@ struct ContentView: View {
                 case .failure(let error): model.errorMessage = error.localizedDescription
                 }
             }
-            .alert("Hingy", isPresented: Binding(get: { !showLibrary && model.errorMessage != nil },
+            .alert(DuoSoundApp.displayName, isPresented: Binding(get: { !showLibrary && model.errorMessage != nil },
                 set: { if !$0 { model.errorMessage = nil } })) {
                     Button("OK", role: .cancel) { model.errorMessage = nil }
                 } message: { Text(model.errorMessage ?? "") }
@@ -182,7 +181,7 @@ struct SoundLibraryView: View {
             .navigationTitle("\(event.title) sounds")
             .navigationBarTitleDisplayMode(.inline)
             .searchable(text: $search, prompt: "Search \(SoundPreset.builtIns.count) sounds")
-            .alert("Hingy", isPresented: Binding(get: { model.errorMessage != nil },
+            .alert(DuoSoundApp.displayName, isPresented: Binding(get: { model.errorMessage != nil },
                 set: { if !$0 { model.errorMessage = nil } })) {
                     Button("OK", role: .cancel) { model.errorMessage = nil }
                 } message: { Text(model.errorMessage ?? "") }

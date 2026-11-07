@@ -34,7 +34,7 @@ for path in sources:
     children.append(ref)
     builds.append(add(relative + ':build', isa='PBXBuildFile', fileRef=ref))
 resources = []
-for relative, kind, bundle in [('App/Info.plist', 'text.plist.xml', False), ('App/PrivacyInfo.xcprivacy', 'text.xml', True), ('App/PrivacySummary.txt', 'text', True), ('App/Assets.xcassets', 'folder.assetcatalog', True), ('Sources/DuoSoundCore/Resources/RecordedSounds', 'folder', True)]:
+for relative, kind, bundle in [('App/Info.plist', 'text.plist.xml', False), ('App/PrivacyInfo.xcprivacy', 'text.xml', True), ('App/PrivacySummary.txt', 'text', True), ('App/Assets.xcassets', 'folder.assetcatalog', True), ('App/FoldShortcuts', 'folder', True), ('Sources/DuoSoundCore/Resources/RecordedSounds', 'folder', True)]:
     ref = add(relative, isa='PBXFileReference', lastKnownFileType=kind, path=relative, sourceTree='<group>')
     children.append(ref)
     if bundle:

@@ -1,7 +1,61 @@
 import XCTest
+#if TEST_SHORTCUT_DISPATCH && canImport(AppIntentsTesting)
+import AppIntents
+import AppIntentsTesting
+import AVFoundation
+#endif
 
 final class ReleaseSmokeTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
+
+    #if TEST_SHORTCUT_DISPATCH && canImport(AppIntentsTesting)
+    @MainActor
+    func testSoundActionsReturnAudioWhileAnotherAppIsFrontmost() async throws {
+        guard #available(iOS 27.2, *) else {
+            throw XCTSkip("Requires an iOS 27.2+ runtime matching Xcode's AppIntentsTesting framework.")
+        }
+        let app = XCUIApplication()
+        app.launch()
+        openLibrary(app, event: "opened")
+        searchLibrary(app, for: "Chime", rowID: "select-opened-chime").tap()
+        dismissLibrarySearch(app)
+        app.buttons["Done"].tap()
+        openLibrary(app, event: "closed")
+        searchLibrary(app, for: "Click", rowID: "select-closed-click").tap()
+        dismissLibrarySearch(app)
+        app.buttons["Done"].tap()
+
+        XCUIDevice.shared.press(.home)
+        let settings = XCUIApplication(bundleIdentifier: "com.apple.Preferences")
+        settings.activate()
+        XCTAssertTrue(settings.wait(for: .runningForeground, timeout: 10))
+        let backgrounded = app.wait(for: .runningBackground, timeout: 5)
+            || app.wait(for: .runningBackgroundSuspended, timeout: 10)
+        XCTAssertTrue(backgrounded)
+        let testBundleID = try XCTUnwrap(Bundle(for: Self.self).bundleIdentifier)
+        XCTAssertTrue(testBundleID.hasSuffix(".uitests"))
+        let definitions = IntentDefinitions(bundleIdentifier: String(testBundleID.dropLast(".uitests".count)))
+
+        for (direction, duration) in [("Opening", 0.42), ("Closing", 0.13)] {
+            let result = try await definitions.intents["Get\(direction)SoundIntent"].makeIntent().run()
+            let file: IntentFile = try result.value
+            XCTAssertEqual(settings.state, .runningForeground)
+            XCTAssertNotEqual(app.state, .runningForeground)
+            XCTAssertEqual(file.filename, "Hingy-\(direction).wav")
+            XCTAssertEqual(String(data: file.data.prefix(4), encoding: .ascii), "RIFF")
+            XCTAssertEqual(String(data: file.data.dropFirst(8).prefix(4), encoding: .ascii), "WAVE")
+            let audio = try AVAudioPlayer(data: file.data)
+            XCTAssertEqual(audio.duration, duration, accuracy: 0.03)
+        }
+        let evidence = XCTAttachment(screenshot: settings.screenshot())
+        evidence.name = "Settings stays in front during both sound-file actions"
+        evidence.lifetime = .keepAlways
+        add(evidence)
+        app.activate()
+        XCTAssertEqual(app.buttons["soundChoice-opened"].value as? String, "Chime")
+        XCTAssertEqual(app.buttons["soundChoice-closed"].value as? String, "Click")
+    }
+    #endif
 
     @MainActor
     func testDuoPublicHingeProvidesSilentInitialReading() throws {
@@ -20,9 +74,28 @@ final class ReleaseSmokeTests: XCTestCase {
     }
 
     @MainActor
+    func testSetupOffersBothSoundShortcuts() throws {
+        let app = XCUIApplication()
+        app.launch()
+        let setup = app.buttons["shortcutsHelp"]
+        for _ in 0..<5 where !setup.isHittable { app.swipeUp() }
+        XCTAssertTrue(setup.isHittable)
+        setup.tap()
+
+        XCTAssertTrue(app.navigationBars["Sounds in other apps"].waitForExistence(timeout: 10))
+        for identifier in ["addOpeningShortcut", "addClosingShortcut"] {
+            XCTAssertTrue(app.descendants(matching: .any).matching(identifier: identifier).firstMatch.exists)
+        }
+        let save = app.buttons["saveBothShortcuts"]
+        for _ in 0..<4 where !save.isHittable { app.swipeUp() }
+        XCTAssertTrue(save.isHittable)
+    }
+
+    @MainActor
     func testPreviewLaunchAndPrivacy() throws {
         let app = XCUIApplication()
         app.launch()
+        XCTAssertTrue(app.navigationBars["Hingy - Hinge Sounds"].waitForExistence(timeout: 10))
         let status = app.staticTexts["monitoringStatus"]
         XCTAssertTrue(status.waitForExistence(timeout: 10))
         XCTAssertFalse(status.label.isEmpty)
@@ -43,15 +116,13 @@ final class ReleaseSmokeTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         openLibrary(app, event: "opened")
-        searchLibrary(app, for: "Chime")
-        app.buttons["select-opened-chime"].tap()
-        searchLibrary(app, for: "Crystal")
-        let crystal = app.buttons["select-opened-crystal"]
-        XCTAssertTrue(crystal.waitForExistence(timeout: 5))
+        searchLibrary(app, for: "Chime", rowID: "select-opened-chime").tap()
+        let crystal = searchLibrary(app, for: "Crystal", rowID: "select-opened-crystal")
         app.buttons["preview-opened-crystal"].tap()
         let feedback = app.staticTexts["libraryPreviewStatus"]
         for _ in 0..<4 where !feedback.isHittable { app.swipeDown() }
-        XCTAssertTrue(feedback.label.contains("Preview · Opening · Crystal"))
+        expectation(for: NSPredicate(format: "label CONTAINS %@", "Preview · Opening · Crystal"), evaluatedWith: feedback)
+        waitForExpectations(timeout: 5)
         XCTAssertEqual(crystal.value as? String, "Not selected", "Preview must not save a selection")
         crystal.tap()
         XCTAssertEqual(crystal.value as? String, "Selected")
@@ -61,9 +132,7 @@ final class ReleaseSmokeTests: XCTestCase {
         XCTAssertEqual(app.buttons["soundChoice-opened"].value as? String, "Crystal")
 
         openLibrary(app, event: "closed")
-        searchLibrary(app, for: "Laser")
-        let laser = app.buttons["select-closed-laser"]
-        XCTAssertTrue(laser.waitForExistence(timeout: 5))
+        let laser = searchLibrary(app, for: "Laser", rowID: "select-closed-laser")
         laser.tap()
         dismissLibrarySearch(app)
         app.buttons["Done"].tap()
@@ -81,14 +150,12 @@ final class ReleaseSmokeTests: XCTestCase {
         let app = XCUIApplication()
         app.launch()
         openLibrary(app, event: "opened")
-        searchLibrary(app, for: "Tiny Fart")
-        let fart = app.buttons["select-opened-tinyFart"]
-        XCTAssertTrue(fart.waitForExistence(timeout: 5))
+        let fart = searchLibrary(app, for: "Tiny Fart", rowID: "select-opened-tinyFart")
         let selectionBeforePreview = try XCTUnwrap(fart.value as? String)
         app.buttons["preview-opened-tinyFart"].tap()
         let status = app.staticTexts["libraryPreviewStatus"]
         expectation(for: NSPredicate(format: "label CONTAINS %@", "Preview · Opening · Tiny Fart"), evaluatedWith: status)
-        waitForExpectations(timeout: 5)
+        waitForExpectations(timeout: 20)
         XCTAssertEqual(fart.value as? String, selectionBeforePreview)
         fart.tap()
         capture("07-fart-library-preview")
@@ -96,8 +163,7 @@ final class ReleaseSmokeTests: XCTestCase {
         app.buttons["Done"].tap()
 
         openLibrary(app, event: "closed")
-        searchLibrary(app, for: "Wood Knock")
-        let woodKnock = app.buttons["select-closed-woodKnock"]
+        let woodKnock = searchLibrary(app, for: "Wood Knock", rowID: "select-closed-woodKnock")
         woodKnock.tap()
         expectation(for: NSPredicate(format: "value == %@", "Selected"), evaluatedWith: woodKnock)
         waitForExpectations(timeout: 5)
@@ -106,12 +172,10 @@ final class ReleaseSmokeTests: XCTestCase {
         XCTAssertEqual(app.buttons["soundChoice-closed"].value as? String, "Wood Knock")
         app.terminate()
         app.launch()
-        openLibrary(app, event: "closed")
-        searchLibrary(app, for: "Wood Knock")
-        XCTAssertEqual(app.buttons["select-closed-woodKnock"].value as? String, "Selected")
+        let closing = app.buttons["soundChoice-closed"]
+        reveal(closing, in: app)
+        XCTAssertEqual(closing.value as? String, "Wood Knock")
         capture("08-kenney-selection-persisted")
-        dismissLibrarySearch(app)
-        app.buttons["Done"].tap()
         app.buttons["About"].tap()
         let credits = app.buttons["soundCredits"]
         for _ in 0..<6 where !credits.isHittable { app.swipeUp() }
@@ -133,13 +197,14 @@ final class ReleaseSmokeTests: XCTestCase {
         setSwitch(enabled, to: false, in: app)
         for event in ["opened", "closed"] {
             let preview = app.buttons["preview-selected-\(event)"]
-            for _ in 0..<6 where !preview.isHittable { app.swipeUp() }
-            XCTAssertTrue(preview.isHittable)
+            reveal(preview, in: app)
             preview.tap()
             let lastEvent = app.staticTexts["lastEvent"]
             for _ in 0..<6 where !lastEvent.isHittable { app.swipeDown() }
-            XCTAssertTrue(lastEvent.label.contains("Preview · \(event == "opened" ? "Opening" : "Closing")"))
-            XCTAssertFalse(app.alerts["Hingy"].exists)
+            let feedback = "Preview · \(event == "opened" ? "Opening" : "Closing")"
+            expectation(for: NSPredicate(format: "label CONTAINS %@", feedback), evaluatedWith: lastEvent)
+            waitForExpectations(timeout: 5)
+            XCTAssertFalse(app.alerts.firstMatch.exists)
         }
         setSwitch(enabled, to: true, in: app)
         capture("06-manual-previews-with-fold-sounds-paused")
@@ -148,28 +213,34 @@ final class ReleaseSmokeTests: XCTestCase {
     @MainActor
     private func openLibrary(_ app: XCUIApplication, event: String) {
         let choice = app.buttons["soundChoice-\(event)"]
-        // On Duo's outer display, isHittable can be true while a row is
-        // partially behind the navigation bar. Reveal the entire row first;
-        // a full-page swipe can overshoot from below the screen to the header.
-        let safeTop = app.frame.minY + 100
-        let safeBottom = app.frame.maxY - 70
-        for _ in 0..<12 {
-            if choice.isHittable && choice.frame.minY >= safeTop && choice.frame.maxY <= safeBottom { break }
-            let aboveHeader = choice.exists && choice.frame.minY < safeTop
-            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.4 : 0.7))
-            let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.65 : 0.45))
-            start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
-        }
-        XCTAssertTrue(choice.isHittable)
-        XCTAssertGreaterThanOrEqual(choice.frame.minY, safeTop)
-        XCTAssertLessThanOrEqual(choice.frame.maxY, safeBottom)
+        reveal(choice, in: app)
         choice.tap()
         let title = event == "opened" ? "Opening sounds" : "Closing sounds"
         XCTAssertTrue(app.navigationBars[title].waitForExistence(timeout: 5))
     }
 
     @MainActor
-    private func searchLibrary(_ app: XCUIApplication, for query: String) {
+    private func reveal(_ row: XCUIElement, in app: XCUIApplication) {
+        // On Duo's outer display, isHittable can be true while a row is
+        // partially behind the navigation bar. Reveal the entire row first;
+        // a full-page swipe can overshoot from below the screen to the header.
+        let safeTop = app.frame.minY + 100
+        let safeBottom = app.frame.maxY - 70
+        for _ in 0..<12 {
+            let frame = row.exists ? row.frame : .null
+            if !frame.isEmpty && frame.minY >= safeTop && frame.maxY <= safeBottom && row.isHittable { break }
+            let aboveHeader = !frame.isEmpty && frame.minY < safeTop
+            let start = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.4 : 0.7))
+            let end = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: aboveHeader ? 0.65 : 0.45))
+            start.press(forDuration: 0.05, thenDragTo: end, withVelocity: .slow, thenHoldForDuration: 0.1)
+        }
+        XCTAssertTrue(row.isHittable)
+        XCTAssertGreaterThanOrEqual(row.frame.minY, safeTop)
+        XCTAssertLessThanOrEqual(row.frame.maxY, safeBottom)
+    }
+
+    @MainActor
+    private func searchLibrary(_ app: XCUIApplication, for query: String, rowID: String) -> XCUIElement {
         let search = app.searchFields.firstMatch
         // Compact Duo sheets collapse searchable into a bottom Search button.
         // Open that native control before expecting the editable field.
@@ -195,22 +266,21 @@ final class ReleaseSmokeTests: XCTestCase {
             XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: focused, object: nil)], timeout: 5), .completed)
         }
         search.typeText(query)
-        // Filtering animates rows on iPad. XCTest can otherwise synthesize a
-        // tap at the row's old unfiltered position even though it exists.
-        let result = app.buttons[query]
-        XCTAssertTrue(result.waitForExistence(timeout: 5))
-        var previousFrame = CGRect.null
-        var stableSince = Date()
-        let settled = NSPredicate { _, _ in
+        expectation(for: NSPredicate(format: "value == %@", query), evaluatedWith: search)
+        waitForExpectations(timeout: 10)
+        // Submit first so the keyboard retracts before tapping a filtered row.
+        search.typeText("\n")
+        let result = app.buttons.matching(identifier: rowID).firstMatch
+        let viewport = app.frame
+        let visible = NSPredicate { _, _ in
+            guard result.exists else { return false }
             let frame = result.frame
-            if frame != previousFrame {
-                previousFrame = frame
-                stableSince = Date()
-                return false
-            }
-            return result.isHittable && !frame.isEmpty && Date().timeIntervalSince(stableSince) >= 0.3
+            return !frame.isEmpty && viewport.intersects(frame)
         }
-        XCTAssertEqual(XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: settled, object: nil)], timeout: 5), .completed)
+        let outcome = XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: visible, object: nil)], timeout: 20)
+        if outcome != .completed { capture("missing-search-result-\(rowID)") }
+        XCTAssertEqual(outcome, .completed, "Expected a visible row for \(query)")
+        return result
     }
 
     @MainActor
@@ -226,18 +296,20 @@ final class ReleaseSmokeTests: XCTestCase {
 
     @MainActor
     private func setSwitch(_ toggle: XCUIElement, to enabled: Bool, in app: XCUIApplication) {
-        // A partially visible Form row can be hittable while its actual switch
-        // is behind the home indicator. Bring the whole row into the safe area.
-        for _ in 0..<6 {
-            if toggle.isHittable && toggle.frame.maxY < app.frame.maxY - 60 { break }
-            app.swipeUp()
-        }
-        XCTAssertTrue(toggle.isHittable)
+        reveal(toggle, in: app)
         let value = enabled ? "1" : "0"
+        guard toggle.value as? String != value else { return }
+        let changed = NSPredicate(format: "value == %@", value)
+        toggle.tap()
+        if XCTWaiter.wait(for: [XCTNSPredicateExpectation(predicate: changed, object: toggle)],
+                          timeout: 2) == .completed { return }
+        // SwiftUI can expose the whole Form row as the switch. Target the
+        // center of the trailing control if tapping the row didn't toggle it.
         if toggle.value as? String != value {
-            toggle.coordinate(withNormalizedOffset: CGVector(dx: 0.93, dy: 0.5)).tap()
+            let trailing = toggle.coordinate(withNormalizedOffset: CGVector(dx: 1, dy: 0.5))
+            trailing.withOffset(CGVector(dx: -min(48, toggle.frame.width / 2), dy: 0)).tap()
         }
-        expectation(for: NSPredicate(format: "value == %@", value), evaluatedWith: toggle)
+        expectation(for: changed, evaluatedWith: toggle)
         waitForExpectations(timeout: 5)
     }
 

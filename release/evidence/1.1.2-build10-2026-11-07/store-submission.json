@@ -1,0 +1,18 @@
+{
+  "app_id": "6812193737",
+  "app_name": "Hingy - Hinge Sounds",
+  "version_id": "50a327e6-9801-4d2d-8889-88f77ed1d0a6",
+  "version": "1.1.2",
+  "build_id": "458a58c3-9742-461d-9a1a-20d69afe4e72",
+  "build_number": "10",
+  "processing_state": "VALID",
+  "review_submission_id": "21af7c5e-70f4-450d-b173-b60154d71bc3",
+  "review_submission_state": "WAITING_FOR_REVIEW",
+  "version_state": "WAITING_FOR_REVIEW",
+  "submitted_date": "2026-11-07T01:41:41.457Z",
+  "release_type": "AFTER_APPROVAL",
+  "submitted_from_commit": "13b81cddca39d566c82a4297ec2a12cebf480aa1",
+  "source_sha256": "b5455a26ce9b0e6f7849572935916e0145718b83ab664aff2ab547bc416386e8",
+  "publicly_released": false,
+  "physical_fold_and_locked_audio_verified": false
+}

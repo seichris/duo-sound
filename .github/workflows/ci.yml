@@ -12,7 +12,7 @@ concurrency:
 jobs:
   core-and-ios-build:
     runs-on: xcode-27
-    timeout-minutes: 35
+    timeout-minutes: 55
     env:
       DEVELOPER_DIR: /Applications/Xcode_27.1.app/Contents/Developer
     steps:
@@ -41,12 +41,18 @@ jobs:
         run: |
           python3 -m unittest discover -s scripts/tests -v
           python3 scripts/release_check.py
+          python3 scripts/generate_fold_shortcuts.py --verify
       - name: Build native hinge app for iOS simulator
         run: >-
           xcodebuild -project DuoSound.xcodeproj -scheme DuoSound
           -configuration Release -sdk iphonesimulator
           -destination 'generic/platform=iOS Simulator'
           -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO build
+      - name: Build Debug tests once for both simulators
+        run: >-
+          xcodebuild -project DuoSound.xcodeproj -scheme DuoSound
+          -configuration Debug -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath DerivedData -jobs 2 CODE_SIGNING_ALLOWED=NO build-for-testing
       - name: Select available iPhone and iPad simulators
         id: simulator
         run: |
@@ -67,10 +73,11 @@ jobs:
           print('QA simulator:',phones[0]['name'])
           print('iPad QA simulator:',tablets[0]['name'])
           PY
+      - name: Boot iPhone for UI tests
+        run: python3 -c "import subprocess; subprocess.run(['xcrun','simctl','bootstatus','${{ steps.simulator.outputs.udid }}','-b'],check=True,timeout=180)"
       - name: UI smoke tests and actual preview screenshots
-        timeout-minutes: 15
+        timeout-minutes: 22
         run: |
-          python3 -c "import subprocess; subprocess.run(['xcrun','simctl','bootstatus','${{ steps.simulator.outputs.udid }}','-b'],check=True,timeout=180)"
           mkdir -p TestResults
           set -o pipefail
           xcodebuild -project DuoSound.xcodeproj -scheme DuoSound -configuration Debug \
@@ -78,18 +85,23 @@ jobs:
             -derivedDataPath DerivedData -resultBundlePath TestResults/DuoSound.xcresult \
             -parallel-testing-enabled NO -collect-test-diagnostics never \
             -test-timeouts-enabled YES -maximum-test-execution-time-allowance 300 \
-            CODE_SIGNING_ALLOWED=NO test | tee TestResults/iphone-tests.log
+            CODE_SIGNING_ALLOWED=NO test-without-building | tee TestResults/iphone-tests.log
       - name: Export screenshot attachments
         if: always()
         run: |
-          if [ -d TestResults/DuoSound.xcresult ]; then
+          if [ -f TestResults/DuoSound.xcresult/Info.plist ]; then
             xcrun xcresulttool export attachments --path TestResults/DuoSound.xcresult --output-path TestResults/Attachments
           fi
-      - name: iPad audio regression and UI tests
+      - name: Shut down iPhone and boot iPad for tests
+        id: boot_ipad
         if: ${{ !cancelled() && steps.simulator.outcome == 'success' }}
-        timeout-minutes: 15
         run: |
+          xcrun simctl shutdown '${{ steps.simulator.outputs.udid }}' || true
           python3 -c "import subprocess; subprocess.run(['xcrun','simctl','bootstatus','${{ steps.simulator.outputs.ipad_udid }}','-b'],check=True,timeout=180)"
+      - name: iPad audio regression and UI tests
+        if: ${{ !cancelled() && steps.boot_ipad.outcome == 'success' }}
+        timeout-minutes: 22
+        run: |
           mkdir -p TestResults
           set -o pipefail
           xcodebuild -project DuoSound.xcodeproj -scheme DuoSound -configuration Debug \
@@ -97,7 +109,7 @@ jobs:
             -derivedDataPath DerivedData -resultBundlePath TestResults/Hingy-iPad.xcresult \
             -parallel-testing-enabled NO -collect-test-diagnostics never \
             -test-timeouts-enabled YES -maximum-test-execution-time-allowance 300 \
-            CODE_SIGNING_ALLOWED=NO test | tee TestResults/ipad-tests.log
+            CODE_SIGNING_ALLOWED=NO test-without-building | tee TestResults/ipad-tests.log
       - uses: actions/upload-artifact@v4
         if: always()
         with:

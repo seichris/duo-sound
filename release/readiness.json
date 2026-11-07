@@ -1,8 +1,8 @@
 {
   "schema_version": 1,
   "status": "ready",
-  "assessed_on": "2026-10-22",
-  "validated_source_sha256": "8bed71d5277505034c82bdce2e7ba6d07c281c62ec65a0b68aef25c800e7ea5c",
+  "assessed_on": "2026-11-07",
+  "validated_source_sha256": "b5455a26ce9b0e6f7849572935916e0145718b83ab664aff2ab547bc416386e8",
   "owner": {
     "legal_name": "WEB3 FZCO",
     "support_email": "jensen@web3.consulting",
@@ -17,40 +17,40 @@
   "evidence": {
     "public_sdk_compiles": {
       "passed": true,
-      "reference": "release/evidence/1.1-build8-2026-10-22/signed-device-build.json"
+      "reference": "release/evidence/1.1.2-build10-2026-11-07/audit.json"
     },
     "physical_open_close_and_handoff": {
       "passed": false,
       "reference": null,
       "waiver": {
         "basis": "owner_authorized_simulator_only",
-        "reference": "release/evidence/1.1-build8-2026-10-22/simulator-release-authorization.json"
+        "reference": "release/evidence/1.1.2-build10-2026-11-07/simulator-release-authorization.json"
       }
     },
     "audio_import_lifecycle_accessibility": {
       "passed": true,
-      "reference": "release/evidence/1.1-build8-2026-10-22/audit.json"
+      "reference": "release/evidence/1.1.2-build10-2026-11-07/audit.json"
     },
     "privacy_manifest_and_policy_audited": {
       "passed": true,
-      "reference": "release/evidence/1.1-build8-2026-10-22/audit.json"
+      "reference": "release/evidence/1.1.2-build10-2026-11-07/audit.json"
     },
     "real_store_screenshots_reviewed": {
       "passed": true,
-      "reference": "release/evidence/1.1-build8-2026-10-22/audit.json"
+      "reference": "release/evidence/1.1.2-build10-2026-11-07/capture-manifest.json"
     },
     "public_urls_and_contact_verified": {
       "passed": true,
-      "reference": "release/evidence/1.1-build8-2026-10-22/audit.json"
+      "reference": "release/evidence/1.1.2-build10-2026-11-07/audit.json"
     },
     "seller_age_rating_rights_and_availability": {
       "passed": true,
-      "reference": "release/evidence/1.1-build8-2026-10-22/audit.json"
+      "reference": "release/evidence/1.1.2-build10-2026-11-07/audit.json"
     },
     "distribution_sdk_accepted_by_apple": {
       "passed": true,
-      "reference": "release/evidence/1.1-build8-2026-10-22/apple-processed-build.json"
+      "reference": "release/evidence/1.1.2-build10-2026-11-07/processed-build.json"
     }
   },
-  "notes": "Submitted Hingy 1.1 (8) for App Review at 2026-10-21T22:53:27.24Z. Apple processed the signed build VALID; four current native screenshots COMPLETE; final strict API validation zero errors/warnings. Release type AFTER_APPROVAL. Physical iPhone installation/launch verified; physical Duo folding/handoff and locked Shortcuts automation remain untested under explicit owner simulator-release authorization. Source and updated privacy policy merged in PR #4. See release/BUILD_8_SUBMITTED.md."
+  "notes": "Build 10 processed VALID by Apple and attached to 1.1.2. Store validation has zero blocking issues. Both English locales have the current native screenshots and manual trigger disclosures. Background dispatch passed with Settings in front. Physical Duo fold delivery and locked audio remain unverified under the continued owner simulator-validation release authorization. Automatic release is configured after Apple approval."
 }
