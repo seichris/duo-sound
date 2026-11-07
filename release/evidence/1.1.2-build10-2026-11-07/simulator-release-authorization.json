@@ -1,0 +1,10 @@
+{
+  "authorization_source": "explicit_user_request",
+  "request": "ok add the same background test for Hingy and include the results in the PR; then publish to the app store",
+  "physical_testing_waived": true,
+  "physical_testing_performed": false,
+  "build_number": "10",
+  "source_sha256": "b5455a26ce9b0e6f7849572935916e0145718b83ab664aff2ab547bc416386e8",
+  "scope": "Publication requested after disclosure that the current pair requires manual fold-trigger setup and physical Duo testing is pending. Continues the owner-authorized simulator-validation release policy recorded for build 8.",
+  "prior_authorization": "release/evidence/1.1-build8-2026-10-22/simulator-release-authorization.json"
+}

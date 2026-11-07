@@ -1,0 +1,54 @@
+{
+  "date": "2026-11-07",
+  "version": "1.1.2",
+  "build_number": "10",
+  "source_sha256": "b5455a26ce9b0e6f7849572935916e0145718b83ab664aff2ab547bc416386e8",
+  "runtime_source_comparison": {
+    "base_commit": "02015c2d55f7dd7d3a60b3b7efdeee17626ca796",
+    "paths": [
+      "App",
+      "Sources"
+    ],
+    "identical": true
+  },
+  "checks": {
+    "swift_core_tests": {
+      "passed": 46,
+      "failed": 0
+    },
+    "release_preparation_tests": {
+      "passed": 25,
+      "failed": 0
+    },
+    "signed_shortcut_payloads": "Both existing playback-only Apple signatures and action chains verified. includesFoldTriggers remains false.",
+    "generic_ios_device_compile": "Release-Duo compiled with Xcode 27.2 for generic iOS with CODE_SIGNING_ALLOWED=NO.",
+    "background_dispatch": "background-dispatch-summary.json"
+  },
+  "privacy": {
+    "source_review": "No runtime code changed from the passing full CI. The setup guide opens Apple-hosted shortcut links and exports the bundled shortcut definition files. No accounts, analytics, tracking or developer network service were added.",
+    "published_source": "https://apps.apple.com/us/app/hingy/id6812193737",
+    "published_declaration": "Data Not Collected"
+  },
+  "reviewed_public_urls": [
+    {
+      "url": "https://github.com/seichris/duo-sound/issues",
+      "http_status": 200
+    },
+    {
+      "url": "https://github.com/seichris/duo-sound/blob/main/docs/PRIVACY.md",
+      "http_status": 200
+    },
+    {
+      "url": "https://github.com/seichris/duo-sound",
+      "http_status": 200
+    }
+  ],
+  "previous_audio_import_accessibility_audit": "release/evidence/1.1-build8-2026-10-22/audit.json",
+  "full_runtime_ci": "https://github.com/seichris/duo-sound/actions/runs/42276930095",
+  "physical_duo_fold_and_locked_audio_verified": false,
+  "screenshots": {
+    "reviewed": true,
+    "manifest": "capture-manifest.json",
+    "count": 5
+  }
+}

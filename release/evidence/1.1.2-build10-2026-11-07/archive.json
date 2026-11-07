@@ -1,0 +1,18 @@
+{
+  "date": "2026-11-07",
+  "version": "1.1.2",
+  "build_number": "10",
+  "display_name": "Hingy - Hinge Sounds",
+  "bundle_id": "com.seichris.duosound",
+  "source_sha256": "b5455a26ce9b0e6f7849572935916e0145718b83ab664aff2ab547bc416386e8",
+  "xcode": "27B52",
+  "sdk": "24B8118",
+  "minimum_os": "17.0",
+  "ipa_sha256": "9a43f84f4e8ef1611e1dc4904f0a530862688125fb455a631a1ed0b894d7effe",
+  "ipa_size_bytes": 5031539,
+  "configuration": "AppStore",
+  "archive_result": "ARCHIVE SUCCEEDED",
+  "export_result": "EXPORT SUCCEEDED",
+  "signature_validation": "codesign --verify --deep --strict passed",
+  "signing_identity": "Apple Distribution: WEB3 FZCO (4H5PK8686H)"
+}

@@ -1,0 +1,148 @@
+{
+  "version": "1.1.2",
+  "date": "2026-11-07",
+  "screenshots": [
+    {
+      "locale": "en-US",
+      "display_type": "APP_IPHONE_67",
+      "id": "50000019-609d-83c9-8032-67d13aa3f051",
+      "file_name": "01-home.png",
+      "md5": "643c56a48b2c064329dfb2ee15748bb0",
+      "width": 1320,
+      "height": 2868,
+      "state": "COMPLETE"
+    },
+    {
+      "locale": "en-US",
+      "display_type": "APP_IPHONE_67",
+      "id": "f6400019-609d-83c9-801f-6ea0801f6b0a",
+      "file_name": "02-shortcuts.png",
+      "md5": "72ccb6edd5467bf3b8b2a897f588738b",
+      "width": 1320,
+      "height": 2868,
+      "state": "COMPLETE"
+    },
+    {
+      "locale": "en-US",
+      "display_type": "APP_IPAD_PRO_3GEN_129",
+      "id": "bb000019-609d-83c9-8018-8f6ed96988c7",
+      "file_name": "01-home.png",
+      "md5": "f3be46c1fe6060549a4bf1e44d60e54c",
+      "width": 2048,
+      "height": 2732,
+      "state": "COMPLETE"
+    },
+    {
+      "locale": "en-US",
+      "display_type": "APP_IPHONE_DUO",
+      "id": "4bc00019-609d-83c9-801d-b61e7305233c",
+      "file_name": "build10-01-inner-home.png",
+      "md5": "fc6a311ff06168ca103c1bb5ced548da",
+      "width": 2853,
+      "height": 2007,
+      "state": "COMPLETE"
+    },
+    {
+      "locale": "en-US",
+      "display_type": "APP_IPHONE_DUO",
+      "id": "96400019-609d-83c9-801d-cdcdea995b52",
+      "file_name": "build10-02-outer-home.png",
+      "md5": "edaeaf0f2a2f9512e99e6196514acc7c",
+      "width": 1398,
+      "height": 2034,
+      "state": "COMPLETE"
+    },
+    {
+      "locale": "en-GB",
+      "display_type": "APP_IPHONE_67",
+      "id": "5f800019-609d-83c9-8023-c0315607a001",
+      "file_name": "01-home.png",
+      "md5": "643c56a48b2c064329dfb2ee15748bb0",
+      "width": 1320,
+      "height": 2868,
+      "state": "COMPLETE"
+    },
+    {
+      "locale": "en-GB",
+      "display_type": "APP_IPHONE_67",
+      "id": "21c00019-609d-83c9-8018-76e070067611",
+      "file_name": "02-shortcuts.png",
+      "md5": "72ccb6edd5467bf3b8b2a897f588738b",
+      "width": 1320,
+      "height": 2868,
+      "state": "COMPLETE"
+    },
+    {
+      "locale": "en-GB",
+      "display_type": "APP_IPHONE_DUO",
+      "id": "f9400019-609d-83c9-8008-5c4c3f006547",
+      "file_name": "build10-01-inner-home.png",
+      "md5": "fc6a311ff06168ca103c1bb5ced548da",
+      "width": 2853,
+      "height": 2007,
+      "state": "COMPLETE"
+    },
+    {
+      "locale": "en-GB",
+      "display_type": "APP_IPHONE_DUO",
+      "id": "bf000019-609d-83c9-8011-9161e91ede8d",
+      "file_name": "build10-02-outer-home.png",
+      "md5": "edaeaf0f2a2f9512e99e6196514acc7c",
+      "width": 1398,
+      "height": 2034,
+      "state": "COMPLETE"
+    },
+    {
+      "locale": "en-GB",
+      "display_type": "APP_IPAD_PRO_3GEN_129",
+      "id": "c1c00019-609d-83c9-8021-432888bce593",
+      "file_name": "01-home.png",
+      "md5": "f3be46c1fe6060549a4bf1e44d60e54c",
+      "width": 2048,
+      "height": 2732,
+      "state": "COMPLETE"
+    }
+  ],
+  "replaced_inherited_assets": [
+    {
+      "locale": "en-US",
+      "id": "e1d2bbc2-1e53-474e-8bf1-1bf3f6cfb385",
+      "fileName": "01-home.png"
+    },
+    {
+      "locale": "en-US",
+      "id": "c0001667-2dff-4f8b-a34c-245203d7e5cc",
+      "fileName": "02-crystal-library.png"
+    },
+    {
+      "locale": "en-US",
+      "id": "48205c12-3b00-4c8d-9b21-ddf0e3fd646f",
+      "fileName": "ipad-home.png"
+    },
+    {
+      "locale": "en-US",
+      "id": "817770cf-3ce4-466c-93e7-c801fe3ac5fc",
+      "fileName": "02-kenney-library.png"
+    },
+    {
+      "locale": "en-US",
+      "id": "9c9bd904-e9bc-4b4d-b0d5-d4322bc2b50e",
+      "fileName": "01-inner-home.png"
+    },
+    {
+      "locale": "en-US",
+      "id": "3b93864b-ef9a-459d-9091-d95d406d43ee",
+      "fileName": "02-outer-home.png"
+    },
+    {
+      "locale": "en-GB",
+      "id": "814b2ba4-a40a-4514-87ce-95dc9442518f",
+      "fileName": "01-inner-home.png"
+    },
+    {
+      "locale": "en-GB",
+      "id": "05115c3d-413e-4da2-b40d-cd7a4d6c4a5f",
+      "fileName": "02-outer-home.png"
+    }
+  ]
+}
