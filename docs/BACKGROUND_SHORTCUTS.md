@@ -6,6 +6,21 @@ Apple added the **When my iPhone is opened or closed** Shortcuts trigger in iOS 
 
 The setup screen reads the bundled `FoldShortcuts/Install.json`. For a pair that includes triggers, it asks the user to enable each imported automation. For a playback-only pair, it gives the steps to attach **Opened** and **Closed** in Shortcuts. Adding a shortcut and enabling its automation are separate user actions.
 
+## Background system-dispatch test
+
+On November 7, 2026, Xcode 27.2 (27B52) passed `testSoundActionsReturnAudioWhileAnotherAppIsFrontmost` on the iOS 27.2 Duo simulator (24B91016s). The test selects Chime for opening and Click for closing, backgrounds Hingy, and activates Settings. Apple's AppIntentsTesting service dispatches both real app actions. Each returns a WAV file while Settings stays in the foreground and Hingy stays in the background. The returned opening and closing files decode with durations of 0.42 and 0.13 seconds. The saved selections remain intact.
+
+Keep Xcode's default simulator signing enabled and use a runtime matching the installed Xcode testing framework.
+
+```sh
+xcodebuild test -project DuoSound.xcodeproj -scheme DuoSound-DuoSDK \
+  -configuration Debug-Duo -destination "platform=iOS Simulator,id=$SIMULATOR_ID" \
+  -only-testing:DuoSoundUITests/ReleaseSmokeTests/testSoundActionsReturnAudioWhileAnotherAppIsFrontmost \
+  -parallel-testing-enabled NO 'OTHER_SWIFT_FLAGS=$(inherited) -D TEST_SHORTCUT_DISPATCH'
+```
+
+The test validates system dispatch and audio-file handoff. Audible playback through Apple's Play Sound action and physical fold-trigger delivery require separate checks. [Result summary](../release/evidence/1.1.2-build10-2026-11-07/background-dispatch-summary.json)
+
 To regenerate the complete pair, run `python3 scripts/generate_fold_shortcuts.py` on a Mac running macOS 27 or later and signed in to iCloud. The script uses Apple’s Anyone signer and checks the trigger, direction, sound action and playback input in each signed output before replacing the packaged pair. `--verify` checks the committed pair offline. `--playback-only` explicitly creates the version that requires manual trigger setup. The published iCloud links identify the corresponding signed files. [Apple’s signing guide](https://support.apple.com/guide/shortcuts-mac/run-shortcuts-from-the-command-line-apd455c82f02/mac)
 
 ## October 21, 2026 investigation

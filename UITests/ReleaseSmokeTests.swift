@@ -1,7 +1,61 @@
 import XCTest
+#if TEST_SHORTCUT_DISPATCH && canImport(AppIntentsTesting)
+import AppIntents
+import AppIntentsTesting
+import AVFoundation
+#endif
 
 final class ReleaseSmokeTests: XCTestCase {
     override func setUpWithError() throws { continueAfterFailure = false }
+
+    #if TEST_SHORTCUT_DISPATCH && canImport(AppIntentsTesting)
+    @MainActor
+    func testSoundActionsReturnAudioWhileAnotherAppIsFrontmost() async throws {
+        guard #available(iOS 27.2, *) else {
+            throw XCTSkip("Requires an iOS 27.2+ runtime matching Xcode's AppIntentsTesting framework.")
+        }
+        let app = XCUIApplication()
+        app.launch()
+        openLibrary(app, event: "opened")
+        searchLibrary(app, for: "Chime", rowID: "select-opened-chime").tap()
+        dismissLibrarySearch(app)
+        app.buttons["Done"].tap()
+        openLibrary(app, event: "closed")
+        searchLibrary(app, for: "Click", rowID: "select-closed-click").tap()
+        dismissLibrarySearch(app)
+        app.buttons["Done"].tap()
+
+        XCUIDevice.shared.press(.home)
+        let settings = XCUIApplication(bundleIdentifier: "com.apple.Preferences")
+        settings.activate()
+        XCTAssertTrue(settings.wait(for: .runningForeground, timeout: 10))
+        let backgrounded = app.wait(for: .runningBackground, timeout: 5)
+            || app.wait(for: .runningBackgroundSuspended, timeout: 10)
+        XCTAssertTrue(backgrounded)
+        let testBundleID = try XCTUnwrap(Bundle(for: Self.self).bundleIdentifier)
+        XCTAssertTrue(testBundleID.hasSuffix(".uitests"))
+        let definitions = IntentDefinitions(bundleIdentifier: String(testBundleID.dropLast(".uitests".count)))
+
+        for (direction, duration) in [("Opening", 0.42), ("Closing", 0.13)] {
+            let result = try await definitions.intents["Get\(direction)SoundIntent"].makeIntent().run()
+            let file: IntentFile = try result.value
+            XCTAssertEqual(settings.state, .runningForeground)
+            XCTAssertNotEqual(app.state, .runningForeground)
+            XCTAssertEqual(file.filename, "Hingy-\(direction).wav")
+            XCTAssertEqual(String(data: file.data.prefix(4), encoding: .ascii), "RIFF")
+            XCTAssertEqual(String(data: file.data.dropFirst(8).prefix(4), encoding: .ascii), "WAVE")
+            let audio = try AVAudioPlayer(data: file.data)
+            XCTAssertEqual(audio.duration, duration, accuracy: 0.03)
+        }
+        let evidence = XCTAttachment(screenshot: settings.screenshot())
+        evidence.name = "Settings stays in front during both sound-file actions"
+        evidence.lifetime = .keepAlways
+        add(evidence)
+        app.activate()
+        XCTAssertEqual(app.buttons["soundChoice-opened"].value as? String, "Chime")
+        XCTAssertEqual(app.buttons["soundChoice-closed"].value as? String, "Click")
+    }
+    #endif
 
     @MainActor
     func testDuoPublicHingeProvidesSilentInitialReading() throws {
